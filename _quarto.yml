@@ -1,0 +1,57 @@
+project:
+  type: book
+  output-dir: public
+
+execute: 
+  echo: false
+  warning: false
+  message: false
+  
+book:
+  title: "OECD Regional Outlook 2023 - Country Profiles"
+  chapters:
+    - index.qmd
+    - tl3-aut.qmd
+    - tl3-bel.qmd
+    - tl2-can.qmd
+    - tl2-chl.qmd
+    - tl0-col.qmd
+    - tl0-cri.qmd
+    - tl3-cze.qmd
+    - tl3-dnk.qmd
+    - tl3-est.qmd
+    - tl3-fin.qmd
+    - tl3-fra.qmd
+    - tl3-deu.qmd
+    - tl3-grc.qmd
+    - tl3-hun.qmd
+    - tl0-isl.qmd
+    - tl0-irl.qmd
+    - tl0-isr.qmd
+    - tl3-ita.qmd
+    - tl3-jpn.qmd
+    - tl3-kor.qmd
+    - tl3-lva.qmd
+    - tl3-ltu.qmd
+    - tl0-lux.qmd
+    - tl2-mex.qmd
+    - tl3-nld.qmd
+    - tl3-nzl.qmd
+    - tl3-nor.qmd
+    - tl3-pol.qmd
+    - tl3-prt.qmd
+    - tl3-svk.qmd
+    - tl3-svn.qmd
+    - tl3-esp.qmd
+    - tl3-swe.qmd
+    - tl3-che.qmd
+    - tl3-tur.qmd
+    - tl3-gbr.qmd
+    - tl0-usa.qmd
+
+bibliography: references.bib
+    
+format:
+  html:
+    theme: [cosmo, custom.scss]
+    number-sections: false

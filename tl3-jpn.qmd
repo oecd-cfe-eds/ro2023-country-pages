@@ -1,0 +1,504 @@
+```{r jpn_ctry}
+ctry <- "JPN"
+ctry2 <- "Japan"
+```
+
+# Japan
+
+```{r jpn_pkgs, warning=FALSE}
+library(oecdcountryprofiles)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(oecdplot)
+library(knitr)
+library(readxl)
+library(janitor)
+library(stringr)
+library(readr)
+library(tintin)
+library(scales)
+library(plotly)
+
+load_oecd_fonts()
+
+missing_reg <- c("ITG2F")
+excl_countries <- c("LUX", "IRL")
+
+clrs <- tintin_colours$the_black_island
+clrs2 <- tintin_colours$the_blue_lotus
+clrs3 <- tintin_colours$the_red_sea_sharks
+clrs4 <- tintin_colours$the_calculus_affair
+clrs5 <- tintin_colours$red_rackhams_treasure
+```
+
+<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
+<p class="MsoNormal" style="background:#fff9e6">
+<b><span style="font-size:9.0pt;color:#212529">OECD Regional Outlook</span></b><u></u><u></u></p>
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The OECD
+<a href="https://www.oecd-ilibrary.org/urban-rural-and-regional-development/oecd-regional-outlook_2dafc8cf-en" target="_blank"><i><span style="color:#0d6efd">Regional Outlook</span></i></a> reviews recent trends, policy developments, and prospects across OECD regions, including the underlying causes driving regional inequalities in performance and well-being. The report offers evidence,
+ guidance and policy recommendations on how to improve competitiveness and productivity, promote inclusive growth, accelerate the net-zero transition and raise well-being standards through effective regional development policy and multi-level governance.</span><u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
+<p class="MsoNormal" style="background:#d4edff"><b><span style="font-size:9.0pt;color:#212529">Territorial definitions</span></b><u></u><u></u></p>
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The data in this note reflect different sub-national geographic levels in OECD countries:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Regions</strong>: are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019).</li>
+<li><strong>Functional urban areas</strong> consist of cities – defined as densely populated local units with at least 50 000 inhabitants – and adjacent local units connected to the city (commuting zones) in terms of commuting flows (Dijkstra, Poelman, and Veneri 2019). Metropolitan areas refer to functional urban areas above 250 000 inhabitants.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">In addition, some indicators use the degree of urbanisation classification (OECD et al. 2021), which defines three types of areas:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Cities</strong> consist of contiguous grid cells that have a density of at least 1 500 inhabitants per km2 or are at least 50% built up, with a population of at least 50 000.</li>
+<li><strong>Towns and semi-dense areas</strong> consist of contiguous grid cells with a density of at least 300 inhabitants per km2 and are at least 3% built up, with a total population of at least 5 000.</li>
+<li><strong>Rural areas</strong> are cells that do not belong to a city or a town and semi-dense area. Most of these have a density below 300 inhabitants per km2.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i><span style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</span></i></a></span><u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+## Overview
+
+```{r jpn_tbl}
+read_html_table(ctry)
+```
+
+## Regional inequality trends
+
+```{r jpn_fig1}
+iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
+  clean_names() %>% 
+  rename(iso3 = iso_3)
+
+top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>% 
+  clean_names()
+
+gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
+  clean_names() %>% 
+  select(-x1) %>%
+  left_join(iso3_g20, by = "iso3") %>%
+  filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
+  mutate(
+    metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
+    metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
+  ) %>%
+  bind_rows(
+    read_csv("data/gdp_pop_tl2_00_20_imputed_l.csv") %>%
+      clean_names() %>%
+      select(time, reg_id, iso3, gdp, pop, gdp_pc, regional_name_eng = reg_name)
+  )
+
+summary_theil_tl3 <- read_csv("data/theil_gdppc_country_00_20_wCHE-CHL.csv") %>%
+  clean_names() %>% 
+  filter(level == "gdppc_tl3") %>%
+  select(-c(x1, level))
+
+summary_stats <- gdp_pop_00_20 %>%
+  group_by(iso3, time) %>%
+  summarise(mean_gdp_pc = mean(gdp_pc, na.rm = TRUE)) %>%
+  ungroup() %>%
+  left_join(top_bottom_c, by = c("iso3", "time")) %>%
+  mutate(
+    top_bottom = top_20_gdppc / bottom_20_gdppc,
+    top_mean = top_20_gdppc / mean_gdp_pc,
+    bottom_mean = bottom_20_gdppc / mean_gdp_pc
+  )
+
+summary_stats <- summary_stats %>%
+  left_join(summary_theil_tl3, by = c("iso3", "time"))
+
+index_2000 <- summary_stats %>%
+  filter(time == 2000) %>%
+  pivot_wider(
+    id_cols = "iso3",
+    names_from = "time",
+    values_from = -c(time, iso3)
+  )
+
+summary_stats_index <- summary_stats %>%
+  left_join(index_2000, by = "iso3") %>%
+  mutate(
+    index_gdppc = mean_gdp_pc / mean_gdp_pc_2000,
+    index_bottom = bottom_mean / bottom_mean_2000,
+    index_top = top_mean / top_mean_2000,
+    index_theil = theil / theil_2000,
+    index_top_mean = top_mean / top_mean_2000,
+    index_bottom_mean = bottom_mean / bottom_mean_2000,
+    index_top_bottom = top_bottom / top_bottom_2000
+  ) %>%
+  select(
+    iso3,
+    time,
+    index_gdppc,
+    index_bottom,
+    index_top_mean,
+    index_top_bottom,
+    index_bottom_mean,
+    index_top,
+    index_theil
+  )
+
+summary_wide <- summary_stats_index %>%
+  pivot_longer(cols = -c(time, iso3), names_to = "index") %>%
+  mutate(
+    labels_index = case_when(
+      index == "index_bottom" ~ "Bottom 20%",
+      index == "index_top" ~ "Top 20%",
+      index == "index_bottom_mean" ~ "Bottom 20%/Mean",
+      index == "index_top_mean" ~ "Top 20%/Mean",
+      index == "index_theil" ~ "Theil index",
+      index == "index_gdppc" ~ "Mean GDP per capita",
+      index == "index_top_bottom" ~ "Top 20%/Bottom 20%"
+    )
+  ) %>%
+  left_join(iso3_g20, by = "iso3")
+
+lev_3 <- c(
+  "Theil index",
+  "Top 20%/Mean",
+  "Bottom 20%/Mean",
+  "Mean GDP per capita"
+)
+
+fig1 <- summary_wide %>%
+  filter(iso3 == ctry, labels_index %in% lev_3) %>%
+  pivot_wider(
+    names_from = index,
+    values_from = value
+  ) %>%
+  mutate(
+    index_label = factor(labels_index, levels = lev_3)
+  ) %>%
+  ggplot(aes(x = time)) +
+  geom_line(aes(
+    y = index_gdppc,
+    colour = index_label
+    ), linetype = "dashed", linewidth = 1.2
+  ) +
+  geom_line(aes(
+    y = index_top_mean,
+    colour = index_label
+    ), linetype = "dashed", linewidth = 1.2
+  ) +
+  geom_line(aes(
+    y = index_bottom_mean,
+    colour = index_label
+    ), linetype = "dashed", linewidth = 1.2
+  ) +
+  geom_line(aes(
+    y = index_theil,
+    colour = index_label
+    ), linewidth = 1.2
+  ) +
+  scale_colour_manual(values = clrs2) +
+  scale_x_continuous(expand = c(0, 0)) +
+  labs(
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL3 OECD regions",
+    x = "",
+    y = "Statistic (2000=1)",
+    linetype = "",
+    colour = ""
+  ) +
+  theme_oecd(base_size = 11) +
+  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+```
+
+```{r jpn_fig1_summary}
+theil_chg <- summary_wide %>%
+  filter(
+    index == "index_theil",
+    iso3 == ctry,
+    time %in% range(time)
+  ) %>%
+  arrange(time) %>%
+  mutate(diff = value - lag(value)) %>%
+  filter(time == max(time)) %>%
+  pull(diff)
+
+theil_chg_txt <- ifelse(theil_chg > 0, "an increase", "a decline")
+
+theil_max <- summary_wide %>%
+  filter(
+    index == "index_theil",
+    iso3 == ctry
+  ) %>%
+  filter(value == max(value)) %>%
+  pull(time) %>%
+  as.integer()
+
+polarization_pct <- summary_wide %>%
+  filter(
+    index == "index_top_mean",
+    iso3 == ctry,
+    time %in% range(time)
+  ) %>%
+  arrange(time) %>%
+  mutate(diff = lead(value) - value) %>%
+  filter(time == min(time)) %>%
+  pull(diff) %>%
+  round(3)
+
+polarization_txt <- ifelse(polarization_pct > 0, "higher", "lower")
+
+polarization_yrs <- summary_wide %>%
+  filter(
+    index == "index_top_mean",
+    iso3 == ctry
+  ) %>%
+  filter(time %in% range(time)) %>%
+  pull(time) %>%
+  as.integer()
+
+polarization_2_pct <- summary_wide %>%
+  filter(
+    index == "index_bottom_mean",
+    iso3 == ctry,
+    time %in% range(time)
+  ) %>%
+  arrange(time) %>%
+  mutate(diff = lead(value) - value) %>%
+  filter(time == min(time)) %>%
+  pull(diff) %>%
+  round(3)
+
+polarization_2_txt <- ifelse(polarization_2_pct > 0, "higher", "lower")
+```
+
+`r ctry2` experienced `r theil_chg_txt` in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in `r theil_max`.
+
+Polarisation, as measured by the Top 20%/Mean ratio was `r paste(abs(polarization_pct), polarization_txt)` in `r min(polarization_yrs)` compared to `r max(polarization_yrs)`. Bottom divergence, as measured by the Bottom 20%/Mean ratio was `r paste(abs(polarization_2_pct), polarization_2_txt)` in the same period.
+
+```{r jpn_fig1_1}
+# no interactivity
+# fig1
+
+# interactivity
+ggplotly(fig1) %>%
+  config(displayModeBar = F)
+```
+
+<div class="oecdnote">
+**Note**: Based on 1 586 TL3 regions in 27 countries with available data (no TL3 data (continuous time series for more than 1 region) for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland). Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita.
+
+Source: OECD Regional Database (2022).
+</div>
+
+```{r jpn_fig2}
+# Load file with top/bottom 20% data (provided by Eric using weights)
+top_bottom_c_oecd <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
+  clean_names()
+
+# Load GDP_PC data for 2000-2020 aggregated by metros sharing the same FUA (missings imputed by Eric)
+gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
+  clean_names() %>%
+  select(-x1) %>%
+  filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
+  mutate(
+    metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
+    metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
+  ) %>%
+  drop_na(iso3)
+
+# Process data ------------------------------------------------------------
+
+gdppc_metro <- gdp_pop_00_20 %>%
+  group_by(metro_lev1, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_lev1, values_from = mean_gdppc) %>%
+  mutate(
+    gap = Metropolitan / `Non-metropolitan`,
+    type = "Metropolitan/Non-metropolitan"
+  ) %>%
+  select(time, iso3, gap, type)
+
+gdppc_large <- gdp_pop_00_20 %>%
+  group_by(metro_large, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc, na.rm =  T), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_large, values_from = mean_gdppc) %>%
+  clean_names() %>% 
+  mutate(
+    gap = metropolitan_large / non_large,
+    type = "Large/Non-large"
+  ) %>%
+  select(time, iso3, gap, type) %>% 
+  drop_na(gap)
+
+gdppc_far <- gdp_pop_00_20 %>%
+  group_by(metro_far, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_far, values_from = mean_gdppc) %>%
+  clean_names() %>% 
+  mutate(
+    gap = close / far_from_a_fua_250k,
+    type = "Near/Far from a FUA >250K"
+  ) %>%
+  select(time, iso3, gap, type) %>% 
+  drop_na(gap)
+
+gaps <- bind_rows(gdppc_metro, gdppc_far, gdppc_large)
+
+mean_gaps <- gaps %>%
+  filter(time == 2020) %>%
+  group_by(time, type) %>% 
+  summarise(gap = mean(gap, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(time = "OECD mean gap, 2020") %>%
+  select(time, type, gap)
+
+country <- gaps %>%
+  filter(iso3 == ctry) %>% 
+  select(-iso3)
+
+country <- bind_rows(
+    country %>% 
+      mutate(time = as.character(time)),
+    mean_gaps
+  ) %>% 
+  mutate(time = factor(time))
+
+lev_type <- c("Large/Non-large", "Metropolitan/Non-metropolitan", "Near/Far from a FUA >250K")
+
+fig2 <- country %>%
+  mutate(
+    type = factor(type, levels = lev_type)
+  ) %>%
+  rename(
+    series = type
+  ) %>%
+  ggplot() +
+  geom_col(
+    # aes(x = time, y = gap, fill = type),
+    aes(x = series, y = gap, fill = time),
+    linewidth = 1.5,
+    position=position_dodge2(preserve = "single")
+  ) +
+  labs(x = "Category", y = "Gap",
+       title = "Figure 2: Changes in the contribution of region types to regional income\ninequality based on TL3 GDP per capita") +
+  theme_minimal() +
+  scale_fill_manual(values = clrs, name = "") +
+  theme(legend.position = "top",
+        plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+```
+
+```{r jpn_fig2_2}
+gdp_gap <- country %>%
+  filter(
+    time == 2020,
+    type == "Large/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_2_gap <- country %>%
+  filter(
+    time == "OECD mean gap, 2020",
+    type == "Large/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_gap_lag <- country %>%
+  filter(
+    time == 2000,
+    type == "Large/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_gap_txt <- ifelse(gdp_gap - gdp_gap_lag > 0, "increased", "decreased")
+
+gdp_gap_pct <- abs(round(gdp_gap - gdp_gap_lag, 3))
+
+gdp_3_gap <- country %>%
+  filter(
+    time == 2020,
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_3_gap_lag <- country %>%
+  filter(
+    time == 2000,
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_4_gap <- country %>%
+  filter(
+    time == "OECD mean gap, 2020",
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_2_gap_txt <- ifelse(gdp_3_gap - gdp_3_gap_lag > 0, "increased", "decreased")
+
+gdp_2_gap_pct <- abs(round(gdp_3_gap - gdp_3_gap_lag, 3))
+
+gdp_5_gap <- country %>%
+  filter(
+    time == 2020,
+    type == "Near/Far from a FUA >250K"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_5_gap_lag <- country %>%
+  filter(
+    time == 2000,
+    type == "Near/Far from a FUA >250K"
+  ) %>%
+  pull(gap) %>%
+  round(3)
+
+gdp_3_gap_txt <- ifelse(gdp_5_gap - gdp_5_gap_lag > 0, "increase", "decrease")
+
+gdp_3_gap_pct <- abs(round(gdp_5_gap - gdp_5_gap_lag, 3))
+```
+
+In 2020, the gap in GDP per capita between large and non-large metropolitan regions was `r gdp_gap`. For reference, the same value for OECD was `r gdp_2_gap`. This gap `r paste(gdp_gap_txt, "by", gdp_gap_pct)` percentage points between 2000 and 2020.
+
+Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metropolitan regions was `r gdp_3_gap`. For reference, the same value for OECD was `r gdp_4_gap`. This gap `r paste(gdp_2_gap_txt, "by", gdp_2_gap_pct)` percentage points since 2000.
+
+As for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 inhabitants, it was `r gdp_5_gap` in 2020, `r paste(gdp_3_gap_txt, "of", gdp_3_gap_pct)` percentage points since 2000.
+
+```{r jpn_fig2_3}
+# no interactivity
+# fig2
+
+# interactivity
+ggplotly(fig2) %>%
+  config(displayModeBar = F)
+```
+
+<div class="oecdnote">
+**Note**: Far from a FUA>250K includes regions near/with a small FUA and remote regions.
+
+Source: OECD Regional Database (2022).
+</div>
+
+## Recent policy developments
+
+```{r jpn_txt}
+read_html_text(ctry)
+```

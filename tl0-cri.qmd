@@ -1,0 +1,80 @@
+```{r cri_ctry}
+ctry <- "CRI"
+ctry2 <- "Costa Rica"
+```
+
+# Costa Rica
+
+```{r cri_pkgs}
+library(oecdcountryprofiles)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(oecdplot)
+library(knitr)
+library(readxl)
+library(janitor)
+library(stringr)
+library(readr)
+library(tintin)
+
+load_oecd_fonts()
+
+missing_reg <- c("ITG2F")
+excl_countries <- c("LUX", "IRL")
+
+clrs <- tintin_colours$the_black_island
+clrs2 <- tintin_colours$the_blue_lotus
+clrs3 <- tintin_colours$the_red_sea_sharks
+clrs4 <- tintin_colours$the_calculus_affair
+clrs5 <- tintin_colours$red_rackhams_treasure
+```
+
+<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
+<p class="MsoNormal" style="background:#fff9e6">
+<b><span style="font-size:9.0pt;color:#212529">OECD Regional Outlook</span></b><u></u><u></u></p>
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The OECD
+<a href="https://www.oecd-ilibrary.org/urban-rural-and-regional-development/oecd-regional-outlook_2dafc8cf-en" target="_blank"><i><span style="color:#0d6efd">Regional Outlook</span></i></a> reviews recent trends, policy developments, and prospects across OECD regions, including the underlying causes driving regional inequalities in performance and well-being. The report offers evidence,
+ guidance and policy recommendations on how to improve competitiveness and productivity, promote inclusive growth, accelerate the net-zero transition and raise well-being standards through effective regional development policy and multi-level governance.</span><u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
+<p class="MsoNormal" style="background:#d4edff"><b><span style="font-size:9.0pt;color:#212529">Territorial definitions</span></b><u></u><u></u></p>
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The data in this note reflect different sub-national geographic levels in OECD countries:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Regions</strong>: are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019).</li>
+<li><strong>Functional urban areas</strong> consist of cities – defined as densely populated local units with at least 50 000 inhabitants – and adjacent local units connected to the city (commuting zones) in terms of commuting flows (Dijkstra, Poelman, and Veneri 2019). Metropolitan areas refer to functional urban areas above 250 000 inhabitants.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">In addition, some indicators use the degree of urbanisation classification (OECD et al. 2021), which defines three types of areas:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Cities</strong> consist of contiguous grid cells that have a density of at least 1 500 inhabitants per km2 or are at least 50% built up, with a population of at least 50 000.</li>
+<li><strong>Towns and semi-dense areas</strong> consist of contiguous grid cells with a density of at least 300 inhabitants per km2 and are at least 3% built up, with a total population of at least 5 000.</li>
+<li><strong>Rural areas</strong> are cells that do not belong to a city or a town and semi-dense area. Most of these have a density below 300 inhabitants per km2.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i><span style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</span></i></a></span><u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+## Overview
+
+```{r cri_tbl}
+read_html_table(ctry)
+```
+
+## Recent policy developments
+
+```{r cri_txt}
+read_html_text(ctry)
+```

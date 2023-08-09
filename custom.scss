@@ -1,0 +1,26 @@
+/*-- scss:defaults --*/
+
+$p-font-size: 10px;
+$p-font-family: "Noto Sans Display", sans-serif;
+$p-color: #0b1e2d;
+$p-line-height: 1.05em;
+$p-font-weight: 500;
+$note-font-size: 9px;
+$note-color: #5a6570;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wght@500;700&display=swap');
+
+/*-- scss:rules --*/
+
+* {
+  // font-size: $p-font-size;
+  font-family: $p-font-family;
+  // color: $p-color;
+  line-height: $p-line-height;
+  // font-weight: $p-font-weight;
+}
+
+div.oecdnote p {
+  font-size: $note-font-size;
+  color: $note-color;
+}

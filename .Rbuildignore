@@ -1,0 +1,12 @@
+^\.quarto$
+^\.github$
+^_quarto\.yml$
+^dev$
+^\.Rproj\.user$
+^_book$
+^data$
+^revisited_drafts$
+^cover\.png$
+^references\.bib$
+.*\.Rproj$
+.*\.qmd
