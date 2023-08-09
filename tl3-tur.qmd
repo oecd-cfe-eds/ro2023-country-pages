@@ -1,9 +1,9 @@
 ```{r tur_ctry}
 ctry <- "TUR"
-ctry2 <- "Turkey"
+ctry2 <- "Türkiye"
 ```
 
-# Turkey
+# Türkiye
 
 ```{r tur_pkgs, warning=FALSE}
 library(oecdcountryprofiles)
