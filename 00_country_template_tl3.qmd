@@ -546,8 +546,8 @@ dp11 <- dp1 %>%
 dp11 <- dp11 %>%
   mutate(
     name = case_when(
-      name == "pw_lp_country" ~ "Low Productivity",
-      name == "pw_hp_country" ~ "High Productivity"
+      name == "pw_lp_country" ~ "Bottom 50% regions",
+      name == "pw_hp_country" ~ "Top 50% regions"
     )
   )
 
@@ -558,7 +558,7 @@ yrs <- seq(min(yrs), max(yrs), 2)
 
 hpgrew <- dp11 %>% 
   filter(
-    name == "High Productivity",
+    name == "Top 50% regions",
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
@@ -568,7 +568,7 @@ hpgrew <- dp11 %>%
 
 lpgrew <- dp11 %>% 
   filter(
-    name == "Low Productivity",
+    name == "Bottom 50% regions",
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
@@ -602,7 +602,16 @@ fig3_1 <- dp11 %>%
   theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-In `r ctry3`, labour productivity in high-productivity regions grew by `r hpgrew`% between `r min(yrs)` and `r max(yrs)`, `r abs(hpdiff)` percentage points `r hpmore` compared to low-productivity regions.
+```{r fig3_text}
+fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
+  clean_names()
+
+fig3_text <- fig3_text %>%
+  filter(iso3 == ctry) %>%
+  pull(text_final)
+```
+
+`r fig3_text`
 
 ```{r fig3_2}
 # no interactivity
@@ -614,7 +623,7 @@ ggplotly(fig3_1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Labour productivity for high productivity (low productivity) regions is equal to the sum of Gross Value Added across high productivity (low productivity) regions in a country/year divided by the sum of Employment across high productivity (low productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The starting year is the first available year for each country.
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States where they are large (TL2) regions due to data availability.
 
 Source: OECD Regional Database (2022).
 </div>
