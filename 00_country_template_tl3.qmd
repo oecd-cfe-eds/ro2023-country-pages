@@ -631,31 +631,23 @@ Source: OECD Regional Database (2022).
 ```{r fig4}
 # read ----
 
-finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
-  "data/countryprofile_option2_addon.xlsx"
-} else {
-  "data/countryprofile_option2.xlsx"
-}
-
-dp2 <- read_excel(finp, sheet = ctry) %>% 
+dp2 <- read_excel("data/countryprofile_fig4_alt.xlsx", sheet = ctry) %>% 
   clean_names()
 
 # tidy ----
 
-colnames(dp2) <- str_replace(colnames(dp2), tolower(ctry), "country")
-
 dp21 <- dp2 %>%
-  select(time, matches("country")) %>%
+  select(time, starts_with("share_")) %>%
   pivot_longer(-time) %>%
   rename(value_country = value)
 
 dp21 <- dp21 %>%
   mutate(
     name = case_when(
-      name == "share_tgoods_lp_country" ~ paste(ctry, "TG LP"),
-      name == "share_tgoods_hp_country" ~ paste(ctry, "TG HP"),
-      name == "share_tserv_lp_country" ~ paste(ctry, "TS LP"),
-      name == "share_tserv_hp_country" ~ paste(ctry, "TS HP")
+      name == "share_tgoods_lp" ~ paste(ctry, "IN LH"),
+      name == "share_tgoods_hp" ~ paste(ctry, "IN UH"),
+      name == "share_tserv_lp" ~ paste(ctry, "SE LH"),
+      name == "share_tserv_hp" ~ paste(ctry, "SE UH")
     )
   )
 
@@ -666,7 +658,7 @@ yrs <- seq(min(yrs), max(yrs), 1)
 
 tghpgrew <- dp21 %>% 
   filter(
-    name == paste(ctry, "TG HP"),
+    name == paste(ctry, "IN UH"),
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = value_country - lag(value_country)) %>% 
@@ -676,7 +668,7 @@ tghpgrew <- dp21 %>%
 
 tglpgrew <- dp21 %>% 
   filter(
-    name == paste(ctry, "TG LP"),
+    name == paste(ctry, "IN LH"),
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = value_country - lag(value_country)) %>% 
@@ -692,7 +684,7 @@ tglpmore <- ifelse(tglpdiff > 0, "grew", "declined")
 
 tshpgrew <- dp21 %>% 
   filter(
-    name == paste(ctry, "TS HP"),
+    name == paste(ctry, "SE UH"),
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = value_country - lag(value_country)) %>% 
@@ -702,7 +694,7 @@ tshpgrew <- dp21 %>%
 
 tslpgrew <- dp21 %>% 
   filter(
-    name == paste(ctry, "TS LP"),
+    name == paste(ctry, "SE LH"),
     time %in% c(min(yrs), max(yrs))
   ) %>% 
   summarise(grew = value_country - lag(value_country)) %>% 
@@ -724,12 +716,12 @@ dp21 <- dp21 %>%
     country = str_replace_all(name, " .*", ""),
     
     category1 = str_sub(category, 1, 2),
-    category1 = str_replace_all(category1, "TG", "Tradable goods"),
-    category1 = str_replace_all(category1, "TS", "Tradable services"),
+    category1 = str_replace_all(category1, "IN", "Industry"),
+    category1 = str_replace_all(category1, "SE", "Services"),
 
     category2 = paste(str_sub(category, 4, 5), time),
-    category2 = str_replace_all(category2, "LP", "Low productivity"),
-    category2 = str_replace_all(category2, "HP", "High productivity")
+    category2 = str_replace_all(category2, "LH", "Lower half"),
+    category2 = str_replace_all(category2, "UH", "Upper half")
   )
 
 dp21_2 <- dp21 %>%
@@ -739,8 +731,6 @@ dp21_2 <- dp21 %>%
     category2 = str_replace_all(category2, as.character(min(yrs)), "minyr"),
     category2 = str_replace_all(category2, as.character(max(yrs)), "maxyr")
   ) %>%
-  # remove all after productivy in category2
-  #mutate(category2 = str_replace_all(category2, "productivity.*", "productivity")) %>%
   pivot_wider(names_from = category2, values_from = value_country) %>%
   clean_names()
 
@@ -753,10 +743,10 @@ fig4_title <- if (any(ctry %in% c("USA","TUR","NOR"))) {
 fig4_2 <- dp21_2 %>% 
   rename(
     series = category2_2,
-    hp_min_y = high_productivity_minyr,
-    hp_max_y = high_productivity_maxyr,
-    lp_min_y = low_productivity_minyr,
-    lp_max_y = low_productivity_maxyr
+    hp_min_y = upper_half_minyr,
+    hp_max_y = upper_half_maxyr,
+    lp_min_y = lower_half_minyr,
+    lp_max_y = lower_half_maxyr
   ) %>%
   ggplot() +
   geom_col(aes(x = country,
@@ -782,7 +772,7 @@ fig4_2 <- dp21_2 %>%
   theme_oecd(base_size = 10) +
   scale_color_manual(values = clrs4[1:4]) +
   scale_fill_manual(values = clrs4[1:4]) +
-  labs(x = "", y = "Employment share (%)", color = "",
+  labs(x = "", y = "Share of workers (%)", color = "",
        title = fig4_title) +
   facet_wrap(~category1) +
   # hide fill from legend
@@ -790,7 +780,13 @@ fig4_2 <- dp21_2 %>%
   theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-In `r ctry3`, the share of employment in the TG sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same the share of employment in TS `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.
+```{r fig4_text}
+text_all <- dp2 %>%
+  filter(time == 2020) %>%
+  pull(text_all)
+```
+
+`r text_all`
 
 ```{r fig4_2}
 # no interactivity
@@ -802,7 +798,7 @@ ggplotly(fig4_2) %>%
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). 
 
 Source: OECD Regional Database (2022).
 </div>
