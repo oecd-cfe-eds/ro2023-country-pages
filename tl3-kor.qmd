@@ -1,11 +1,11 @@
-```{r gbr_ctry}
-ctry <- "GBR"
-ctry2 <- "United Kingdom"
+```{r kor_ctry}
+ctry <- "KOR"
+ctry2 <- "Korea"
 ```
 
-# United Kingdom
+# Korea
 
-```{r gbr_pkgs, warning=FALSE}
+```{r kor_pkgs, warning=FALSE}
 library(oecdcountryprofiles)
 library(dplyr)
 library(tidyr)
@@ -50,13 +50,13 @@ clrs5 <- tintin_colours$red_rackhams_treasure
 
 ## Overview
 
-```{r gbr_tbl}
+```{r kor_tbl}
 read_html_table(ctry)
 ```
 
 ## Regional inequality trends
 
-```{r gbr_fig1}
+```{r kor_fig1}
 iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
   clean_names() %>% 
   rename(iso3 = iso_3)
@@ -213,7 +213,7 @@ fig1 <- summary_wide %>%
   theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-```{r gbr_fig1_summary}
+```{r kor_fig1_summary}
 theil_chg <- summary_wide %>%
   filter(
     index == "index_theil",
@@ -297,7 +297,7 @@ The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in
 
 `r paragraph_theil`
 
-```{r gbr_fig1_1}
+```{r kor_fig1_1}
 # no interactivity
 # fig1
 
@@ -313,7 +313,7 @@ Top/bottom calculated as population equivalent (top/bottom regions with at least
 **Source**: OECD Regional Database (2022).
 </div>
 
-```{r gbr_fig2}
+```{r kor_fig2}
 # Load file with top/bottom 20% data (provided by Eric using weights)
 top_bottom_c_oecd <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
   clean_names()
@@ -417,7 +417,7 @@ fig2 <- country %>%
         plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-```{r gbr_fig2_2}
+```{r kor_fig2_2}
 gdp_gap <- country %>%
   filter(
     time == 2020,
@@ -495,7 +495,7 @@ gdp_3_gap_txt <- ifelse(gdp_5_gap - gdp_5_gap_lag > 0, "increased", "decreased")
 gdp_3_gap_pct <- abs(round(gdp_5_gap - gdp_5_gap_lag, 3))
 ```
 
-```{r gbr_next paragraph}
+```{r kor_next paragraph}
 next_paragraph <- if (any(ctry %in% c("LTU"))) {
   glue("There is no data for the gap in GDP percapita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
 } else{
@@ -509,7 +509,7 @@ Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metro
 
 In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, " ", gdp_3_gap_pct)` percentage points since 2000.
 
-```{r gbr_fig2_3}
+```{r kor_fig2_3}
 # no interactivity
 # fig2
 
@@ -524,7 +524,7 @@ ggplotly(fig2) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
-```{r gbr_fig3}
+```{r kor_fig3}
 # read ----
 
 finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
@@ -604,7 +604,7 @@ fig3_1 <- dp11 %>%
   theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-```{r gbr_fig3_text}
+```{r kor_fig3_text}
 fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
   clean_names()
 
@@ -615,7 +615,7 @@ fig3_text <- fig3_text %>%
 
 `r fig3_text`
 
-```{r gbr_fig3_2}
+```{r kor_fig3_2}
 # no interactivity
 # fig3_1
 
@@ -633,7 +633,7 @@ ggplotly(fig3_1) %>%
 <br>
 <br>
 
-```{r gbr_fig4}
+```{r kor_fig4}
 # read ----
 
 dp2 <- read_excel("data/countryprofile_fig4_alt.xlsx", sheet = ctry) %>% 
@@ -785,7 +785,7 @@ fig4_2 <- dp21_2 %>%
   theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
 ```
 
-```{r gbr_fig4_text}
+```{r kor_fig4_text}
 text_all <- dp2 %>%
   filter(time == 2020) %>%
   pull(text_all)
@@ -793,7 +793,7 @@ text_all <- dp2 %>%
 
 `r text_all`
 
-```{r gbr_fig4_2}
+```{r kor_fig4_2}
 ggplotly(fig4_2) %>%
   config(displayModeBar = F)
 ```
@@ -806,7 +806,7 @@ ggplotly(fig4_2) %>%
 
 ## Recent policy developments
 
-```{r gbr_txt}
+```{r kor_txt}
 read_html_text(ctry)
 ```
 

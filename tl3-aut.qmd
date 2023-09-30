@@ -275,6 +275,7 @@ polarization_2_pct <- summary_wide %>%
 
 polarization_2_txt <- ifelse(polarization_2_pct > 0, "higher", "lower")
 polarization_2_txt2 <- ifelse(polarization_2_txt == "higher", "convergence", "divergence")
+
 # needs the: USA, UK, Czech Rep, Slovak Rep, Netherlands
 
 ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
@@ -803,16 +804,11 @@ ggplotly(fig4_2) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
-<br>
-<br>
-
 ## Recent policy developments
 
 ```{r aut_txt}
 read_html_text(ctry)
 ```
-
-<br>
 
 <table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
 <tbody>

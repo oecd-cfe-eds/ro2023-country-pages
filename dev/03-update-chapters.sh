@@ -20,19 +20,3 @@ do
     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
 done
-
-# UPDATE TL2 COUNTRIES
-
-# for file in index.qmd *can.qmd *chl.qmd *mex.qmd
-# do
-#     echo $file
-#     sed -i '8,$d' $file
-#     sed -i '7r 00_country_template_tl2.qmd' $file
-#     sed -i 's/{r /{r '${file: -7:3}'_/g' $file
-
-#     # replace all ${file: -7:3}_${file: -7:3} with ${file: -7:3}_
-#     # yes, I know this is a bad trick, but it works
-#     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
-#     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
-#     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
-# done

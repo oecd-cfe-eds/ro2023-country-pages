@@ -1,4 +1,4 @@
-```{r aut_pkgs, warning=FALSE}
+```{r pkgs, warning=FALSE}
 library(oecdcountryprofiles)
 library(dplyr)
 library(tidyr)
