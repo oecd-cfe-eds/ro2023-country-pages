@@ -750,23 +750,26 @@ fig4_2 <- dp21_2 %>%
   geom_col(aes(x = country,
     y = hp_min_y,    
     fill = series),
-    position = position_dodge(width=0.25)) +
+    position = position_dodge(width=-1)
+  ) +
   geom_col(aes(x = country,
     y = hp_max_y,    
     fill = series),
-    position = position_dodge(width=-1)) +
+    position = position_dodge(width=0.33)
+  ) +
   geom_point(aes(x = country,
     y = lp_min_y,
     colour = series),
     size = 5,
     shape = 18,
-    position = position_dodge(width=-0.66)) +
+    position = position_dodge(width=0.33)) +
   geom_point(aes(x = country,
     y = lp_max_y,
     colour = series),
     size = 5,
     shape = 18,
-    position = position_dodge(width=0.33)) +
+    position = position_dodge(width=-1)
+  ) +
   theme_oecd(base_size = 10) +
   scale_color_manual(values = clrs4[1:4]) +
   scale_fill_manual(values = clrs4[1:4]) +
