@@ -129,10 +129,12 @@ fig3_1
 ```
 
 <div class="oecdnote">
-**Note**: Labour productivity for high productivity (low productivity) regions is equal to the sum of Gross Value Added across high productivity (low productivity) regions in a country/year divided by the sum of Employment across high productivity (low productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The starting year is the first available year for each country.
-
-Source: OECD Regional Database (2022).
+**Note**: Labour productivity for high productivity (low productivity) regions is equal to the sum of Gross Value Added across high productivity (low productivity) regions in a country/year divided by the sum of Employment across high productivity (low productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The starting year is the first available year for each country.<br>
+**Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 
 ```{r fig4}
@@ -291,13 +293,37 @@ fig4_2
 ```
 
 <div class="oecdnote">
-**Note**: The employment share for high productivity (low productivity) regions in a given sector is defined as total employment across high productivity (low productivity) regions in a sector/year divided by total employment across high productivity (low productivity) regions in a year. Regions are at the TL2 level for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The tradable goods sector includes Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). The starting year is the first available year for each country.
-
-Source: OECD Regional Database (2022).
+**Note**: The employment share for high productivity (low productivity) regions in a given sector is defined as total employment across high productivity (low productivity) regions in a sector/year divided by total employment across high productivity (low productivity) regions in a year. Regions are at the TL2 level for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The tradable goods sector includes Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). The starting year is the first available year for each country.<br>
+**Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ## Recent policy developments
 
 ```{r cri_txt}
 read_html_text(ctry)
 ```
+
+<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
+<p class="MsoNormal" style="background:#d4edff"><b><span style="font-size:9.0pt;color:#212529">Territorial definitions</span></b><u></u><u></u></p>
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The data in this note reflect different sub-national geographic levels in OECD countries:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Regions</strong>: are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019).</li>
+<li><strong>Functional urban areas</strong> consist of cities – defined as densely populated local units with at least 50 000 inhabitants – and adjacent local units connected to the city (commuting zones) in terms of commuting flows (Dijkstra, Poelman, and Veneri 2019). Metropolitan areas refer to functional urban areas above 250 000 inhabitants.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">In addition, some indicators use the degree of urbanisation classification (OECD et al. 2021), which defines three types of areas:</span>
+<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
+<li><strong>Cities</strong> consist of contiguous grid cells that have a density of at least 1 500 inhabitants per km2 or are at least 50% built up, with a population of at least 50 000.</li>
+<li><strong>Towns and semi-dense areas</strong> consist of contiguous grid cells with a density of at least 300 inhabitants per km2 and are at least 3% built up, with a total population of at least 5 000.</li>
+<li><strong>Rural areas</strong> are cells that do not belong to a city or a town and semi-dense area. Most of these have a density below 300 inhabitants per km2.</li></ul></p>
+
+<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i><span style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</span></i></a></span><u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
