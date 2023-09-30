@@ -1,5 +1,6 @@
 /*-- scss:defaults --*/
 
+$h1-color: #002f6c;
 $p-font-size: 12px;
 $p-font-family: "Noto Sans Display", sans-serif;
 $p-color: #0b1e2d;
@@ -23,4 +24,8 @@ $note-color: #5a6570;
 div.oecdnote p {
   font-size: $note-font-size;
   color: $note-color;
+}
+
+h1.title, .title.h1 {
+  color: $h1-color;
 }
