@@ -39,10 +39,15 @@ clrs5 <- tintin_colours$red_rackhams_treasure
 <tr>
 <td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
 <p class="MsoNormal" style="background:#fff9e6">
-<b><span style="font-size:9.0pt;color:#212529">OECD Regional Outlook</span></b><u></u><u></u></p>
+<b><span style="font-size:9.0pt;color:#212529">OECD Regional Outlook</span></b></p>
+
+<!-- include RO2023_cover.JPG here -->
+<center>
+<img src="RO2023_cover.jpg" alt="OECD Regional Outlook 2023" height="416"/>
+</center>
+
 <p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The OECD
-<a href="https://www.oecd-ilibrary.org/urban-rural-and-regional-development/oecd-regional-outlook_2dafc8cf-en" target="_blank"><i><span style="color:#0d6efd">Regional Outlook</span></i></a> reviews recent trends, policy developments, and prospects across OECD regions, including the underlying causes driving regional inequalities in performance and well-being. The report offers evidence,
- guidance and policy recommendations on how to improve competitiveness and productivity, promote inclusive growth, accelerate the net-zero transition and raise well-being standards through effective regional development policy and multi-level governance.</span><u></u><u></u></p>
+<a href="https://www.oecd-ilibrary.org/urban-rural-and-regional-development/oecd-regional-outlook_2dafc8cf-en" target="_blank"><i><span style="color:#0d6efd">Regional Outlook</span></i></a> reviews recent trends, policy developments, and prospects across OECD regions, including the underlying causes driving regional inequalities in performance and well-being. The report offers evidence, guidance and policy recommendations on how to improve competitiveness and productivity, promote inclusive growth, accelerate the net-zero transition and raise well-being standards through effective regional development policy and multi-level governance.</span></p>
 </td>
 </tr>
 </tbody>
