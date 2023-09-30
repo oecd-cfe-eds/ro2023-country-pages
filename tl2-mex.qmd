@@ -77,7 +77,7 @@ gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
   ) %>%
   bind_rows(
     read_csv("data/gdp_pop_tl2_00_20_imputed_l_CHL_PACHA.csv") %>%
-      filter(TIME < 2021) %>% 
+      filter(time < 2021) %>% 
       clean_names() %>%
       select(time, reg_id, iso3, gdp, pop, gdp_pc, regional_name_eng = reg_name)
   )
