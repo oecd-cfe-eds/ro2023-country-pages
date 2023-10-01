@@ -109,6 +109,18 @@ min_y <- summary_theil_tl3 %>%
   pull(time) %>%
   min()
 
+if (ctry == "CHE") {
+  min_y <- 2008
+}
+
+if (ctry == "HUN") {
+  min_y <- 2001
+}
+
+if (ctry == "TUR") {
+  min_y <- 2004
+}
+
 index_200x <- summary_stats %>%
   filter(time == min_y) %>%
   pivot_wider(
@@ -173,7 +185,7 @@ lev_3 <- c(
 )
 
 fig1 <- summary_wide %>%
-  filter(iso3 == ctry, labels_index %in% lev_3) %>%
+  filter(iso3 == ctry, labels_index %in% lev_3, time >= min_y) %>%
   pivot_wider(
     names_from = index,
     values_from = value
@@ -309,8 +321,7 @@ ggplotly(fig1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Based on 1 586 TL3 regions in 27 countries with available data (no TL3 data (continuous time series for more than 1 region) for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland). Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita.
-Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.
+**Note**: Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.
 
 **Source**: OECD Regional Database (2022).
 </div>
@@ -915,29 +926,19 @@ read_html_text(ctry)
   <tr>
     <td>
       <p style="padding-left:10px;padding-right:10px;padding-top:10px;font-size:9.0pt;">
-      The data in this note reflect different sub-national geographic levels in OECD countries:</span>
-      <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
-        <li>
-          <strong>Regions</strong>: are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019).
-        </li>
-        <li>
-          <strong>Functional urban areas</strong> consist of cities – defined as densely populated local units with at least 50 000 inhabitants – and adjacent local units connected to the city (commuting zones) in terms of commuting flows (Dijkstra, Poelman, and Veneri 2019). Metropolitan areas refer to functional urban areas above 250 000 inhabitants
-        </li>
-      </ul>
+        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). In Canada, TL2 corresponds to the provinces and territories.
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
-        In addition, some indicators use the degree of urbanisation classification (OECD et al. 2021), which defines three types of areas:
-        <ul style="list-style-type:circle;font-size:9.0pt; padding-right:10px">
-          <li>
-            <strong>Cities</strong> consist of contiguous grid cells that have a density of at least 1 500 inhabitants per km2 or are at least 50% built up, with a population of at least 50 000.
-          </li>
-          <li>
-            <strong>Towns and semi-dense areas</strong> consist of contiguous grid cells with a density of at least 300 inhabitants per km2 and are at least 3% built up, with a total population of at least 5 000.
-          </li>
-          <li>
-            <strong>Rural areas</strong> are cells that do not belong to a city or a town and semi-dense area. Most of these have a density below 300 inhabitants per km2.
-          </li>
-        </ul>
+        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+      </p>
+      <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
+        <li>
+          <b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
+        </li>
+        <li>
+          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+        </li>
+      </ul>
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
         Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</i></a>

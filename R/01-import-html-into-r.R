@@ -40,7 +40,7 @@ read_html_table <- function(ctry, table = 1L) {
   }
 
   tbl <- str_trim(tbl)
-  
+
   tbl <- HTML(tbl)
 
   return(tbl)

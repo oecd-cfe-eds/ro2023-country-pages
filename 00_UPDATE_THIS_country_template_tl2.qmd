@@ -73,14 +73,14 @@ read_html_table(ctry)
 
 ```{r fig1}
 iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   rename(iso3 = iso_3)
 
-top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>% 
+top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
   clean_names()
 
 gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   select(-x1) %>%
   left_join(iso3_g20, by = "iso3") %>%
   filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
@@ -95,7 +95,7 @@ gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
   )
 
 summary_theil_tl2 <- read_csv("data/theil_gdppc_country_00_20_wCHE-CHL.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   filter(level == "gdppc_tl2") %>%
   select(-c(x1, level))
 
@@ -140,7 +140,7 @@ index_200x <- summary_stats %>%
 # index_200x %>%
 #   filter(iso3 == ctry) %>%
 #   select(theil_2008)
-# => rename cols 
+# => rename cols
 
 colnames(index_200x) <- gsub("_200[0-9]", "_200x", colnames(index_200x))
 
@@ -202,23 +202,19 @@ fig1 <- summary_wide %>%
   geom_line(aes(
     y = index_gdppc,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_top_mean,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_bottom_mean,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_theil,
     colour = index_label
-    ), linewidth = 1.2
-  ) +
+  ), linewidth = 1.2) +
   scale_colour_manual(values = clrs2) +
   scale_x_continuous(expand = c(0, 0)) +
   labs(
@@ -229,7 +225,7 @@ fig1 <- summary_wide %>%
     colour = ""
   ) +
   theme_oecd(base_size = 10) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
 ```
 
 ```{r fig1_summary}
@@ -373,24 +369,24 @@ dp11 <- dp11 %>%
 yrs <- sort(unique(dp11$time))
 yrs <- seq(min(yrs), max(yrs), 2)
 
-hpgrew <- dp11 %>% 
+hpgrew <- dp11 %>%
   filter(
     name == "High Productivity",
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
-lpgrew <- dp11 %>% 
+lpgrew <- dp11 %>%
   filter(
     name == "Low Productivity",
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
 hpdiff <- hpgrew - lpgrew
@@ -406,11 +402,13 @@ fig2 <- dp11 %>%
   geom_line(aes(x = time, y = value, color = series), linewidth = 1.2) +
   theme_oecd(base_size = 10) +
   scale_colour_manual(values = clrs3[1:2]) +
-  labs(x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
-       title = "Figure 2: Evolution of labour productivity, TL2 regions") +
+  labs(
+    x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
+    title = "Figure 2: Evolution of labour productivity, TL2 regions"
+  ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format()) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
 
 ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
   paste("The", ctry2)
@@ -453,7 +451,7 @@ finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
   "data/countryprofile_option2.xlsx"
 }
 
-dp2 <- read_excel(finp, sheet = ctry) %>% 
+dp2 <- read_excel(finp, sheet = ctry) %>%
   clean_names()
 
 # tidy ----
@@ -480,24 +478,24 @@ dp21 <- dp21 %>%
 yrs <- sort(unique(dp21$time))
 yrs <- seq(min(yrs), max(yrs), 1)
 
-tghpgrew <- dp21 %>% 
+tghpgrew <- dp21 %>%
   filter(
     name == paste(ctry, "TG HP"),
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = value_country - lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = value_country - lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
-tglpgrew <- dp21 %>% 
+tglpgrew <- dp21 %>%
   filter(
     name == paste(ctry, "TG LP"),
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = value_country - lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = value_country - lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
 tghpdiff <- tghpgrew - tglpgrew
@@ -506,24 +504,24 @@ tghpmore <- ifelse(tghpdiff > 0, "grew", "declined")
 tglpdiff <- tglpgrew - tglpgrew
 tglpmore <- ifelse(tglpdiff > 0, "grew", "declined")
 
-tshpgrew <- dp21 %>% 
+tshpgrew <- dp21 %>%
   filter(
     name == paste(ctry, "TS HP"),
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = value_country - lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = value_country - lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
-tslpgrew <- dp21 %>% 
+tslpgrew <- dp21 %>%
   filter(
     name == paste(ctry, "TS LP"),
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = value_country - lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
+  ) %>%
+  summarise(grew = value_country - lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
   round(1)
 
 tshpdiff <- tshpgrew - tslpgrew
@@ -532,17 +530,15 @@ tshpmore <- ifelse(tshpdiff > 0, "grew", "declined")
 tslpdiff <- tslpgrew - tslpgrew
 tslpmore <- ifelse(tslpdiff > 0, "grew", "declined")
 
-dp21 <- dp21 %>% 
+dp21 <- dp21 %>%
   mutate(category = gsub(paste0("^OECD |^", ctry, " "), "", name))
 
 dp21 <- dp21 %>%
   mutate(
     country = str_replace_all(name, " .*", ""),
-    
     category1 = str_sub(category, 1, 2),
     category1 = str_replace_all(category1, "TG", "Tradable goods"),
     category1 = str_replace_all(category1, "TS", "Tradable services"),
-
     category2 = paste(str_sub(category, 4, 5), time),
     category2 = str_replace_all(category2, "LP", "Low productivity"),
     category2 = str_replace_all(category2, "HP", "High productivity")
@@ -556,11 +552,11 @@ dp21_2 <- dp21 %>%
     category2 = str_replace_all(category2, as.character(max(yrs)), "maxyr")
   ) %>%
   # remove all after productivy in category2
-  #mutate(category2 = str_replace_all(category2, "productivity.*", "productivity")) %>%
+  # mutate(category2 = str_replace_all(category2, "productivity.*", "productivity")) %>%
   pivot_wider(names_from = category2, values_from = value_country) %>%
   clean_names()
 
-fig3 <- dp21_2 %>% 
+fig3 <- dp21_2 %>%
   rename(
     series = category2_2,
     hp_min_y = high_productivity_minyr,
@@ -569,35 +565,53 @@ fig3 <- dp21_2 %>%
     lp_max_y = low_productivity_maxyr
   ) %>%
   ggplot() +
-  geom_col(aes(x = country,
-    y = hp_min_y,    
-    fill = series),
-    position = position_dodge(width=0.25)) +
-  geom_col(aes(x = country,
-    y = hp_max_y,    
-    fill = series),
-    position = position_dodge(width=-1)) +
-  geom_point(aes(x = country,
-    y = lp_min_y,
-    colour = series),
+  geom_col(
+    aes(
+      x = country,
+      y = hp_min_y,
+      fill = series
+    ),
+    position = position_dodge(width = 0.25)
+  ) +
+  geom_col(
+    aes(
+      x = country,
+      y = hp_max_y,
+      fill = series
+    ),
+    position = position_dodge(width = -1)
+  ) +
+  geom_point(
+    aes(
+      x = country,
+      y = lp_min_y,
+      colour = series
+    ),
     size = 5,
     shape = 18,
-    position = position_dodge(width=-0.66)) +
-  geom_point(aes(x = country,
-    y = lp_max_y,
-    colour = series),
+    position = position_dodge(width = -0.66)
+  ) +
+  geom_point(
+    aes(
+      x = country,
+      y = lp_max_y,
+      colour = series
+    ),
     size = 5,
     shape = 18,
-    position = position_dodge(width=0.33)) +
+    position = position_dodge(width = 0.33)
+  ) +
   theme_oecd(base_size = 10) +
   scale_color_manual(values = clrs4[1:4]) +
   scale_fill_manual(values = clrs4[1:4]) +
-  labs(x = "", y = "Employment share (%)", color = "",
-       title = "Figure 3: Evolution of sectoral specialisation in tradable sectors,\nTL2 regions") +
+  labs(
+    x = "", y = "Employment share (%)", color = "",
+    title = "Figure 3: Evolution of sectoral specialisation in tradable sectors,\nTL2 regions"
+  ) +
   facet_wrap(~category1) +
   # hide fill from legend
-  guides(fill = "none", color=guide_legend(ncol=2)) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+  guides(fill = "none", color = guide_legend(ncol = 2)) +
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
 ```
 
 In `r ctry3`, the share of employment in the TG sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same the share of employment in TS `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.

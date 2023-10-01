@@ -209,8 +209,9 @@ fig1 <- summary_wide %>%
     linetype = "",
     colour = ""
   ) +
-  theme_oecd(base_size = 10) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  # theme_oecd(base_size = 10) +
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  theme_minimal()
 ```
 
 ```{r usa_fig1_summary}
@@ -433,12 +434,9 @@ fig2 <- country %>%
     x = "Category", y = "Gap",
     title = "Figure 2: Changes in the contribution of region types to regional income\ninequality based on TL3 GDP per capita"
   ) +
-  theme_oecd(base_size = 10) +
-  scale_fill_manual(values = clrs, name = "") +
-  theme(
-    legend.position = "top",
-    plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))
-  )
+  # theme_oecd(base_size = 10) +
+  theme_minimal() +
+  scale_fill_manual(values = clrs, name = "")
 ```
 
 ```{r usa_fig2_2}
@@ -605,15 +603,15 @@ fig3 <- dp11 %>%
   ) %>%
   ggplot() +
   geom_line(aes(x = time, y = value, color = series), linewidth = 1.2) +
-  theme_oecd(base_size = 10) +
+  # theme_oecd(base_size = 10) +
+  theme_minimal() +
   scale_colour_manual(values = clrs3[1:2]) +
   labs(
     x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
     title = "Figure 3: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
-  scale_y_continuous(labels = scales::number_format()) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  scale_y_continuous(labels = scales::number_format())
 
 # needs the: USA, UK, Czech Rep, Slovak Rep, Netherlands
 
@@ -800,7 +798,8 @@ fig4 <- dp21_2 %>%
     shape = 18,
     position = position_dodge(width = 0.33)
   ) +
-  theme_oecd(base_size = 10) +
+  # theme_oecd(base_size = 10) +
+  theme_minimal() +
   scale_color_manual(values = clrs4[1:4]) +
   scale_fill_manual(values = clrs4[1:4]) +
   labs(
@@ -809,8 +808,7 @@ fig4 <- dp21_2 %>%
   ) +
   facet_wrap(~category1) +
   # hide fill from legend
-  guides(fill = "none", color = guide_legend(ncol = 2)) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  guides(fill = "none", color = guide_legend(ncol = 2))
 ```
 
 In `r ctry3`, the share of employment in the TG sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same the share of employment in TS `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.
@@ -836,24 +834,32 @@ ggplotly(fig4) %>%
 read_html_text(ctry)
 ```
 
-<table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
-<tbody>
-<tr>
-<td style="width:467.5pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt" width="623" valign="top">
-<p class="MsoNormal" style="background:#d4edff"><b><span style="font-size:9.0pt;color:#212529">Territorial definitions</span></b><u></u><u></u></p>
-<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">The data in this note reflect different sub-national geographic levels in OECD countries:</span>
-<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
-<li><strong>Regions</strong>: are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019).</li>
-<li><strong>Functional urban areas</strong> consist of cities – defined as densely populated local units with at least 50 000 inhabitants – and adjacent local units connected to the city (commuting zones) in terms of commuting flows (Dijkstra, Poelman, and Veneri 2019). Metropolitan areas refer to functional urban areas above 250 000 inhabitants.</li></ul></p>
-
-<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">In addition, some indicators use the degree of urbanisation classification (OECD et al. 2021), which defines three types of areas:</span>
-<ul style=“list-style-type:circle;font-size:9.0pt;color:#212529”>
-<li><strong>Cities</strong> consist of contiguous grid cells that have a density of at least 1 500 inhabitants per km2 or are at least 50% built up, with a population of at least 50 000.</li>
-<li><strong>Towns and semi-dense areas</strong> consist of contiguous grid cells with a density of at least 300 inhabitants per km2 and are at least 3% built up, with a total population of at least 5 000.</li>
-<li><strong>Rural areas</strong> are cells that do not belong to a city or a town and semi-dense area. Most of these have a density below 300 inhabitants per km2.</li></ul></p>
-
-<p class="MsoNormal" style="margin:2.4pt;background:white"><span style="font-size:9.0pt;color:#212529">Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i><span style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</span></i></a></span><u></u><u></u></p>
-</td>
-</tr>
-</tbody>
+<table border="1" style="width:75%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="background:#d4edff; padding:10px;font-size:9.0pt;" valign="center">
+      Territorial definitions
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <p style="padding-left:10px;padding-right:10px;padding-top:10px;font-size:9.0pt;">
+        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). In Canada, TL2 corresponds to the provinces and territories.
+      </p>
+      <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
+        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+      </p>
+      <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
+        <li>
+          <b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
+        </li>
+        <li>
+          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+        </li>
+      </ul>
+      </p>
+      <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
+        Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</i></a>
+      </p>
+    </td>
+  </tr>
 </table>
