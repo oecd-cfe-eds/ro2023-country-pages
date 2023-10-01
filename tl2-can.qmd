@@ -209,8 +209,9 @@ fig1 <- summary_wide %>%
     linetype = "",
     colour = ""
   ) +
-  theme_oecd(base_size = 10) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  # theme_oecd(base_size = 10) +
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  theme_minimal()
 ```
 
 ```{r can_fig1_summary}
@@ -386,18 +387,15 @@ fig2 <- dp11 %>%
   ) %>%
   ggplot() +
   geom_line(aes(x = time, y = value, color = series), linewidth = 1.2) +
-  theme_oecd(base_size = 10) +
+  # theme_oecd(base_size = 10) +
+  theme_minimal() +
   scale_colour_manual(values = clrs3[1:2]) +
   labs(
     x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
     title = "Figure 2: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
-  scale_y_continuous(labels = scales::number_format()) +
-  theme(
-    plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)),
-    legend.title = element_blank()
-  )
+  scale_y_continuous(labels = scales::number_format())
 
 ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
   paste("The", ctry2)
