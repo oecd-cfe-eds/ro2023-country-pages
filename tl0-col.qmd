@@ -57,14 +57,14 @@ read_html_table(ctry)
 
 ```{r col_fig1}
 iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   rename(iso3 = iso_3)
 
-top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>% 
+top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
   clean_names()
 
 gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   select(-x1) %>%
   left_join(iso3_g20, by = "iso3") %>%
   filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
@@ -79,7 +79,7 @@ gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
   )
 
 summary_theil_tl2 <- read_csv("data/theil_gdppc_country_00_20_wCHE.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   filter(level == "gdppc_tl2") %>%
   select(-c(x1, level))
 
@@ -166,23 +166,19 @@ fig1 <- summary_wide %>%
   geom_line(aes(
     y = index_gdppc,
     colour = factor(labels_index, levels = lev_2)
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_top_mean,
     colour = factor(labels_index, levels = lev_2)
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_bottom_mean,
     colour = factor(labels_index, levels = lev_2)
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_theil,
     colour = factor(labels_index, levels = lev_2)
-    ), linewidth = 1.2
-  ) +
+  ), linewidth = 1.2) +
   scale_colour_manual(values = clrs2) +
   scale_x_continuous(expand = c(0, 0)) +
   labs(
@@ -193,7 +189,7 @@ fig1 <- summary_wide %>%
     colour = ""
   ) +
   theme_oecd(base_size = 10) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,8,0)))
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 8, 0)))
 ```
 
 ```{r col_fig1_summary}
@@ -259,7 +255,7 @@ polarization_2_txt <- ifelse(polarization_2_pct > 0, "higher", "lower")
 
 `r ctry2` experienced `r theil_chg_txt` in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in `r theil_max`.
 
-Polarisation, as measured by the Top 20%/Mean ratio was `r paste(abs(polarization_pct), polarization_txt)` in `r min(polarization_yrs)` compared to `r max(polarization_yrs)`. Bottom divergence, as measured by the Bottom 20%/Mean ratio was `r paste(abs(polarization_2_pct), polarization_2_txt)` in the same period.
+<!-- Polarisation, as measured by the Top 20%/Mean ratio was `r paste(abs(polarization_pct), polarization_txt)` in `r min(polarization_yrs)` compared to `r max(polarization_yrs)`. Bottom divergence, as measured by the Bottom 20%/Mean ratio was `r paste(abs(polarization_2_pct), polarization_2_txt)` in the same period. -->
 
 ```{r col_fig1_1}
 fig1
@@ -297,8 +293,8 @@ dp11 <- dp1 %>%
 dp11 <- dp11 %>%
   mutate(
     name = case_when(
-      name == "pw_lp_country" ~ "Low Productivity",
-      name == "pw_hp_country" ~ "High Productivity"
+      name == "pw_lp_country" ~ "Lower half",
+      name == "pw_hp_country" ~ "Upper half"
     )
   )
 
@@ -307,25 +303,25 @@ dp11 <- dp11 %>%
 yrs <- sort(unique(dp11$time))
 yrs <- seq(min(yrs), max(yrs), 2)
 
-hpgrew <- dp11 %>% 
+hpgrew <- dp11 %>%
   filter(
-    name == "High Productivity",
+    name == "Upper half",
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
-  round(2)
+  ) %>%
+  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
+  round(1)
 
-lpgrew <- dp11 %>% 
+lpgrew <- dp11 %>%
   filter(
-    name == "Low Productivity",
+    name == "Lower half",
     time %in% c(min(yrs), max(yrs))
-  ) %>% 
-  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>% 
-  drop_na() %>% 
-  pull() %>% 
-  round(2)
+  ) %>%
+  summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %>%
+  drop_na() %>%
+  pull() %>%
+  round(1)
 
 hpdiff <- hpgrew - lpgrew
 
@@ -335,11 +331,13 @@ fig3_1 <- ggplot(dp11) +
   geom_line(aes(x = time, y = value_country, color = name), linewidth = 1.2) +
   theme_oecd(base_size = 10) +
   scale_colour_manual(values = clrs3[1:2]) +
-  labs(x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
-       title = "Figure 2: Evolution of labour productivity, TL2 regions") +
+  labs(
+    x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
+    title = "Figure 2: Evolution of labour productivity, TL2 regions"
+  ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format()) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,8,0)))
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 8, 0)))
 ```
 
 In `r ctry2`, labour productivity in high-productivity regions grew by `r paste0(hpgrew, "%")` between `r min(yrs)` and `r max(yrs)`, `r paste0(abs(hpdiff))` percentage points `r hpmore` compared to low-productivity regions.

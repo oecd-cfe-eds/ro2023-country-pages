@@ -79,14 +79,14 @@ read_html_table(ctry)
 
 ```{r jpn_fig1}
 iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   rename(iso3 = iso_3)
 
-top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>% 
+top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
   clean_names()
 
 gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   select(-x1) %>%
   left_join(iso3_g20, by = "iso3") %>%
   filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
@@ -101,7 +101,7 @@ gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
   )
 
 summary_theil_tl3 <- read_csv("data/theil_gdppc_country_00_20_wCHE-CHL.csv") %>%
-  clean_names() %>% 
+  clean_names() %>%
   filter(level == "gdppc_tl3") %>%
   select(-c(x1, level))
 
@@ -185,23 +185,19 @@ fig1 <- summary_wide %>%
   geom_line(aes(
     y = index_gdppc,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_top_mean,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_bottom_mean,
     colour = index_label
-    ), linetype = "dashed", linewidth = 1.2
-  ) +
+  ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_theil,
     colour = index_label
-    ), linewidth = 1.2
-  ) +
+  ), linewidth = 1.2) +
   scale_colour_manual(values = clrs2) +
   scale_x_continuous(expand = c(0, 0)) +
   labs(
@@ -212,7 +208,7 @@ fig1 <- summary_wide %>%
     colour = ""
   ) +
   theme_oecd(base_size = 11) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
 ```
 
 ```{r jpn_fig1_summary}
@@ -327,16 +323,16 @@ gdppc_metro <- gdp_pop_00_20 %>%
 
 gdppc_large <- gdp_pop_00_20 %>%
   group_by(metro_large, time, iso3) %>%
-  summarise(mean_gdppc = mean(gdp_pc, na.rm =  T), .groups = "drop") %>%
+  summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
   ungroup() %>%
   filter(time %in% c(2000, 2020)) %>%
   pivot_wider(id_cols = c(time, iso3), names_from = metro_large, values_from = mean_gdppc) %>%
-  clean_names() %>% 
+  clean_names() %>%
   mutate(
     gap = metropolitan_large / non_large,
     type = "Large/Non-large"
   ) %>%
-  select(time, iso3, gap, type) %>% 
+  select(time, iso3, gap, type) %>%
   drop_na(gap)
 
 gdppc_far <- gdp_pop_00_20 %>%
@@ -345,33 +341,33 @@ gdppc_far <- gdp_pop_00_20 %>%
   ungroup() %>%
   filter(time %in% c(2000, 2020)) %>%
   pivot_wider(id_cols = c(time, iso3), names_from = metro_far, values_from = mean_gdppc) %>%
-  clean_names() %>% 
+  clean_names() %>%
   mutate(
     gap = close / far_from_a_fua_250k,
     type = "Near/Far from a FUA >250K"
   ) %>%
-  select(time, iso3, gap, type) %>% 
+  select(time, iso3, gap, type) %>%
   drop_na(gap)
 
 gaps <- bind_rows(gdppc_metro, gdppc_far, gdppc_large)
 
 mean_gaps <- gaps %>%
   filter(time == 2020) %>%
-  group_by(time, type) %>% 
+  group_by(time, type) %>%
   summarise(gap = mean(gap, na.rm = TRUE)) %>%
   ungroup() %>%
   mutate(time = "OECD mean gap, 2020") %>%
   select(time, type, gap)
 
 country <- gaps %>%
-  filter(iso3 == ctry) %>% 
+  filter(iso3 == ctry) %>%
   select(-iso3)
 
 country <- bind_rows(
-    country %>% 
-      mutate(time = as.character(time)),
-    mean_gaps
-  ) %>% 
+  country %>%
+    mutate(time = as.character(time)),
+  mean_gaps
+) %>%
   mutate(time = factor(time))
 
 lev_type <- c("Large/Non-large", "Metropolitan/Non-metropolitan", "Near/Far from a FUA >250K")
@@ -388,14 +384,18 @@ fig2 <- country %>%
     # aes(x = time, y = gap, fill = type),
     aes(x = series, y = gap, fill = time),
     linewidth = 1.5,
-    position=position_dodge2(preserve = "single")
+    position = position_dodge2(preserve = "single")
   ) +
-  labs(x = "Category", y = "Gap",
-       title = "Figure 2: Changes in the contribution of region types to regional income\ninequality based on TL3 GDP per capita") +
+  labs(
+    x = "Category", y = "Gap",
+    title = "Figure 2: Changes in the contribution of region types to regional income\ninequality based on TL3 GDP per capita"
+  ) +
   theme_minimal() +
   scale_fill_manual(values = clrs, name = "") +
-  theme(legend.position = "top",
-        plot.title = element_text(size = 13, hjust = 0, margin=margin(0,0,10,0)))
+  theme(
+    legend.position = "top",
+    plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))
+  )
 ```
 
 ```{r jpn_fig2_2}
