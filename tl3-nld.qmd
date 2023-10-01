@@ -216,9 +216,10 @@ fig1 <- summary_wide %>%
 theil_chg <- summary_wide %>%
   filter(
     index == "index_theil",
-    iso3 == ctry,
-    time %in% range(time)
+    iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
+  filter(time %in% range(time)) %>%
   arrange(time) %>%
   mutate(diff = value - lag(value)) %>%
   filter(time == max(time)) %>%
@@ -231,6 +232,7 @@ theil_max <- summary_wide %>%
     index == "index_theil",
     iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
   filter(value == max(value)) %>%
   pull(time) %>%
   as.integer()
@@ -240,6 +242,7 @@ polarization_pct <- summary_wide %>%
     index == "index_top_mean",
     iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
   filter(time %in% range(time)) %>%
   arrange(time) %>%
   mutate(diff = lead(value) - value) %>%
