@@ -19,6 +19,7 @@ library(stringr)
 library(readr)
 library(tintin)
 library(scales)
+library(plotly)
 
 load_oecd_fonts()
 
@@ -266,7 +267,8 @@ polarization_2_txt <- ifelse(polarization_2_pct > 0, "higher", "lower")
 <!-- Polarisation, as measured by the Top 20%/Mean ratio was `r paste(abs(polarization_pct), polarization_txt)` in `r min(polarization_yrs)` compared to `r max(polarization_yrs)`. Bottom divergence, as measured by the Bottom 20%/Mean ratio was `r paste(abs(polarization_2_pct), polarization_2_txt)` in the same period. -->
 
 ```{r col_fig1_1}
-fig1
+ggplotly(fig1) %>%
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">
@@ -349,7 +351,8 @@ fig3_1 <- ggplot(dp11) +
 In `r ctry2`, labour productivity in high-productivity regions grew by `r paste0(hpgrew, "%")` between `r min(yrs)` and `r max(yrs)`, `r paste0(abs(hpdiff))` percentage points `r hpmore` compared to low-productivity regions.
 
 ```{r col_fig3_2}
-fig3_1
+ggplotly(fig3_1) %>%
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">

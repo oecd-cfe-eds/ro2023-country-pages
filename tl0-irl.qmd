@@ -18,6 +18,8 @@ library(janitor)
 library(stringr)
 library(readr)
 library(tintin)
+library(scales)
+library(plotly)
 
 load_oecd_fonts()
 
@@ -127,7 +129,8 @@ fig3_1 <- ggplot(dp11) +
 In `r ctry2`, labour productivity in high-productivity regions grew by `r hpgrew`% between `r min(yrs)` and `r max(yrs)`, `r abs(hpdiff)` percentage points `r hpmore` compared to low-productivity regions.
 
 ```{r fig3_2}
-fig3_1
+ggplotly(fig3_1) %>%
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">
@@ -304,7 +307,8 @@ fig4_2 <- dp21_2 %>%
 In `r ctry2`, the share of employment in the TG sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same the share of employment in TS `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.
 
 ```{r fig4_2}
-fig4_2
+ggplotly(fig4_2) %>%
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">
