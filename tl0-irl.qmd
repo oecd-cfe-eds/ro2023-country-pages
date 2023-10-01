@@ -131,13 +131,10 @@ fig3_1
 ```
 
 <div class="oecdnote">
-**Note**: Labour productivity for high productivity (low productivity) regions is equal to the sum of Gross Value Added across high productivity (low productivity) regions in a country/year divided by the sum of Employment across high productivity (low productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The starting year is the first available year for each country.<br>
+**Note**: Labour productivity for high productivity (low productivity) regions is equal to the sum of Gross Value Added across high productivity (low productivity) regions in a country/year divided by the sum of Employment across high productivity (low productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The starting year is the first available year for each country.
+
 **Source**: OECD Regional Database (2022).
 </div>
-
-<br>
-<br>
-
 
 ```{r fig4}
 # read ----

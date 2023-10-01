@@ -321,7 +321,6 @@ ggplotly(fig1) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
-
 ```{r can_fig2}
 # read ----
 

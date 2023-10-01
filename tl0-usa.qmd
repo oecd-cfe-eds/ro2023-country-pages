@@ -203,7 +203,7 @@ fig1 <- summary_wide %>%
   scale_colour_manual(values = clrs2) +
   scale_x_continuous(expand = c(0, 0)) +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL3 OECD regions",
     x = "",
     y = sprintf("Statistic (%s=1)", min_y),
     linetype = "",
@@ -329,7 +329,8 @@ ggplotly(fig1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Based on 1 586 TL3 regions in 27 countries with available data (no TL3 data (continuous time series for more than 1 region) for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland). Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita.<br>
+**Note**: Based on 1 586 TL3 regions in 27 countries with available data. For countries without TL3 data, continuous time series for more than 1 region were provided, which is the case for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland. Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita.
+
 **Source**: OECD Regional Database (2022).
 </div>
 

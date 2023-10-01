@@ -209,9 +209,10 @@ fig1 <- summary_wide %>%
 theil_chg <- summary_wide %>%
   filter(
     index == "index_theil",
-    iso3 == ctry,
-    time %in% range(time)
+    iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
+  filter(time %in% range(time)) %>%
   arrange(time) %>%
   mutate(diff = value - lag(value)) %>%
   filter(time == max(time)) %>%
@@ -224,6 +225,7 @@ theil_max <- summary_wide %>%
     index == "index_theil",
     iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
   filter(value == max(value)) %>%
   pull(time) %>%
   as.integer()
@@ -233,6 +235,7 @@ polarization_pct <- summary_wide %>%
     index == "index_top_mean",
     iso3 == ctry
   ) %>%
+  filter(!is.na(value)) %>%
   filter(time %in% range(time)) %>%
   arrange(time) %>%
   mutate(diff = lead(value) - value) %>%
@@ -299,8 +302,7 @@ ggplotly(fig1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Based on 1 586 TL3 regions in 27 countries with available data (no TL3 data (continuous time series for more than 1 region) for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland). Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita.
-Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.
+**Note**: Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.
 
 **Source**: OECD Regional Database (2022).
 </div>
@@ -504,7 +506,7 @@ next_paragraph <- if (any(ctry %in% c("LTU"))) {
 
 Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metropolitan regions was `r gdp_3_gap`. For reference, the same value for OECD was `r gdp_4_gap`. This gap `r paste(gdp_2_gap_txt, "by", gdp_2_gap_pct)` percentage points since 2000.
 
-In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, " ", gdp_3_gap_pct)` percentage points since 2000.
+In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, "by", gdp_3_gap_pct)` percentage points since 2000.
 
 ```{r fig2_3}
 # no interactivity
