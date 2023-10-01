@@ -694,7 +694,6 @@ fig3
 read_html_text(ctry)
 ```
 
-<br>
 <table style="margin-left:66.1pt;border-collapse:collapse" cellspacing="0" cellpadding="0" border="0">
 <tbody>
 <tr>

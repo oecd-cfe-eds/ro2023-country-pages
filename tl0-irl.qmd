@@ -308,12 +308,10 @@ fig4_2
 ```
 
 <div class="oecdnote">
-**Note**: The employment share for high productivity (low productivity) regions in a given sector is defined as total employment across high productivity (low productivity) regions in a sector/year divided by total employment across high productivity (low productivity) regions in a year. Regions are at the TL2 level for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The tradable goods sector includes Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). The starting year is the first available year for each country.<br>
+**Note**: The employment share for high productivity (low productivity) regions in a given sector is defined as total employment across high productivity (low productivity) regions in a sector/year divided by total employment across high productivity (low productivity) regions in a year. Regions are at the TL2 level for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The tradable goods sector includes Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). The starting year is the first available year for each country.
+
 **Source**: OECD Regional Database (2022).
 </div>
-
-<br>
-<br>
 
 ## Recent policy developments
 
