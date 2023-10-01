@@ -514,7 +514,7 @@ next_paragraph <- if (any(ctry %in% c("LTU"))) {
 
 Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metropolitan regions was `r gdp_3_gap`. For reference, the same value for OECD was `r gdp_4_gap`. This gap `r paste(gdp_2_gap_txt, "by", gdp_2_gap_pct)` percentage points since 2000.
 
-In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, " ", gdp_3_gap_pct)` percentage points since 2000.
+In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, "by", gdp_3_gap_pct)` percentage points since 2000.
 
 ```{r ltu_fig2_3}
 # no interactivity
