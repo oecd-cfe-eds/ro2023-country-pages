@@ -401,11 +401,18 @@ ctry4 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
 } else {
   ctry2
 }
-
-labour_paragraph <- glue("In { ctry3 }, labour productivity in high-productivity regions grew by { hpgrew }% between { min(yrs) } and { max(yrs)}, { abs(hpdiff) } percentage points { hpmore } compared to low-productivity regions.")
 ```
 
-`r labour_paragraph`
+```{r aut_fig3_text}
+fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
+  clean_names()
+
+fig3_text <- fig3_text %>%
+  filter(iso3 == ctry) %>%
+  pull(text_final)
+```
+
+`r fig3_text`
 
 ```{r dex_fig2_2}
 # no interactivity
@@ -689,7 +696,7 @@ p
 ```
 
 <div class="oecdnote">
-**Note**: The employment share for high productivity (low productivity) regions in a given sector is defined as total employment across high productivity (low productivity) regions in a sector/year divided by total employment across high productivity (low productivity) regions in a year. Regions are at the TL2 level for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as high productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and low productivity otherwise. The tradable goods sector includes Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). The starting year is the first available year for each country.
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Turkey and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).
 
 Source: OECD Regional Database (2022).
 </div>
