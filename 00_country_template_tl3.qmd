@@ -594,9 +594,9 @@ hpdiff <- hpgrew - lpgrew
 hpmore <- ifelse(hpdiff > 0, "more", "less")
 
 fig3_title <- if (any(ctry %in% c("USA", "TUR", "NOR", "CHE"))) {
-  "Figure 3: Evolution of labour productivity, TL2 regions"
+  "Figure 3: Evolution of labour productivity,\nTL2 regions"
 } else {
-  "Figure 3: Evolution of labour productivity, TL3 regions"
+  "Figure 3: Evolution of labour productivity,\nTL3 regions"
 }
 
 fig3_1 <- dp11 %>%

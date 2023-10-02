@@ -393,7 +393,7 @@ fig2 <- dp11 %>%
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
-    title = "Figure 2: Evolution of labour productivity, TL2 regions"
+    title = "Figure 2: Evolution of labour productivity,\nTL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())
@@ -432,7 +432,7 @@ ggplotly(fig2) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Labour productivity for higher productivity (lower productivity) regions is equal to the sum of Gross Value Added across higher productivity (lower productivity) regions in a country/year divided by the sum of Employment across higher productivity (lower productivity) regions in a country/year. Gross Value Added is expressed in USD 2015 PPP. Regions are at the TL2 level for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States. A region is defined as having higher productivity if its productivity was equal or above the country median for at least two years out of the first four years of each region’ observation period, and as having lower productivity otherwise. The starting year is the first available year of data for each country.
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Turkey and the United States where they are large (TL2) regions due to data availability.
 
 **Source**: OECD Regional Database (2022).
 </div>
