@@ -612,7 +612,7 @@ fig3_1 <- dp11 %>%
   # scale_colour_manual(values = clrs3[1:2]) +
   scale_colour_manual(values = c("#508551", "#177dc7")) +
   labs(
-    x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
+    x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
     title = fig3_title
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
