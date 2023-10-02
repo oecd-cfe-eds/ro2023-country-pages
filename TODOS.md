@@ -38,3 +38,5 @@ Figure 1 should start as from… (and index computation as from..):  2005 for CO
 UPDATE FINAL BOX: SEE FINAL BOX.ODT - DOUBT
 
 CHE: TITLE SHOULD SAY TL2, NOT TL3 - DOUBT
+
+ADD IFELSE FOR CHE TITLE (FIG 4)

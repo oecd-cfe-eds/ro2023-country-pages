@@ -67,7 +67,7 @@ read_html_text(ctry)
   <tr>
     <td>
       <p style="padding-left:10px;padding-right:10px;padding-top:10px;font-size:9.0pt;">
-        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). In Canada, TL2 corresponds to the provinces and territories.
+        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3).
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
         Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
