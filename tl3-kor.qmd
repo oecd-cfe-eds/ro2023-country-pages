@@ -616,7 +616,8 @@ fig3_1 <- dp11 %>%
   # theme_oecd(base_size = 10) +
   # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
   theme_minimal() +
-  scale_colour_manual(values = clrs3[1:2]) +
+  # scale_colour_manual(values = clrs3[1:2]) +
+  scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
     title = fig3_title

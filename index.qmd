@@ -178,42 +178,33 @@ lev_2 <- c(
 )
 
 fig1 <- summary_wide %>%
-  filter(iso3 == ctry, labels_index %in% lev_2) %>%
+  filter(iso3 == ctry, labels_index %in% lev_2, time >= 2005) %>%
+  drop_na() %>%
   pivot_wider(
     names_from = index,
     values_from = value
   ) %>%
-  mutate(
-    index_label = factor(labels_index, levels = lev_2)
-  ) %>%
   ggplot(aes(x = time)) +
   geom_line(aes(
     y = index_gdppc,
-    colour = index_label
-  ), linetype = "dashed", linewidth = 1.2) +
-  geom_line(aes(
-    y = index_top_mean,
-    colour = index_label
-  ), linetype = "dashed", linewidth = 1.2) +
-  geom_line(aes(
-    y = index_bottom_mean,
-    colour = index_label
+    colour = factor(labels_index, levels = lev_2)
   ), linetype = "dashed", linewidth = 1.2) +
   geom_line(aes(
     y = index_theil,
-    colour = index_label
+    colour = factor(labels_index, levels = lev_2)
   ), linewidth = 1.2) +
-  scale_colour_manual(values = clrs2) +
+  scale_colour_manual(values = clrs2[c(1, 2)]) +
   scale_x_continuous(expand = c(0, 0)) +
   labs(
     title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
     x = "",
-    y = sprintf("Statistic (%s=1)", min_y),
+    y = "Statistic (2000=1)",
     linetype = "",
     colour = ""
   ) +
-  theme_oecd(base_size = 10) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  # theme_oecd(base_size = 10) +
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 8, 0)))
+  theme_minimal()
 ```
 
 ```{r dex_fig1_summary}
@@ -388,15 +379,16 @@ fig2 <- dp11 %>%
   ) %>%
   ggplot() +
   geom_line(aes(x = time, y = value, color = series), linewidth = 1.2) +
-  theme_oecd(base_size = 10) +
+  # theme_oecd(base_size = 10) +
+  theme_minimal() +
   scale_colour_manual(values = clrs3[1:2]) +
   labs(
     x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
     title = "Figure 2: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
-  scale_y_continuous(labels = scales::number_format()) +
-  theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
+  scale_y_continuous(labels = scales::number_format())
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0)))
 
 ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
   paste("The", ctry2)
@@ -591,7 +583,7 @@ name1 <- dp21_min_TG$category2
 name2 <- dp21_max_TG$category2
 
 p1 <- plot_ly() %>% add_trace(
-  x = ~x, y = ~y3, color = ~x,
+  x = ~x, y = ~y, color = ~x,
   type = "bar",
   # text = y,
   # textposition = 'auto',
@@ -603,7 +595,7 @@ p1 <- plot_ly() %>% add_trace(
 )
 
 p1 <- p1 %>% add_markers(
-  x = ~x, y = ~y, color = ~x,
+  x = ~x, y = ~y3, color = ~x,
   name = ~name1,
   mode = "markers",
   marker = list(
@@ -621,14 +613,14 @@ p1 <- p1 %>% layout(
 )
 
 p2 <- plot_ly() %>% add_trace(
-  x = ~x, y = ~y4, color = ~x,
+  x = ~x, y = ~y2, color = ~x,
   type = "bar",
   marker = list(color = clrs4[1:2]),
   showlegend = FALSE
 )
 
 p2 <- p2 %>% add_markers(
-  x = ~x, y = ~y2, color = ~x,
+  x = ~x, y = ~y4, color = ~x,
   mode = "markers",
   marker = list(
     color = c("#6bc5f2", "#c8f075"),
@@ -637,12 +629,12 @@ p2 <- p2 %>% add_markers(
   ),
   showlegend = FALSE
 )
+
 p2 <- p2 %>% layout(
   title = "Tradable services",
   xaxis = list(title = "", visible = FALSE),
   yaxis = list(title = "Employment share (%)")
 )
-
 
 p <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 

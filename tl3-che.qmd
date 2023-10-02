@@ -616,7 +616,8 @@ fig3_1 <- dp11 %>%
   # theme_oecd(base_size = 10) +
   # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
   theme_minimal() +
-  scale_colour_manual(values = clrs3[1:2]) +
+  # scale_colour_manual(values = clrs3[1:2]) +
+  scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
     title = fig3_title
@@ -802,7 +803,7 @@ name1 <- dp21_min_TG$category2
 name2 <- dp21_max_TG$category2
 
 p1 <- plot_ly() %>% add_trace(
-  x = ~x, y = ~y3, color = ~x,
+  x = ~x, y = ~y, color = ~x,
   type = "bar",
   # text = y,
   # textposition = 'auto',
@@ -814,7 +815,7 @@ p1 <- plot_ly() %>% add_trace(
 )
 
 p1 <- p1 %>% add_markers(
-  x = ~x, y = ~y, color = ~x,
+  x = ~x, y = ~y3, color = ~x,
   name = ~name1,
   mode = "markers",
   marker = list(
@@ -832,14 +833,14 @@ p1 <- p1 %>% layout(
 )
 
 p2 <- plot_ly() %>% add_trace(
-  x = ~x, y = ~y4, color = ~x,
+  x = ~x, y = ~y2, color = ~x,
   type = "bar",
   marker = list(color = clrs4[1:2]),
   showlegend = FALSE
 )
 
 p2 <- p2 %>% add_markers(
-  x = ~x, y = ~y2, color = ~x,
+  x = ~x, y = ~y4, color = ~x,
   mode = "markers",
   marker = list(
     color = c("#6bc5f2", "#c8f075"),
@@ -857,9 +858,15 @@ p2 <- p2 %>% layout(
 
 fig4 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
+fig4_title <- if (any(ctry %in% c("CHE"))) {
+  "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions"
+} else {
+  "Figure 4: Share of workers in most productive (tradable) sectors,\nTL3 regions"
+}
+
 fig4 <- fig4 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
+    title = list(text = fig4_title, x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
