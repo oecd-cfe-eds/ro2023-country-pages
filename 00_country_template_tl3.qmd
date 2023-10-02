@@ -895,6 +895,18 @@ text_all <- dp2 %>%
 `r text_all`
 
 ```{r fig4_2}
+# put fig4 title in black
+fig4 <- fig4 %>%
+  layout(
+    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
+  )
+
+# remove legend background
+fig4 <- fig4 %>%
+  layout(
+    legend = list(bgcolor = "rgba(0,0,0,0)")
+  )
+  
 ggplotly(fig4) %>%
   config(displayModeBar = F)
 ```
