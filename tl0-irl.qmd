@@ -121,7 +121,7 @@ fig3_1 <- ggplot(dp11) +
   theme_minimal() +
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
-    x = "", y = "Productivity (2015 USD PPP)", colour = "Series",
+    x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
     title = "Figure 1: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
