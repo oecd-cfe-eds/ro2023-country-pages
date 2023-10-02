@@ -126,7 +126,16 @@ fig3_1 <- ggplot(dp11) +
   scale_y_continuous(labels = scales::number_format())
 ```
 
-In `r ctry2`, labour productivity in high-productivity regions grew by `r hpgrew`% between `r min(yrs)` and `r max(yrs)`, `r abs(hpdiff)` percentage points `r hpmore` compared to low-productivity regions.
+```{r aut_fig3_text}
+fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
+  clean_names()
+
+fig3_text <- fig3_text %>%
+  filter(iso3 == ctry) %>%
+  pull(text_final)
+```
+
+`r fig3_text`
 
 ```{r fig3_2}
 ggplotly(fig3_1) %>%

@@ -620,7 +620,16 @@ ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
 }
 ```
 
-In `r ctry3`, labour productivity in high-productivity regions grew by `r hpgrew`% between `r min(yrs)` and `r max(yrs)`, `r abs(hpdiff)` percentage points `r hpmore` compared to low-productivity regions.
+```{r aut_fig3_text}
+fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
+  clean_names()
+
+fig3_text <- fig3_text %>%
+  filter(iso3 == ctry) %>%
+  pull(text_final)
+```
+
+`r fig3_text`
 
 ```{r usa_fig3_2}
 # no interactivity

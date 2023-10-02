@@ -408,12 +408,18 @@ ctry4 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
 } else {
   ctry2
 }
-
-labour_paragraph <- glue("In { ctry3 }, labour productivity in higher productivity regions grew by { hpgrew }% between { min(yrs) } and { max(yrs)}, { abs(hpdiff) } percentage points { hpmore } compared to lower productivity regions.")
 ```
 
-`r labour_paragraph`
+```{r aut_fig3_text}
+fig3_text <- read_excel("data/fig3_text_FINAL.xlsx", sheet = "text") %>%
+  clean_names()
 
+fig3_text <- fig3_text %>%
+  filter(iso3 == ctry) %>%
+  pull(text_final)
+```
+
+`r fig3_text`
 ```{r chl_fig2_2}
 # no interactivity
 # fig2
@@ -681,7 +687,16 @@ fig3 <- fig3 %>%
   )
 ```
 
-In `r ctry3`, the share of employment in the tradable goods sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same time the share of employment in tradable services `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.
+```{r can_fig3_text}
+dp2 <- read_excel("data/countryprofile_fig4_alt.xlsx", sheet = ctry) %>%
+  clean_names()
+
+text_all <- dp2 %>%
+  filter(time == 2020) %>%
+  pull(text_all)
+```
+
+`r text_all`
 
 ```{r chl_fig3_2}
 fig3

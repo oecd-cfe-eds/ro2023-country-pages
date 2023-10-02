@@ -673,7 +673,16 @@ p <- p %>%
   )
 ```
 
-In `r ctry3`, the share of employment in the TG sector `r tghpmore` by `r abs(tghpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tglpmore` by `r abs(tglpgrew)` percentage points in low-productivity ones. At the same the share of employment in TS `r tshpmore` by `r abs(tshpgrew)` percentage points in high-productivity regions between `r min(yrs)` and `r max(yrs)`, and it `r tslpmore` by `r abs(tslpgrew)` percentage points in low-productivity ones.
+```{r can_fig3_text}
+dp2 <- read_excel("data/countryprofile_fig4_alt.xlsx", sheet = ctry) %>%
+  clean_names()
+
+text_all <- dp2 %>%
+  filter(time == 2020) %>%
+  pull(text_all)
+```
+
+`r text_all`
 
 ```{r dex_fig3_2}
 p

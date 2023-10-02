@@ -45,6 +45,18 @@ clrs5 <- tintin_colours$red_rackhams_treasure
 </tbody>
 </table>
 
+## Overview
+
+```{r isr_tbl}
+read_html_table(ctry)
+```
+
+## Recent policy developments
+
+```{r isr_txt}
+read_html_text(ctry)
+```
+
 <table border="1" style="width:75%;margin-left:auto;margin-right:auto;">
   <tr>
     <th style="background:#d4edff; padding:10px;font-size:9.0pt;" valign="center">
