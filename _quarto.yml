@@ -9,6 +9,13 @@ execute:
   
 book:
   title: "OECD Regional Outlook 2023 - Country Profiles"
+  sidebar:
+    pinned: true
+    tools:
+      - icon: save
+        menu:
+          - text: "Download full site"
+            url:  "https://github.com/oecd-cfe-eds/ro2023-country-pages/raw/main/docs.zip"
   chapters:
     - index.qmd
     - tl3-aut.qmd
