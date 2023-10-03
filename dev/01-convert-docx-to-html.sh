@@ -21,3 +21,8 @@ for file in revisited_drafts/*.docx; do
         libreoffice --headless --convert-to html --outdir revisited_drafts/ "$file"
     fi
 done
+
+# replace Turkey by Türkiye in all qmd files
+# for file in *.qmd; do
+#     sed -i 's/Turkey/Türkiye/g' "$file"
+# done
