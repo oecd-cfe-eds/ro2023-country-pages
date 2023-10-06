@@ -154,15 +154,15 @@ ggplotly(fig3_1) %>%
 
 ```{r fig4}
 # read ----
-dp2 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
-  select(time, pw_lp, pw_hp) %>% 
+# %%%% WE NEED THIS FILE AND NOT countryprofile_fig3_alt.xlsx WITH 2 CATEGORIES %%%%
+dp2 <- read_excel("data/countryprofile_option2_addon.xlsx", sheet = ctry) %>%
   clean_names()
 
 # tidy ----
 
-# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+colnames(dp2) <- str_replace(colnames(dp2), tolower(ctry), "country")
 
-colnames(dp2) <- c("time", "pw_lp_country", "pw_hp_country")
+# colnames(dp2) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp21 <- dp2 %>%
   select(time, matches("country")) %>%
