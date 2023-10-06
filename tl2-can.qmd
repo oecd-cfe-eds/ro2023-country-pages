@@ -440,15 +440,15 @@ ggplotly(fig2) %>%
 
 ```{r can_fig3}
 # read ----
-dp2 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
-  select(time, pw_lp, pw_hp) %>% 
+# %%%% WE NEED THIS FILE AND NOT countryprofile_fig3_alt.xlsx WITH 2 CATEGORIES %%%%
+dp2 <- read_excel("data/countryprofile_option2_addon.xlsx", sheet = ctry) %>%
   clean_names()
 
 # tidy ----
 
-# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+colnames(dp2) <- str_replace(colnames(dp2), tolower(ctry), "country")
 
-colnames(dp2) <- c("time", "pw_lp_country", "pw_hp_country")
+# colnames(dp2) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp21 <- dp2 %>%
   select(time, matches("country")) %>%
@@ -470,57 +470,57 @@ dp21 <- dp21 %>%
 yrs <- sort(unique(dp21$time))
 yrs <- seq(min(yrs), max(yrs), 1)
 
-tghpgrew <- dp21 %>%
-  filter(
-    name == paste(ctry, "TG HP"),
-    time %in% c(min(yrs), max(yrs))
-  ) %>%
-  summarise(grew = value_country - lag(value_country)) %>%
-  drop_na() %>%
-  pull() %>%
-  round(1)
+# tghpgrew <- dp21 %>%
+#   filter(
+#     name == paste(ctry, "TG HP"),
+#     time %in% c(min(yrs), max(yrs))
+#   ) %>%
+#   summarise(grew = value_country - lag(value_country)) %>%
+#   drop_na() %>%
+#   pull() %>%
+#   round(1)
 
-tglpgrew <- dp21 %>%
-  filter(
-    name == paste(ctry, "TG LP"),
-    time %in% c(min(yrs), max(yrs))
-  ) %>%
-  summarise(grew = value_country - lag(value_country)) %>%
-  drop_na() %>%
-  pull() %>%
-  round(1)
+# tglpgrew <- dp21 %>%
+#   filter(
+#     name == paste(ctry, "TG LP"),
+#     time %in% c(min(yrs), max(yrs))
+#   ) %>%
+#   summarise(grew = value_country - lag(value_country)) %>%
+#   drop_na() %>%
+#   pull() %>%
+#   round(1)
 
-tghpdiff <- tghpgrew - tglpgrew
-tghpmore <- ifelse(tghpdiff > 0, "grew", "declined")
+# tghpdiff <- tghpgrew - tglpgrew
+# tghpmore <- ifelse(tghpdiff > 0, "grew", "declined")
 
-tglpdiff <- tglpgrew - tglpgrew
-tglpmore <- ifelse(tglpdiff > 0, "grew", "declined")
+# tglpdiff <- tglpgrew - tglpgrew
+# tglpmore <- ifelse(tglpdiff > 0, "grew", "declined")
 
-tshpgrew <- dp21 %>%
-  filter(
-    name == paste(ctry, "TS HP"),
-    time %in% c(min(yrs), max(yrs))
-  ) %>%
-  summarise(grew = value_country - lag(value_country)) %>%
-  drop_na() %>%
-  pull() %>%
-  round(1)
+# tshpgrew <- dp21 %>%
+#   filter(
+#     name == paste(ctry, "TS HP"),
+#     time %in% c(min(yrs), max(yrs))
+#   ) %>%
+#   summarise(grew = value_country - lag(value_country)) %>%
+#   drop_na() %>%
+#   pull() %>%
+#   round(1)
 
-tslpgrew <- dp21 %>%
-  filter(
-    name == paste(ctry, "TS LP"),
-    time %in% c(min(yrs), max(yrs))
-  ) %>%
-  summarise(grew = value_country - lag(value_country)) %>%
-  drop_na() %>%
-  pull() %>%
-  round(1)
+# tslpgrew <- dp21 %>%
+#   filter(
+#     name == paste(ctry, "TS LP"),
+#     time %in% c(min(yrs), max(yrs))
+#   ) %>%
+#   summarise(grew = value_country - lag(value_country)) %>%
+#   drop_na() %>%
+#   pull() %>%
+#   round(1)
 
-tshpdiff <- tshpgrew - tslpgrew
-tshpmore <- ifelse(tshpdiff > 0, "grew", "declined")
+# tshpdiff <- tshpgrew - tslpgrew
+# tshpmore <- ifelse(tshpdiff > 0, "grew", "declined")
 
-tslpdiff <- tslpgrew - tslpgrew
-tslpmore <- ifelse(tslpdiff > 0, "grew", "declined")
+# tslpdiff <- tslpgrew - tslpgrew
+# tslpmore <- ifelse(tslpdiff > 0, "grew", "declined")
 
 dp21 <- dp21 %>%
   mutate(category = gsub(paste0("^OECD |^", ctry, " "), "", name))
@@ -543,8 +543,6 @@ dp21_2 <- dp21 %>%
     category2 = str_replace_all(category2, as.character(min(yrs)), "minyr"),
     category2 = str_replace_all(category2, as.character(max(yrs)), "maxyr")
   ) %>%
-  # remove all after productivy in category2
-  # mutate(category2 = str_replace_all(category2, "productivity.*", "productivity")) %>%
   pivot_wider(names_from = category2, values_from = value_country) %>%
   clean_names()
 
