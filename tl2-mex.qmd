@@ -181,7 +181,7 @@ lev_2 <- c(
 max_x <- max(summary_wide$time)
 min_x <- min(summary_wide$time)
 
-fig1 <- summary_wide %>%
+df_fig1 <- summary_wide %>%
   filter(iso3 == ctry, labels_index %in% lev_2, time >= 2003) %>%
   pivot_wider(
     names_from = index,
@@ -189,7 +189,9 @@ fig1 <- summary_wide %>%
   ) %>%
   mutate(
     index_label = factor(labels_index, levels = lev_2)
-  ) %>%
+  ) 
+
+fig1 <- df_fig1 %>%
   ggplot(aes(x = time)) +
   geom_line(aes(
     y = index_gdppc,
@@ -200,12 +202,9 @@ fig1 <- summary_wide %>%
     colour = index_label
   ), linewidth = 1.2) +
   scale_colour_manual(values = clrs2) +
-  scale_x_continuous(
-    expand = c(0, 0),
-    n.breaks = round((max_x - min_x) / 2, 0)
-  ) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5))  +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators, TL2 OECD regions",
     x = "",
     y = sprintf("Statistic (%s=1)", min_y),
     linetype = "",
@@ -323,21 +322,20 @@ ggplotly(fig1) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
+<br>
+<br>
+
 ```{r mex_fig2}
 # read ----
-
-finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
-  "data/countryprofile_option1_addon.xlsx"
-} else {
-  "data/countryprofile_option1.xlsx"
-}
-
-dp1 <- read_excel(finp, sheet = ctry) %>%
+dp1 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
+  select(time, pw_lp, pw_hp) %>% 
   clean_names()
 
 # tidy ----
 
-colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+
+colnames(dp1) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp11 <- dp1 %>%
   select(time, matches("country")) %>%
@@ -392,8 +390,8 @@ fig2 <- dp11 %>%
   theme_minimal() +
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
-    x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
-    title = "Figure 2: Evolution of labour productivity,\nTL2 regions"
+    x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
+    title = "Figure 2: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())
@@ -432,10 +430,12 @@ ggplotly(fig2) %>%
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability.
-
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. <br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ```{r mex_fig3}
 # read ----
@@ -535,8 +535,8 @@ dp21 <- dp21 %>%
     category1 = str_replace_all(category1, "TG", "Tradable goods"),
     category1 = str_replace_all(category1, "TS", "Tradable services"),
     category2 = paste(str_sub(category, 4, 5), time),
-    category2 = str_replace_all(category2, "LP", "Low productivity"),
-    category2 = str_replace_all(category2, "HP", "High productivity")
+    category2 = str_replace_all(category2, "LP", "Lower half"),
+    category2 = str_replace_all(category2, "HP", "Upper half")
   )
 
 dp21_2 <- dp21 %>%
@@ -651,7 +651,7 @@ fig3 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
@@ -673,7 +673,7 @@ fig3 <- fig3 %>%
         x = 0.75,
         y = 1,
         font = list(size = 14),
-        text = "Services",
+        text = "Tradable services",
         xref = "paper",
         yref = "paper",
         xanchor = "center",
@@ -699,7 +699,7 @@ text_all <- dp2 %>%
 # put fig3 title in black
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0, font = list(color = "black"))
   )
 
 # remove legend background
@@ -712,10 +712,12 @@ fig3
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median. The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).
-
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median. The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).<br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ## Recent policy developments
 
@@ -735,14 +737,14 @@ read_html_text(ctry)
         The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3).
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
-        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
       </p>
       <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
         <li>
           <b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
         </li>
         <li>
-          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
         </li>
       </ul>
       </p>

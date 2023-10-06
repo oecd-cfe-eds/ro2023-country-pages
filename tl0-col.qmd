@@ -165,13 +165,15 @@ lev_2 <- c(
   "Mean GDP per capita"
 )
 
-fig1 <- summary_wide %>%
+df_fig1 <- summary_wide %>%
   filter(iso3 == ctry, labels_index %in% lev_2, time >= 2005) %>%
   drop_na() %>%
   pivot_wider(
     names_from = index,
     values_from = value
-  ) %>%
+  ) 
+
+fig1 <- df_fig1 %>%
   ggplot(aes(x = time)) +
   geom_line(aes(
     y = index_gdppc,
@@ -182,9 +184,9 @@ fig1 <- summary_wide %>%
     colour = factor(labels_index, levels = lev_2)
   ), linewidth = 1.2) +
   scale_colour_manual(values = clrs2[c(1, 2)]) +
-  scale_x_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5)) +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators, TL2 OECD regions",
     x = "",
     y = "Statistic (2000=1)",
     linetype = "",
@@ -269,21 +271,20 @@ ggplotly(fig1) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
+<br>
+<br>
+
 ```{r col_fig3}
 # read ----
-
-finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
-  "data/countryprofile_option1_addon.xlsx"
-} else {
-  "data/countryprofile_option1.xlsx"
-}
-
-dp1 <- read_excel(finp, sheet = ctry) %>%
+dp1 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
+  select(time, pw_lp, pw_hp) %>% 
   clean_names()
 
 # tidy ----
 
-colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+
+colnames(dp1) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp11 <- dp1 %>%
   select(time, matches("country")) %>%
@@ -333,8 +334,8 @@ fig3_1 <- ggplot(dp11) +
   theme_minimal() +
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
-    x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
-    title = "Figure 2: Evolution of labour productivity,\nTL2 regions"
+    x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
+    title = "Figure 2: Evolution of labour productivity, TL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())
@@ -357,10 +358,12 @@ ggplotly(fig3_1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability.
-
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability.<br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ## Recent policy developments
 
@@ -380,14 +383,14 @@ read_html_text(ctry)
         The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3).
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
-        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
       </p>
       <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
         <li>
           <b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
         </li>
         <li>
-          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
         </li>
       </ul>
       </p>
