@@ -7,7 +7,7 @@
 
 # UPDATE TL3 COUNTRIES
 
-for file in *aut.qmd *bel.qmd *che.qmd *cze.qmd *deu.qmd *dnk.qmd *esp.qmd *est.qmd *fin.qmd *fra.qmd *gbr.qmd *grc.qmd *hun.qmd *ita.qmd *jpn.qmd *kor.qmd *ltu.qmd *lva.qmd *nld.qmd *nor.qmd *nzl.qmd *pol.qmd *prt.qmd *svn.qmd *.svk.qmd *swe.qmd *tur.qmd
+for file in *aut.qmd *bel.qmd *che.qmd *cze.qmd *deu.qmd *dnk.qmd *esp.qmd *est.qmd *fin.qmd *fra.qmd *gbr.qmd *grc.qmd *hun.qmd *ita.qmd *jpn.qmd *kor.qmd *ltu.qmd *lva.qmd *nld.qmd *nor.qmd *nzl.qmd *pol.qmd *prt.qmd *svn.qmd *svk.qmd *swe.qmd *tur.qmd
 do
     echo $file
     sed -i '8,$d' $file
