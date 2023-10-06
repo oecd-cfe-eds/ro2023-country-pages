@@ -184,7 +184,7 @@ lev_3 <- c(
   "Mean GDP per capita"
 )
 
-fig1 <- summary_wide %>%
+df_fig1 <- summary_wide %>%
   filter(iso3 == ctry, labels_index %in% lev_3, time >= min_y) %>%
   pivot_wider(
     names_from = index,
@@ -192,7 +192,9 @@ fig1 <- summary_wide %>%
   ) %>%
   mutate(
     index_label = factor(labels_index, levels = lev_3)
-  ) %>%
+  ) 
+
+fig1 <- df_fig1 %>%
   ggplot(aes(x = time)) +
   geom_line(aes(
     y = index_gdppc,
@@ -210,10 +212,11 @@ fig1 <- summary_wide %>%
     y = index_theil,
     colour = index_label
   ), linewidth = 1.2) +
+  geom_hline(yintercept = 1, color = "lightgrey", linetype = "dashed") +
   scale_colour_manual(values = clrs2[c(1, 3, 4, 2)]) + # evil hack to match TL2 colours
-  scale_x_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5)) +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL3 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators, TL3 OECD regions",
     x = "",
     y = "Statistic (2000=1)",
     linetype = "",
@@ -304,9 +307,14 @@ ctry4 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
   ctry2
 }
 
-paragraph_theil <- glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
+paragraph_theil <- if (any(ctry %in% c("GBR"))){
+  glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
 
-The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio was { paste(abs(polarization_2_pct), polarization_2_txt) } in the same period, indicating bottom { polarization_2_txt2 }.")
+The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio did not change in the same period.")
+} else{
+glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
+
+The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio was { paste(abs(polarization_2_pct), polarization_2_txt) } in the same period, indicating bottom { polarization_2_txt2 }.")}
 ```
 
 `r paragraph_theil`
@@ -321,10 +329,12 @@ ggplotly(fig1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.
-
+**Note**: Top/bottom calculated as population equivalent (top/bottom regions with at least 20% of the population). The interpretation of top/bottom 20% GDP per capita is that 20% of the population in the country holds 20% of the value. Top 20%/Mean calculated as mean GDP per capita in top 20% regions over mean TL3 GDP per capita in a given year. Bottom 20%/Mean calculated as mean TL3 GDP per capita in bottom 20% regions over mean TL3 GDP per capita in a given year. To improve data consistency, input series are aggregated when TL3 regions are part of the same FUA. To improve time series, TL3 missing values have been estimated based on the evolution at higher geographic level.<br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ```{r esp_fig2}
 # Load file with top/bottom 20% data (provided by Eric using weights)
@@ -422,8 +432,8 @@ fig2 <- country %>%
     position = position_dodge2(preserve = "single")
   ) +
   labs(
-    x = "Category", y = "Gap",
-    title = "Figure 2: GDP per capita gap by type of region\ncompared to the OECD average"
+    x = "", y = "Gap",
+    title = "Figure 2: GDP per capita gap by type of region compared to the OECD average"
   ) +
   # theme_oecd(base_size = 10) +
   # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
@@ -514,10 +524,16 @@ gdp_3_gap_pct <- abs(round(gdp_5_gap - gdp_5_gap_lag, 3))
 ```
 
 ```{r esp_next paragraph}
-next_paragraph <- if (any(ctry %in% c("LTU"))) {
-  glue("There is no data for the gap in GDP percapita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
+next_paragraph <- if (any(ctry %in% c("LTU", "EST", "FIN", "LVA", "NZL", "NOR", "SVK", "SVN", "CHE"))) {
+  glue("There is no data for the gap in GDP per capita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
 } else {
   glue("In 2020, the gap in GDP per capita between large metropolitan and non-large metropolitan regions was { gdp_gap }. For reference, the same value for OECD was { gdp_2_gap }. This gap { gdp_gap_txt }  by { gdp_gap_pct } percentage points between 2000 and 2020.")
+}
+
+last_paragraph <- if (any(ctry %in% c("KOR", "NLD"))) {
+  glue("There is no data for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants for 2000 and 2020.")
+} else {
+  glue("In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was { gdp_5_gap } in 2020 and { gdp_3_gap_txt } by { gdp_3_gap_pct}  percentage points since 2000.")
 }
 ```
 
@@ -525,7 +541,7 @@ next_paragraph <- if (any(ctry %in% c("LTU"))) {
 
 Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metropolitan regions was `r gdp_3_gap`. For reference, the same value for OECD was `r gdp_4_gap`. This gap `r paste(gdp_2_gap_txt, "by", gdp_2_gap_pct)` percentage points since 2000.
 
-In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was `r gdp_5_gap` in 2020 and `r paste(gdp_3_gap_txt, "by", gdp_3_gap_pct)` percentage points since 2000.
+`r last_paragraph`
 
 ```{r esp_fig2_3}
 # no interactivity
@@ -537,26 +553,24 @@ ggplotly(fig2) %>%
 ```
 
 <div class="oecdnote">
-**Note**: Far from a FUA>250K includes regions near/with a small FUA and remote regions. OECD mean gap based on 1 586 TL3 regions in 27 countries with available data (no TL3 data for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland).
-
+**Note**: Far from a FUA>250K includes regions near/with a small FUA and remote regions. OECD mean gap based on 1 586 TL3 regions in 27 countries with available data (no TL3 data for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland).<br>
 **Source**: OECD Regional Database (2022).
 </div>
 
+<br>
+<br>
+
 ```{r esp_fig3}
 # read ----
-
-finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
-  "data/countryprofile_option1_addon.xlsx"
-} else {
-  "data/countryprofile_option1.xlsx"
-}
-
-dp1 <- read_excel(finp, sheet = ctry) %>%
+dp1 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
+  select(time, pw_lp, pw_hp) %>% 
   clean_names()
 
 # tidy ----
 
-colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+
+colnames(dp1) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp11 <- dp1 %>%
   select(time, matches("country")) %>%
@@ -601,9 +615,9 @@ hpdiff <- hpgrew - lpgrew
 hpmore <- ifelse(hpdiff > 0, "more", "less")
 
 fig3_title <- if (any(ctry %in% c("USA", "TUR", "NOR", "CHE"))) {
-  "Figure 3: Evolution of labour productivity,\nTL2 regions"
+  "Figure 3: Evolution of labour productivity, TL2 regions"
 } else {
-  "Figure 3: Evolution of labour productivity,\nTL3 regions"
+  "Figure 3: Evolution of labour productivity, TL3 regions"
 }
 
 fig3_1 <- dp11 %>%
@@ -619,7 +633,7 @@ fig3_1 <- dp11 %>%
   # scale_colour_manual(values = clrs3[1:2]) +
   scale_colour_manual(values = c("#508551", "#177dc7")) +
   labs(
-    x = "", y = "Labour productivity (2015 USD PPP)", colour = "Series",
+    x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
     title = fig3_title
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
@@ -647,10 +661,12 @@ ggplotly(fig3_1) %>%
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability.
-
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. <br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ```{r esp_fig4}
 # read ----
@@ -856,7 +872,7 @@ fig4 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig4 <- fig4 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
+    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors, TL3 regions", x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
@@ -878,7 +894,7 @@ fig4 <- fig4 %>%
         x = 0.75,
         y = 1,
         font = list(size = 14),
-        text = "Services",
+        text = "Tradable services",
         xref = "paper",
         yref = "paper",
         xanchor = "center",
@@ -901,7 +917,7 @@ text_all <- dp2 %>%
 # put fig4 title in black
 fig4 <- fig4 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0, font = list(color = "black"))
   )
 
 # remove legend background
@@ -915,10 +931,12 @@ ggplotly(fig4) %>%
 ```
 
 <div class="oecdnote">
-**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N). 
-
+**Note**: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median.  The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).  <br>
 **Source**: OECD Regional Database (2022).
 </div>
+
+<br>
+<br>
 
 ## Recent policy developments
 
@@ -938,14 +956,14 @@ read_html_text(ctry)
         The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3).
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
-        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+        Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
       </p>
       <ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
         <li>
           <b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
         </li>
         <li>
-          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+          <b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e. between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
         </li>
       </ul>
       </p>
