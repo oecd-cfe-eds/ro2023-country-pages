@@ -329,19 +329,25 @@ ggplotly(fig1) %>%
 
 ```{r chl_fig2}
 # read ----
+# 
+# finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
+#   "data/countryprofile_option1_addon.xlsx"
+# } else {
+#   "data/countryprofile_option1.xlsx"
+# }
+# 
+# dp1 <- read_excel(finp, sheet = ctry) %>%
+#   clean_names()
+# 
+# # tidy ----
+# 
+# colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
 
-finp <- if (any(ctry %in% c("AUS", "CAN", "COL", "CHE", "CHL", "IRL", "MEX"))) {
-  "data/countryprofile_option1_addon.xlsx"
-} else {
-  "data/countryprofile_option1.xlsx"
-}
-
-dp1 <- read_excel(finp, sheet = ctry) %>%
+dp1 <- read_excel("data/countryprofile_fig3_alt.xlsx", sheet = ctry) %>%
+  select(time, pw_lp, pw_hp) %>% 
   clean_names()
 
-# tidy ----
-
-colnames(dp1) <- str_replace(colnames(dp1), tolower(ctry), "country")
+colnames(dp1) <- c("time", "pw_lp_country", "pw_hp_country")
 
 dp11 <- dp1 %>%
   select(time, matches("country")) %>%
@@ -442,30 +448,26 @@ ggplotly(fig2) %>%
 <br>
 <br>
 
-```{r chl_fig3}
+```{r fig4}
 # read ----
-# %%%% WE NEED THIS FILE AND NOT countryprofile_fig3_alt.xlsx WITH 2 CATEGORIES %%%%
-dp2 <- read_excel("data/countryprofile_option2_addon.xlsx", sheet = ctry) %>%
+
+dp2 <- read_excel("data/countryprofile_fig4_alt.xlsx", sheet = ctry) %>%
   clean_names()
 
 # tidy ----
 
-colnames(dp2) <- str_replace(colnames(dp2), tolower(ctry), "country")
-
-# colnames(dp2) <- c("time", "pw_lp_country", "pw_hp_country")
-
 dp21 <- dp2 %>%
-  select(time, matches("country")) %>%
+  select(time, starts_with("share_")) %>%
   pivot_longer(-time) %>%
   rename(value_country = value)
 
 dp21 <- dp21 %>%
   mutate(
     name = case_when(
-      name == "share_tgoods_lp_country" ~ paste(ctry, "TG LP"),
-      name == "share_tgoods_hp_country" ~ paste(ctry, "TG HP"),
-      name == "share_tserv_lp_country" ~ paste(ctry, "TS LP"),
-      name == "share_tserv_hp_country" ~ paste(ctry, "TS HP")
+      name == "share_tgoods_lp" ~ paste(ctry, "TG LP"),
+      name == "share_tgoods_hp" ~ paste(ctry, "TG HP"),
+      name == "share_tserv_lp" ~ paste(ctry, "TS LP"),
+      name == "share_tserv_hp" ~ paste(ctry, "TS HP")
     )
   )
 
@@ -547,8 +549,6 @@ dp21_2 <- dp21 %>%
     category2 = str_replace_all(category2, as.character(min(yrs)), "minyr"),
     category2 = str_replace_all(category2, as.character(max(yrs)), "maxyr")
   ) %>%
-  # remove all after productivy in category2
-  # mutate(category2 = str_replace_all(category2, "productivity.*", "productivity")) %>%
   pivot_wider(names_from = category2, values_from = value_country) %>%
   clean_names()
 
