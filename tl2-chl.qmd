@@ -205,7 +205,7 @@ fig1 <- summary_wide %>%
     n.breaks = round((max_x - min_x) / 2, 0)
   ) +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators, TL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
     x = "",
     y = sprintf("Statistic (%s=1)", min_y),
     linetype = "",
@@ -652,7 +652,7 @@ fig3 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0),
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
@@ -700,7 +700,7 @@ text_all <- dp2 %>%
 # put fig3 title in black
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
   )
 
 # remove legend background

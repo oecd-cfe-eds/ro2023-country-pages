@@ -60,74 +60,74 @@ read_html_table(ctry)
 
 ```{r jpn_fig1}
 iso3_g20 <- read_csv("data/ISO_3_G20.csv") %>%
-    clean_names() %>%
-    rename(iso3 = iso_3)
+  clean_names() %>%
+  rename(iso3 = iso_3)
 
 top_bottom_c <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
-    filter(TIME < 2021) %>%
-    clean_names()
+  filter(TIME < 2021) %>%
+  clean_names()
 
 gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
-    filter(TIME < 2021) %>%
-    clean_names() %>%
-    select(-x1) %>%
-    left_join(iso3_g20, by = "iso3") %>%
-    filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
-    mutate(
-        metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
-        metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
-    ) %>%
-    bind_rows(
-        read_csv("data/gdp_pop_tl2_00_20_imputed_l.csv") %>%
-            filter(TIME < 2021) %>%
-            clean_names() %>%
-            select(time, reg_id, iso3, gdp, pop, gdp_pc, regional_name_eng = reg_name)
-    )
+  filter(TIME < 2021) %>%
+  clean_names() %>%
+  select(-x1) %>%
+  left_join(iso3_g20, by = "iso3") %>%
+  filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
+  mutate(
+    metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
+    metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
+  ) %>%
+  bind_rows(
+    read_csv("data/gdp_pop_tl2_00_20_imputed_l.csv") %>%
+      filter(TIME < 2021) %>%
+      clean_names() %>%
+      select(time, reg_id, iso3, gdp, pop, gdp_pc, regional_name_eng = reg_name)
+  )
 
 summary_theil_tl3 <- read_csv("data/theil_gdppc_country_00_20_wCHE-CHL.csv") %>%
-    filter(TIME < 2021) %>%
-    clean_names() %>%
-    filter(level == "gdppc_tl3") %>%
-    select(-c(x1, level))
+  filter(TIME < 2021) %>%
+  clean_names() %>%
+  filter(level == "gdppc_tl3") %>%
+  select(-c(x1, level))
 
 summary_stats <- gdp_pop_00_20 %>%
-    group_by(iso3, time) %>%
-    summarise(mean_gdp_pc = mean(gdp_pc, na.rm = TRUE)) %>%
-    ungroup() %>%
-    left_join(top_bottom_c, by = c("iso3", "time")) %>%
-    mutate(
-        top_bottom = top_20_gdppc / bottom_20_gdppc,
-        top_mean = top_20_gdppc / mean_gdp_pc,
-        bottom_mean = bottom_20_gdppc / mean_gdp_pc
-    )
+  group_by(iso3, time) %>%
+  summarise(mean_gdp_pc = mean(gdp_pc, na.rm = TRUE)) %>%
+  ungroup() %>%
+  left_join(top_bottom_c, by = c("iso3", "time")) %>%
+  mutate(
+    top_bottom = top_20_gdppc / bottom_20_gdppc,
+    top_mean = top_20_gdppc / mean_gdp_pc,
+    bottom_mean = bottom_20_gdppc / mean_gdp_pc
+  )
 
 summary_stats <- summary_stats %>%
-    left_join(summary_theil_tl3, by = c("iso3", "time"))
+  left_join(summary_theil_tl3, by = c("iso3", "time"))
 
 min_y <- summary_theil_tl3 %>%
-    filter(iso3 == ctry) %>%
-    pull(time) %>%
-    min()
+  filter(iso3 == ctry) %>%
+  pull(time) %>%
+  min()
 
 if (ctry == "CHE") {
-    min_y <- 2008
+  min_y <- 2008
 }
 
 if (ctry == "HUN") {
-    min_y <- 2001
+  min_y <- 2001
 }
 
 if (ctry == "TUR") {
-    min_y <- 2004
+  min_y <- 2004
 }
 
 index_200x <- summary_stats %>%
-    filter(time == min_y) %>%
-    pivot_wider(
-        id_cols = "iso3",
-        names_from = "time",
-        values_from = -c(time, iso3)
-    )
+  filter(time == min_y) %>%
+  pivot_wider(
+    id_cols = "iso3",
+    names_from = "time",
+    values_from = -c(time, iso3)
+  )
 
 # index_2000 <- summary_stats %>%
 #   filter(time == 2000) %>%
@@ -140,155 +140,155 @@ index_200x <- summary_stats %>%
 colnames(index_200x) <- gsub("_200[0-9]", "_200x", colnames(index_200x))
 
 summary_stats_index <- summary_stats %>%
-    left_join(index_200x, by = "iso3") %>%
-    mutate(
-        index_gdppc = mean_gdp_pc / mean_gdp_pc_200x,
-        index_bottom = bottom_mean / bottom_mean_200x,
-        index_top = top_mean / top_mean_200x,
-        index_theil = theil / theil_200x,
-        index_top_mean = top_mean / top_mean_200x,
-        index_bottom_mean = bottom_mean / bottom_mean_200x,
-        index_top_bottom = top_bottom / top_bottom_200x
-    ) %>%
-    select(
-        iso3,
-        time,
-        index_gdppc,
-        index_bottom,
-        index_top_mean,
-        index_top_bottom,
-        index_bottom_mean,
-        index_top,
-        index_theil
-    )
+  left_join(index_200x, by = "iso3") %>%
+  mutate(
+    index_gdppc = mean_gdp_pc / mean_gdp_pc_200x,
+    index_bottom = bottom_mean / bottom_mean_200x,
+    index_top = top_mean / top_mean_200x,
+    index_theil = theil / theil_200x,
+    index_top_mean = top_mean / top_mean_200x,
+    index_bottom_mean = bottom_mean / bottom_mean_200x,
+    index_top_bottom = top_bottom / top_bottom_200x
+  ) %>%
+  select(
+    iso3,
+    time,
+    index_gdppc,
+    index_bottom,
+    index_top_mean,
+    index_top_bottom,
+    index_bottom_mean,
+    index_top,
+    index_theil
+  )
 
 summary_wide <- summary_stats_index %>%
-    pivot_longer(cols = -c(time, iso3), names_to = "index") %>%
-    mutate(
-        labels_index = case_when(
-            index == "index_bottom" ~ "Bottom 20%",
-            index == "index_top" ~ "Top 20%",
-            index == "index_bottom_mean" ~ "Bottom 20%/Mean",
-            index == "index_top_mean" ~ "Top 20%/Mean",
-            index == "index_theil" ~ "Theil index",
-            index == "index_gdppc" ~ "Mean GDP per capita",
-            index == "index_top_bottom" ~ "Top 20%/Bottom 20%"
-        )
-    ) %>%
-    left_join(iso3_g20, by = "iso3")
+  pivot_longer(cols = -c(time, iso3), names_to = "index") %>%
+  mutate(
+    labels_index = case_when(
+      index == "index_bottom" ~ "Bottom 20%",
+      index == "index_top" ~ "Top 20%",
+      index == "index_bottom_mean" ~ "Bottom 20%/Mean",
+      index == "index_top_mean" ~ "Top 20%/Mean",
+      index == "index_theil" ~ "Theil index",
+      index == "index_gdppc" ~ "Mean GDP per capita",
+      index == "index_top_bottom" ~ "Top 20%/Bottom 20%"
+    )
+  ) %>%
+  left_join(iso3_g20, by = "iso3")
 
 lev_3 <- c(
-    "Theil index",
-    "Top 20%/Mean",
-    "Bottom 20%/Mean",
-    "Mean GDP per capita"
+  "Theil index",
+  "Top 20%/Mean",
+  "Bottom 20%/Mean",
+  "Mean GDP per capita"
 )
 
 df_fig1 <- summary_wide %>%
-    filter(iso3 == ctry, labels_index %in% lev_3, time >= min_y) %>%
-    pivot_wider(
-        names_from = index,
-        values_from = value
-    ) %>%
-    mutate(
-        index_label = factor(labels_index, levels = lev_3)
-    )
+  filter(iso3 == ctry, labels_index %in% lev_3, time >= min_y) %>%
+  pivot_wider(
+    names_from = index,
+    values_from = value
+  ) %>%
+  mutate(
+    index_label = factor(labels_index, levels = lev_3)
+  ) 
 
 fig1 <- df_fig1 %>%
-    ggplot(aes(x = time)) +
-    geom_line(aes(
-        y = index_gdppc,
-        colour = index_label
-    ), linetype = "dashed", linewidth = 1.2) +
-    geom_line(aes(
-        y = index_top_mean,
-        colour = index_label
-    ), linetype = "dashed", linewidth = 1.2) +
-    geom_line(aes(
-        y = index_bottom_mean,
-        colour = index_label
-    ), linetype = "dashed", linewidth = 1.2) +
-    geom_line(aes(
-        y = index_theil,
-        colour = index_label
-    ), linewidth = 1.2) +
-    geom_hline(yintercept = 1, color = "lightgrey", linetype = "dashed") +
-    scale_colour_manual(values = clrs2[c(1, 3, 4, 2)]) + # evil hack to match TL2 colours
-    scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5)) +
-    labs(
-        title = "Figure 1: Trends in GDP per capita inequality indicators, TL3 OECD regions",
-        x = "",
-        y = "Statistic (2000=1)",
-        linetype = "",
-        colour = ""
-    ) +
-    # theme_oecd(base_size = 10) +
-    # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
-    theme_minimal()
+  ggplot(aes(x = time)) +
+  geom_line(aes(
+    y = index_gdppc,
+    colour = index_label
+  ), linetype = "dashed", linewidth = 1.2) +
+  geom_line(aes(
+    y = index_top_mean,
+    colour = index_label
+  ), linetype = "dashed", linewidth = 1.2) +
+  geom_line(aes(
+    y = index_bottom_mean,
+    colour = index_label
+  ), linetype = "dashed", linewidth = 1.2) +
+  geom_line(aes(
+    y = index_theil,
+    colour = index_label
+  ), linewidth = 1.2) +
+  geom_hline(yintercept = 1, color = "lightgrey", linetype = "dashed") +
+  scale_colour_manual(values = clrs2[c(1, 3, 4, 2)]) + # evil hack to match TL2 colours
+  scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5)) +
+  labs(
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL3 OECD regions",
+    x = "",
+    y = "Statistic (2000=1)",
+    linetype = "",
+    colour = ""
+  ) +
+  # theme_oecd(base_size = 10) +
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
+  theme_minimal()
 ```
 
 ```{r jpn_fig1_summary}
 theil_chg <- summary_wide %>%
-    filter(
-        index == "index_theil",
-        iso3 == ctry
-    ) %>%
-    filter(!is.na(value)) %>%
-    filter(time %in% range(time)) %>%
-    arrange(time) %>%
-    mutate(diff = value - lag(value)) %>%
-    filter(time == max(time)) %>%
-    pull(diff)
+  filter(
+    index == "index_theil",
+    iso3 == ctry
+  ) %>%
+  filter(!is.na(value)) %>%
+  filter(time %in% range(time)) %>%
+  arrange(time) %>%
+  mutate(diff = value - lag(value)) %>%
+  filter(time == max(time)) %>%
+  pull(diff)
 
 theil_chg_txt <- ifelse(theil_chg > 0, "an increase", "a decline")
 
 theil_max <- summary_wide %>%
-    filter(
-        index == "index_theil",
-        iso3 == ctry
-    ) %>%
-    filter(!is.na(value)) %>%
-    filter(value == max(value)) %>%
-    pull(time) %>%
-    as.integer()
+  filter(
+    index == "index_theil",
+    iso3 == ctry
+  ) %>%
+  filter(!is.na(value)) %>%
+  filter(value == max(value)) %>%
+  pull(time) %>%
+  as.integer()
 
 polarization_pct <- summary_wide %>%
-    filter(
-        index == "index_top_mean",
-        iso3 == ctry
-    ) %>%
-    filter(!is.na(value)) %>%
-    filter(time %in% range(time)) %>%
-    arrange(time) %>%
-    mutate(diff = lead(value) - value) %>%
-    filter(time == min(time)) %>%
-    pull(diff) %>%
-    round(3)
+  filter(
+    index == "index_top_mean",
+    iso3 == ctry
+  ) %>%
+  filter(!is.na(value)) %>%
+  filter(time %in% range(time)) %>%
+  arrange(time) %>%
+  mutate(diff = lead(value) - value) %>%
+  filter(time == min(time)) %>%
+  pull(diff) %>%
+  round(3)
 
 polarization_txt <- ifelse(polarization_pct > 0, "higher", "lower")
 
 polarization_txt2 <- ifelse(polarization_txt == "higher", "increased", "decreased")
 
 polarization_yrs <- summary_wide %>%
-    filter(
-        index == "index_top_mean",
-        iso3 == ctry
-    ) %>%
-    filter(time %in% range(time)) %>%
-    pull(time) %>%
-    as.integer()
+  filter(
+    index == "index_top_mean",
+    iso3 == ctry
+  ) %>%
+  filter(time %in% range(time)) %>%
+  pull(time) %>%
+  as.integer()
 
 polarization_2_pct <- summary_wide %>%
-    filter(
-        index == "index_bottom_mean",
-        iso3 == ctry
-    ) %>%
-    filter(time %in% range(time)) %>%
-    arrange(time) %>%
-    mutate(diff = lead(value) - value) %>%
-    filter(time == min(time)) %>%
-    pull(diff) %>%
-    round(3)
+  filter(
+    index == "index_bottom_mean",
+    iso3 == ctry
+  ) %>%
+  filter(time %in% range(time)) %>%
+  arrange(time) %>%
+  mutate(diff = lead(value) - value) %>%
+  filter(time == min(time)) %>%
+  pull(diff) %>%
+  round(3)
 
 polarization_2_txt <- ifelse(polarization_2_pct > 0, "higher", "lower")
 polarization_2_txt2 <- ifelse(polarization_2_txt == "higher", "convergence", "divergence")
@@ -296,26 +296,25 @@ polarization_2_txt2 <- ifelse(polarization_2_txt == "higher", "convergence", "di
 # needs the: USA, UK, Czech Rep, Slovak Rep, Netherlands
 
 ctry3 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
-    paste("The", ctry2)
+  paste("The", ctry2)
 } else {
-    ctry2
+  ctry2
 }
 
 ctry4 <- if (any(ctry %in% c("USA", "GBR", "CZE", "SVK", "NLD"))) {
-    paste("the", ctry2)
+  paste("the", ctry2)
 } else {
-    ctry2
+  ctry2
 }
 
-paragraph_theil <- if (any(ctry %in% c("GBR"))) {
-    glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
+paragraph_theil <- if (any(ctry %in% c("GBR"))){
+  glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
 
 The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio did not change in the same period.")
-} else {
-    glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
+} else{
+glue("{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.
 
-The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio was { paste(abs(polarization_2_pct), polarization_2_txt) } in the same period, indicating bottom { polarization_2_txt2 }.")
-}
+The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio was { paste(abs(polarization_2_pct), polarization_2_txt) } in the same period, indicating bottom { polarization_2_txt2 }.")}
 ```
 
 `r paragraph_theil`
@@ -326,7 +325,7 @@ The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in
 
 # interactivity
 ggplotly(fig1) %>%
-    config(displayModeBar = F)
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">
@@ -340,184 +339,184 @@ ggplotly(fig1) %>%
 ```{r jpn_fig2}
 # Load file with top/bottom 20% data (provided by Eric using weights)
 top_bottom_c_oecd <- read_excel("data/top_bottom_gdppc_w_agg.xlsx") %>%
-    clean_names()
+  clean_names()
 
 # Load GDP_PC data for 2000-2020 aggregated by metros sharing the same FUA (missings imputed by Eric)
 gdp_pop_00_20 <- read_csv("data/gdp_pop_00_20_imputed_agg_l.csv") %>%
-    clean_names() %>%
-    select(-x1) %>%
-    filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
-    mutate(
-        metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
-        metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
-    ) %>%
-    drop_na(iso3)
+  clean_names() %>%
+  select(-x1) %>%
+  filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %>%
+  mutate(
+    metro_large = ifelse(metro_large != "Metropolitan large", "Non-large", metro_large),
+    metro_far = ifelse(metro_far != "Far from a FUA>250K", "Close", metro_far)
+  ) %>%
+  drop_na(iso3)
 
 # Process data ------------------------------------------------------------
 
 gdppc_metro <- gdp_pop_00_20 %>%
-    group_by(metro_lev1, time, iso3) %>%
-    summarise(mean_gdppc = mean(gdp_pc), .groups = "drop") %>%
-    ungroup() %>%
-    filter(time %in% c(2000, 2020)) %>%
-    pivot_wider(id_cols = c(time, iso3), names_from = metro_lev1, values_from = mean_gdppc) %>%
-    mutate(
-        gap = Metropolitan / `Non-metropolitan`,
-        type = "Metropolitan/Non-metropolitan"
-    ) %>%
-    select(time, iso3, gap, type)
+  group_by(metro_lev1, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_lev1, values_from = mean_gdppc) %>%
+  mutate(
+    gap = Metropolitan / `Non-metropolitan`,
+    type = "Metropolitan/Non-metropolitan"
+  ) %>%
+  select(time, iso3, gap, type)
 
 gdppc_large <- gdp_pop_00_20 %>%
-    group_by(metro_large, time, iso3) %>%
-    summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
-    ungroup() %>%
-    filter(time %in% c(2000, 2020)) %>%
-    pivot_wider(id_cols = c(time, iso3), names_from = metro_large, values_from = mean_gdppc) %>%
-    clean_names() %>%
-    mutate(
-        gap = metropolitan_large / non_large,
-        type = "Large metropolitan/Non-large"
-    ) %>%
-    select(time, iso3, gap, type) %>%
-    drop_na(gap)
+  group_by(metro_large, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_large, values_from = mean_gdppc) %>%
+  clean_names() %>%
+  mutate(
+    gap = metropolitan_large / non_large,
+    type = "Large metropolitan/Non-large"
+  ) %>%
+  select(time, iso3, gap, type) %>%
+  drop_na(gap)
 
 gdppc_far <- gdp_pop_00_20 %>%
-    group_by(metro_far, time, iso3) %>%
-    summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
-    ungroup() %>%
-    filter(time %in% c(2000, 2020)) %>%
-    pivot_wider(id_cols = c(time, iso3), names_from = metro_far, values_from = mean_gdppc) %>%
-    clean_names() %>%
-    mutate(
-        gap = close / far_from_a_fua_250k,
-        type = "Near/Far from a FUA >250K"
-    ) %>%
-    select(time, iso3, gap, type) %>%
-    drop_na(gap)
+  group_by(metro_far, time, iso3) %>%
+  summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = "drop") %>%
+  ungroup() %>%
+  filter(time %in% c(2000, 2020)) %>%
+  pivot_wider(id_cols = c(time, iso3), names_from = metro_far, values_from = mean_gdppc) %>%
+  clean_names() %>%
+  mutate(
+    gap = close / far_from_a_fua_250k,
+    type = "Near/Far from a FUA >250K"
+  ) %>%
+  select(time, iso3, gap, type) %>%
+  drop_na(gap)
 
 gaps <- bind_rows(gdppc_metro, gdppc_far, gdppc_large)
 
 mean_gaps <- gaps %>%
-    filter(time == 2020) %>%
-    group_by(time, type) %>%
-    summarise(gap = mean(gap, na.rm = TRUE)) %>%
-    ungroup() %>%
-    mutate(time = "OECD mean gap, 2020") %>%
-    select(time, type, gap)
+  filter(time == 2020) %>%
+  group_by(time, type) %>%
+  summarise(gap = mean(gap, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(time = "OECD mean gap, 2020") %>%
+  select(time, type, gap)
 
 country <- gaps %>%
-    filter(iso3 == ctry) %>%
-    select(-iso3)
+  filter(iso3 == ctry) %>%
+  select(-iso3)
 
 country <- bind_rows(
-    country %>%
-        mutate(time = as.character(time)),
-    mean_gaps
+  country %>%
+    mutate(time = as.character(time)),
+  mean_gaps
 ) %>%
-    mutate(time = factor(time))
+  mutate(time = factor(time))
 
 lev_type <- c("Large metropolitan/Non-large", "Metropolitan/Non-metropolitan", "Near/Far from a FUA >250K")
 
 fig2 <- country %>%
-    mutate(
-        type = factor(type, levels = lev_type)
-    ) %>%
-    rename(
-        series = type
-    ) %>%
-    ggplot() +
-    geom_col(
-        # aes(x = time, y = gap, fill = type),
-        aes(x = series, y = gap, fill = time),
-        linewidth = 1.5,
-        position = position_dodge2(preserve = "single")
-    ) +
-    labs(
-        x = "", y = "Gap",
-        title = "Figure 2: GDP per capita gap by type of region\ncompared to the OECD average"
-    ) +
-    # theme_oecd(base_size = 10) +
-    # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
-    theme_minimal() +
-    theme(
-        # put x-ticks with 30 degree angle
-        axis.text.x = element_text(angle = 30, hjust = 1)
-    ) +
-    scale_fill_manual(values = clrs, name = "")
+  mutate(
+    type = factor(type, levels = lev_type)
+  ) %>%
+  rename(
+    series = type
+  ) %>%
+  ggplot() +
+  geom_col(
+    # aes(x = time, y = gap, fill = type),
+    aes(x = series, y = gap, fill = time),
+    linewidth = 1.5,
+    position = position_dodge2(preserve = "single")
+  ) +
+  labs(
+    x = "", y = "Gap",
+    title = "Figure 2: GDP per capita gap by type of region\ncompared to the OECD average"
+  ) +
+  # theme_oecd(base_size = 10) +
+  # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
+  theme_minimal() +
+  theme(
+    # put x-ticks with 30 degree angle
+    axis.text.x = element_text(angle = 30, hjust = 1)
+  ) +
+  scale_fill_manual(values = clrs, name = "")
 ```
 
 ```{r jpn_fig2_2}
 gdp_gap <- country %>%
-    filter(
-        time == 2020,
-        type == "Large metropolitan/Non-large"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2020,
+    type == "Large metropolitan/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_2_gap <- country %>%
-    filter(
-        time == "OECD mean gap, 2020",
-        type == "Large metropolitan/Non-large"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == "OECD mean gap, 2020",
+    type == "Large metropolitan/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_gap_lag <- country %>%
-    filter(
-        time == 2000,
-        type == "Large metropolitan/Non-large"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2000,
+    type == "Large metropolitan/Non-large"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_gap_txt <- ifelse(gdp_gap - gdp_gap_lag > 0, "increased", "decreased")
 
 gdp_gap_pct <- abs(round(gdp_gap - gdp_gap_lag, 3))
 
 gdp_3_gap <- country %>%
-    filter(
-        time == 2020,
-        type == "Metropolitan/Non-metropolitan"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2020,
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_3_gap_lag <- country %>%
-    filter(
-        time == 2000,
-        type == "Metropolitan/Non-metropolitan"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2000,
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_4_gap <- country %>%
-    filter(
-        time == "OECD mean gap, 2020",
-        type == "Metropolitan/Non-metropolitan"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == "OECD mean gap, 2020",
+    type == "Metropolitan/Non-metropolitan"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_2_gap_txt <- ifelse(gdp_3_gap - gdp_3_gap_lag > 0, "increased", "decreased")
 
 gdp_2_gap_pct <- abs(round(gdp_3_gap - gdp_3_gap_lag, 3))
 
 gdp_5_gap <- country %>%
-    filter(
-        time == 2020,
-        type == "Near/Far from a FUA >250K"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2020,
+    type == "Near/Far from a FUA >250K"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_5_gap_lag <- country %>%
-    filter(
-        time == 2000,
-        type == "Near/Far from a FUA >250K"
-    ) %>%
-    pull(gap) %>%
-    round(3)
+  filter(
+    time == 2000,
+    type == "Near/Far from a FUA >250K"
+  ) %>%
+  pull(gap) %>%
+  round(3)
 
 gdp_3_gap_txt <- ifelse(gdp_5_gap - gdp_5_gap_lag > 0, "increased", "decreased")
 
@@ -526,15 +525,15 @@ gdp_3_gap_pct <- abs(round(gdp_5_gap - gdp_5_gap_lag, 3))
 
 ```{r jpn_next paragraph}
 next_paragraph <- if (any(ctry %in% c("LTU", "EST", "FIN", "LVA", "NZL", "NOR", "SVK", "SVN", "CHE"))) {
-    glue("There is no data for the gap in GDP per capita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
+  glue("There is no data for the gap in GDP per capita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
 } else {
-    glue("In 2020, the gap in GDP per capita between large metropolitan and non-large metropolitan regions was { gdp_gap }. For reference, the same value for OECD was { gdp_2_gap }. This gap { gdp_gap_txt }  by { gdp_gap_pct } percentage points between 2000 and 2020.")
+  glue("In 2020, the gap in GDP per capita between large metropolitan and non-large metropolitan regions was { gdp_gap }. For reference, the same value for OECD was { gdp_2_gap }. This gap { gdp_gap_txt }  by { gdp_gap_pct } percentage points between 2000 and 2020.")
 }
 
 last_paragraph <- if (any(ctry %in% c("KOR", "NLD"))) {
-    glue("There is no data for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants for 2000 and 2020.")
+  glue("There is no data for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants for 2000 and 2020.")
 } else {
-    glue("In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was { gdp_5_gap } in 2020 and { gdp_3_gap_txt } by { gdp_3_gap_pct}  percentage points since 2000.")
+  glue("In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was { gdp_5_gap } in 2020 and { gdp_3_gap_txt } by { gdp_3_gap_pct}  percentage points since 2000.")
 }
 ```
 
@@ -550,7 +549,7 @@ Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metro
 
 # interactivity
 ggplotly(fig2) %>%
-    config(displayModeBar = F)
+  config(displayModeBar = F)
 ```
 
 <div class="oecdnote">
@@ -558,9 +557,12 @@ ggplotly(fig2) %>%
 **Source**: OECD Regional Database (2022).
 </div>
 
+<br>
+<br>
+
 ## Recent policy developments
 
-```{r can_txt}
+```{r jpn_txt}
 read_html_text(ctry)
 ```
 
@@ -573,7 +575,7 @@ read_html_text(ctry)
   <tr>
     <td>
       <p style="padding-left:10px;padding-right:10px;padding-top:10px;font-size:9.0pt;">
-        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). In Canada, TL2 corresponds to the provinces and territories.
+        The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3).
       </p>
       <p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
         Small regions are classified according to their access to metropolitan areas (Fadic et al. 2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:

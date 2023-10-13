@@ -128,7 +128,7 @@ fig3_1 <- ggplot(dp11) +
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
-    title = "Figure 1: Evolution of labour productivity, TL2 regions"
+    title = "Figure 1: Evolution of labour productivity,\nTL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())
@@ -362,7 +362,7 @@ fig2 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig2 <- fig2 %>%
   layout(
-    title = list(text = "Figure 2: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0),
+    title = list(text = "Figure 2: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,

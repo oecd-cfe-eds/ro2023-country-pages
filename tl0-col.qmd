@@ -186,7 +186,7 @@ fig1 <- df_fig1 %>%
   scale_colour_manual(values = clrs2[c(1, 2)]) +
   scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5)) +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators, TL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
     x = "",
     y = "Statistic (2000=1)",
     linetype = "",
@@ -335,7 +335,7 @@ fig3_1 <- ggplot(dp11) +
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
-    title = "Figure 2: Evolution of labour productivity, TL2 regions"
+    title = "Figure 2: Evolution of labour productivity,\nTL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())

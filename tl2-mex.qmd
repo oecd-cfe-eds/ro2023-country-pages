@@ -204,7 +204,7 @@ fig1 <- df_fig1 %>%
   scale_colour_manual(values = clrs2) +
   scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1$time), to = max(df_fig1$time), by = 5))  +
   labs(
-    title = "Figure 1: Trends in GDP per capita inequality indicators, TL2 OECD regions",
+    title = "Figure 1: Trends in GDP per capita inequality indicators,\nTL2 OECD regions",
     x = "",
     y = sprintf("Statistic (%s=1)", min_y),
     linetype = "",
@@ -391,7 +391,7 @@ fig2 <- dp11 %>%
   scale_colour_manual(values = c("#177dc7","#508551")) +
   labs(
     x = "", y = "Labour productivity (2015 USD PPP)", colour = "",
-    title = "Figure 2: Evolution of labour productivity, TL2 regions"
+    title = "Figure 2: Evolution of labour productivity,\nTL2 regions"
   ) +
   scale_x_continuous(labels = as.character(yrs), breaks = yrs) +
   scale_y_continuous(labels = scales::number_format())
@@ -641,7 +641,7 @@ fig3 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0),
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
@@ -689,7 +689,7 @@ text_all <- dp2 %>%
 # put fig3 title in black
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
   )
 
 # remove legend background
