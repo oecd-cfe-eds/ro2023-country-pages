@@ -431,7 +431,7 @@ fig2 <- country %>%
     ) +
     labs(
         x = "", y = "Gap",
-        title = "Figure 2: Changes in the contribution of region types to regional income inequality based on TL3 GDP per capita"
+        title = "Figure 2: GDP per capita gap by type of region\ncompared to the OECD average"
     ) +
     # theme_oecd(base_size = 10) +
     theme_minimal() +

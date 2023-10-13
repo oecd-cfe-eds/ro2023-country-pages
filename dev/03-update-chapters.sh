@@ -20,3 +20,6 @@ do
     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
     sed -i 's/'${file: -7:3}'_'${file: -7:3}_'/'${file: -7:3}'_/g' $file
 done
+
+# replace all ", TL3 OECD regions" with ",\\nTL3 OECD regions"
+sed -i 's/", TL3 OECD regions/",\\nTL3 OECD regions/g' *qmd

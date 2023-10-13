@@ -434,7 +434,7 @@ fig2 <- country %>%
     ) +
     labs(
         x = "", y = "Gap",
-        title = "Figure 2: GDP per capita gap by type of region compared to the OECD average"
+        title = "Figure 2: GDP per capita gap by type of region\ncompared to the OECD average"
     ) +
     # theme_oecd(base_size = 10) +
     # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) +
