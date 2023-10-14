@@ -59,9 +59,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -74,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">index_2000 &lt;- summary_stats %&gt;%</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Australia</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -113,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">index_2000 &lt;- summary_stats %&gt;%</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Australia</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -311,27 +317,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
-  <li><a href="#index_2000---summary_stats" id="toc-index_2000---summary_stats" class="nav-link" data-scroll-target="#index_2000---summary_stats">index_2000 &lt;- summary_stats %&gt;%</a></li>
-  <li><a href="#filtertime-2000" id="toc-filtertime-2000" class="nav-link" data-scroll-target="#filtertime-2000">filter(time == 2000) %&gt;%</a></li>
-  <li><a href="#pivot_wider" id="toc-pivot_wider" class="nav-link" data-scroll-target="#pivot_wider">pivot_wider(</a></li>
-  <li><a href="#id_cols-iso3" id="toc-id_cols-iso3" class="nav-link" data-scroll-target="#id_cols-iso3">id_cols = “iso3”,</a></li>
-  <li><a href="#names_from-time" id="toc-names_from-time" class="nav-link" data-scroll-target="#names_from-time">names_from = “time”,</a></li>
-  <li><a href="#values_from--ctime-iso3" id="toc-values_from--ctime-iso3" class="nav-link" data-scroll-target="#values_from--ctime-iso3">values_from = -c(time, iso3)</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">)</a></li>
-  <li><a href="#needs-the-usa-uk-czech-rep-slovak-rep-netherlands" id="toc-needs-the-usa-uk-czech-rep-slovak-rep-netherlands" class="nav-link" data-scroll-target="#needs-the-usa-uk-czech-rep-slovak-rep-netherlands">needs the: USA, UK, Czech Rep, Slovak Rep, Netherlands</a></li>
-  <li><a href="#interactivity" id="toc-interactivity" class="nav-link" data-scroll-target="#interactivity">interactivity</a></li>
-  <li><a href="#load-gdp_pc-data-for-2000-2020-aggregated-by-metros-sharing-the-same-fua-missings-imputed-by-eric" id="toc-load-gdp_pc-data-for-2000-2020-aggregated-by-metros-sharing-the-same-fua-missings-imputed-by-eric" class="nav-link" data-scroll-target="#load-gdp_pc-data-for-2000-2020-aggregated-by-metros-sharing-the-same-fua-missings-imputed-by-eric">Load GDP_PC data for 2000-2020 aggregated by metros sharing the same FUA (missings imputed by Eric)</a></li>
-  <li><a href="#process-data" id="toc-process-data" class="nav-link" data-scroll-target="#process-data">Process data ————————————————————</a></li>
-  <li><a href="#interactivity-1" id="toc-interactivity-1" class="nav-link" data-scroll-target="#interactivity-1">interactivity</a></li>
-  <li><a href="#tidy--" id="toc-tidy--" class="nav-link" data-scroll-target="#tidy--">tidy —-</a></li>
-  <li><a href="#colnamesdp1---str_replacecolnamesdp1-tolowerctry-country" id="toc-colnamesdp1---str_replacecolnamesdp1-tolowerctry-country" class="nav-link" data-scroll-target="#colnamesdp1---str_replacecolnamesdp1-tolowerctry-country">colnames(dp1) &lt;- str_replace(colnames(dp1), tolower(ctry), “country”)</a></li>
-  <li><a href="#plot--" id="toc-plot--" class="nav-link" data-scroll-target="#plot--">plot —-</a></li>
-  <li><a href="#interactivity-2" id="toc-interactivity-2" class="nav-link" data-scroll-target="#interactivity-2">interactivity</a></li>
-  <li><a href="#tidy---1" id="toc-tidy---1" class="nav-link" data-scroll-target="#tidy---1">tidy —-</a></li>
-  <li><a href="#plot---1" id="toc-plot---1" class="nav-link" data-scroll-target="#plot---1">plot —-</a></li>
-  <li><a href="#for-plot_ly" id="toc-for-plot_ly" class="nav-link" data-scroll-target="#for-plot_ly">for plot_ly —–</a></li>
-  <li><a href="#remove-legend-background" id="toc-remove-legend-background" class="nav-link" data-scroll-target="#remove-legend-background">remove legend background</a></li>
+  <li><a href="#australia" id="toc-australia" class="nav-link active" data-scroll-target="#australia">Australia</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#regional-inequality-trends" id="toc-regional-inequality-trends" class="nav-link" data-scroll-target="#regional-inequality-trends">Regional inequality trends</a></li>
+  <li><a href="#recent-policy-developments" id="toc-recent-policy-developments" class="nav-link" data-scroll-target="#recent-policy-developments">Recent policy developments</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -355,176 +346,247 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="section" class="level1">
-<h1></h1>
-<p>ctry &lt;- “SVK” ctry2 &lt;- “Slovak Republic” # # # # # library(oecdcountryprofiles) library(dplyr) library(tidyr) library(ggplot2) library(patchwork) library(oecdplot) library(knitr) library(readxl) library(janitor) library(stringr) library(readr) library(tintin) library(scales) library(plotly) library(glue)</p>
-<p>load_oecd_fonts()</p>
-<p>missing_reg &lt;- c(“ITG2F”) excl_countries &lt;- c(“LUX”, “IRL”)</p>
-<p>clrs &lt;- tintin_colours<span class="math inline">\(the_black_island clrs2 &lt;- tintin_colours\)</span>the_blue_lotus clrs3 &lt;- tintin_colours<span class="math inline">\(the_red_sea_sharks clrs4 &lt;- tintin_colours\)</span>the_calculus_affair clrs5 &lt;- tintin_colours$red_rackhams_treasure # # # # # # # # # # # # # # # # # # # # # iso3_g20 &lt;- read_csv(“data/ISO_3_G20.csv”) %&gt;% clean_names() %&gt;% rename(iso3 = iso_3)</p>
-<p>top_bottom_c &lt;- read_excel(“data/top_bottom_gdppc_w_agg.xlsx”) %&gt;% filter(TIME &lt; 2021) %&gt;% clean_names()</p>
-<p>gdp_pop_00_20 &lt;- read_csv(“data/gdp_pop_00_20_imputed_agg_l.csv”) %&gt;% filter(TIME &lt; 2021) %&gt;% clean_names() %&gt;% select(-x1) %&gt;% left_join(iso3_g20, by = “iso3”) %&gt;% filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %&gt;% mutate( metro_large = ifelse(metro_large != “Metropolitan large”, “Non-large”, metro_large), metro_far = ifelse(metro_far != “Far from a FUA&gt;250K”, “Close”, metro_far) ) %&gt;% bind_rows( read_csv(“data/gdp_pop_tl2_00_20_imputed_l.csv”) %&gt;% filter(TIME &lt; 2021) %&gt;% clean_names() %&gt;% select(time, reg_id, iso3, gdp, pop, gdp_pc, regional_name_eng = reg_name) )</p>
-<p>summary_theil_tl3 &lt;- read_csv(“data/theil_gdppc_country_00_20_wCHE-CHL.csv”) %&gt;% filter(TIME &lt; 2021) %&gt;% clean_names() %&gt;% filter(level == “gdppc_tl3”) %&gt;% select(-c(x1, level))</p>
-<p>summary_stats &lt;- gdp_pop_00_20 %&gt;% group_by(iso3, time) %&gt;% summarise(mean_gdp_pc = mean(gdp_pc, na.rm = TRUE)) %&gt;% ungroup() %&gt;% left_join(top_bottom_c, by = c(“iso3”, “time”)) %&gt;% mutate( top_bottom = top_20_gdppc / bottom_20_gdppc, top_mean = top_20_gdppc / mean_gdp_pc, bottom_mean = bottom_20_gdppc / mean_gdp_pc )</p>
-<p>summary_stats &lt;- summary_stats %&gt;% left_join(summary_theil_tl3, by = c(“iso3”, “time”))</p>
-<p>min_y &lt;- summary_theil_tl3 %&gt;% filter(iso3 == ctry) %&gt;% pull(time) %&gt;% min()</p>
-<p>if (ctry == “CHE”) { min_y &lt;- 2008 }</p>
-<p>if (ctry == “HUN”) { min_y &lt;- 2001 }</p>
-<p>if (ctry == “TUR”) { min_y &lt;- 2004 }</p>
-<p>index_200x &lt;- summary_stats %&gt;% filter(time == min_y) %&gt;% pivot_wider( id_cols = “iso3”, names_from = “time”, values_from = -c(time, iso3) )</p>
+<section id="australia" class="level1">
+<h1>Australia</h1>
+
+<!-- create a table with one row followed by a row with two columns -->
+<table border="1" style="width:75%;margin-left:auto;margin-right:auto;">
+<tbody><tr>
+<th colspan="2" style="background:#fff9e6; padding:10px;font-size:9.0pt;" valign="center">
+OECD Regional Outlook
+</th>
+</tr>
+<tr>
+<td>
+<img style="padding:10px;" src="RO2023_cover.jpg" alt="OECD Regional Outlook 2023" height="200">
+</td>
+<td>
+<p style="padding:10px;font-size:9.0pt;">
+The OECD <a href="https://www.oecd-ilibrary.org/urban-rural-and-regional-development/oecd-regional-outlook_2dafc8cf-en" target="_blank"><i style="color:#0d6efd">Regional Outlook</i></a> reviews recent trends, policy developments, and prospects across OECD regions, including the underlying causes driving regional inequalities in performance and well-being. The report offers evidence, guidance and policy recommendations on how to improve competitiveness and productivity, promote inclusive growth, accelerate the net-zero transition and raise well-being standards through effective regional development policy and multi-level governance.
+</p>
+</td>
+</tr>
+
+</tbody></table>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header header">
+<th data-quarto-table-cell-role="th">Population and territory</th>
+<th data-quarto-table-cell-role="th">26,124,814 (30 September 2022), 7 692 024 km2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd odd">
+<td>Administrative structure <em></em></td>
+<td>Federal</td>
+</tr>
+<tr class="even even">
+<td>Regional or state-level governments <em></em></td>
+<td>Australia is a federation of six states and two self-governing territories.</td>
+</tr>
+<tr class="odd odd">
+<td>Intermediate-level governments <em></em></td>
+<td>N/A</td>
+</tr>
+<tr class="even even">
+<td>Municipal-level governments <em></em></td>
+<td>546 councils</td>
+</tr>
+<tr class="odd odd">
+<td>Share of subnational government in total expenditure/revenues (2021)</td>
+<td><p>42.4% of total expenditure</p>
+<p>46.8% of total revenues</p>
+<p>[Source: <a href="https://stats.oecd.org/Index.aspx?DataSetCode=SNGF">Subnational governments in OECD countries: key data, 2023 edition</a>]</p></td>
+</tr>
+<tr class="even even">
+<td>Key regional development challenges</td>
+<td><p>Australia’s regions and their economies are diverse, with each having unique strengths and challenges. Some opportunities and challenges include:</p>
+<ul>
+<li><p>Structural economic transitions to a net zero economy</p></li>
+<li><p>Building resilience to natural disasters</p></li>
+<li><p>Geographic spread and thin markets for some services</p>
+<p>The Australian Government’s new Regional Investment Framework provides a guide for investing in regions to make the most of these opportunities and address challenges in a collaborative way, taking account of local voices.</p></li>
+</ul></td>
+</tr>
+<tr class="odd odd">
+<td>Objectives of regional policy</td>
+<td><p>The Australian Government’s Regional Investment Framework provides an integrated and coordinated framework for regional development regardless of a region’s economic circumstances with the following guiding principles:</p>
+<ul>
+<li><p>Realising that the Government’s ambition of ‘no one held back and no one left behind’ requires specific regional investment across portfolios.</p></li>
+<li><p>Australia’s regions and their economies are diverse, with each having unique strengths and challenges.</p></li>
+<li><p>Delivering on the potential of regional Australia requires building on each regions’ unique strengths, including helping regions undergoing significant economic change to transition or adapt to specific structural challenges.</p></li>
+<li><p>Place-based decision making that draws on the experience of local government alongside regional bodies must guide investment in our regions.</p></li>
+</ul></td>
+</tr>
+<tr class="even even">
+<td>Legal/institutional framework for regional policy</td>
+<td><p>Responsibility for the levers that influence regional development (i.e. education, infrastructure, employment services, services, industry and trade) sit across national, state/territory governments and local governments.</p>
+<p>The Australian Government’s new Regional Investment Framework provides a guide for the Australian Government to work more closely with state, territory and local governments to ensure policy development and delivery is joined up and local voices are taken into consideration.</p></td>
+</tr>
+<tr class="odd odd">
+<td>Budget allocated to regional development (i.e., amount) and fiscal equalisation mechanisms between jurisdictions (if any)</td>
+<td><p>The 2023-24 Regional Ministerial Budget Statement outlines the Australian Government’s latest investment in regional development across 15 portfolios – specifically 129 new initiatives that improve regional livability, health services and people’s wellbeing, and underpin prosperous economic futures and the transition to net zero. This builds on over 220 packages and initiatives to strengthen regional communities and economies announced in the 2022-23 October Budget.</p>
+<p>Major recent initiatives include: $1.0 billion for the Growing Regions and regional Precincts and Partnerships programs to fund community infrastructure projects and larger-scale infrastructure investment; $1.9 billion for the Powering the Regions Fund to support regions in their transition to net zero, including $1.4 billion to support industrial decarbonisation; the development of new clean energy industries, and workforce development; and $15.0 billion for the National Reconstruction Fund to diversify industrial capability across seven priority areas, many of which have a significant presence in regional Australia.</p>
+<p>State and Territory governments also provide significant contributions to regional Australia which fund infrastructure and essential services such as health and education.</p></td>
+</tr>
+<tr class="even even">
+<td>National regional development policy framework</td>
+<td><p>The new Regional Investment Framework enables the Australian Government to take a dedicated focus on investments and initiatives across the spectrum of portfolio areas that support: people, the places they live in, the services they rely on, and the regional industries and local economies that are vital to the nation’s prosperity.</p>
+<p>The Framework’s guiding principles recognise and respond to the diversity of regions, welcome and incorporate local voices and knowledge, and leverage collective effort across governments, communities and the private sector through genuine partnerships.</p>
+<p>The Framework embeds regular and frequent engagement across the broad range of Commonwealth portfolios and with other levels of government. This will ensure joined-up approaches that leverage investments, reduce duplication, and deliver cumulative benefits for our regions and their people.</p>
+<p>This approach is supported by international best practice and the OECD which cites the need for good governance, effective coordination and place-based investment that considers a region’s size, population, etc. to address inequalities, megatrends and future shocks.</p></td>
+</tr>
+<tr class="odd odd">
+<td>Urban policy framework</td>
+<td>The Australian Government is developing a new National Urban Policy. The National Urban Policy will explore opportunities and challenges facing urban communities and will consider how coordinated action by governments can support more productive, equitable and resilient cities and suburbs.</td>
+</tr>
+<tr class="even even">
+<td>Rural policy framework</td>
+<td>Refer to ‘national regional development policy framework’</td>
+</tr>
+<tr class="odd odd">
+<td>Major regional policy tools (e.g., funds, plans, policy initiatives, institutional agreements, etc.)</td>
+<td><p>In line with the Regional Investment Framework, the Australian Government supports regional development through a number of major grant programs, including:</p>
+<ul>
+<li><p>The regional Precincts and Partnerships Program, which will provide a strategic, nationally consistent mechanism for funding and coordinating projects that transform a place, to benefit communities in regional Australia and help regions move towards net-zero emissions, a decarbonised economy and sustained regional growth.</p></li>
+<li><p>The Growing Regions Program, which provides grants to local government entities and not-for-profit organisations for capital works projects that deliver community and economic infrastructure across regional and rural Australia.</p></li>
+</ul>
+<p>State/territory governments also each have their own specific regional development policy, grant programs and economic development plans.</p></td>
+</tr>
+<tr class="even even">
+<td>Policy co-ordination tools at national level</td>
+<td><p>The Australian Government uses a number of tools to coordinate policy at a national level including:</p>
+<ul>
+<li><p>Interdepartmental Committees, which are a common governance mechanism within the Australian Government to facilitate policy coordination across agencies.</p></li>
+<li><p>Regional Australia Impact Statements, which provide a mechanism for Australian Government Cabinet Ministers to receive a summary of the potential impacts that a policy proposal will have on regional Australia and to ensure that their implications and possible mitigation measures are considered in whole-of-Government decision-making.</p></li>
+</ul></td>
+</tr>
+<tr class="odd odd">
+<td>Multi-level governance mechanisms between national and subnational levels (e.g., institutional agreements, Committees, etc.)</td>
+<td><p>Examples of multi-level governance mechanisms used by national and subnational governments include the following:</p>
+<ul>
+<li><p>National Cabinet is chaired by the Prime Minister with state and territory First Ministers as members, and is used to collaboratively address a wide range of issues of national significance. The Commonwealth and state and territory governments individually have flexibility to determine the best way to achieve any agreed outcomes made by National Cabinet in their jurisdiction.</p></li>
+<li><p>Regional Precincts and Partnerships are currently being developed to enable collaboration between all levels of government to achieve a community’s vision.</p></li>
+<li><p>The Regional Deputy Senior Officials Meeting is a mechanism for Australian, state/territory, and local government officials to share information and collaborate to leverage better outcomes for regions.</p></li>
+</ul></td>
+</tr>
+<tr class="even even">
+<td>Policy co-ordination tools at regional level</td>
+<td><p>A range of policy coordination tools at the regional level exist including:</p>
+<ul>
+<li><p>Regional Development Australia Committees, which are a network of local leaders who work across government, business and community groups to improve their local region. This is achieved by supporting economic and workforce development, local procurement, strategic regional planning and informing government programs and infrastructure investments.</p></li>
+<li><p>Many regions also have peak regional advocacy bodies such as ‘<a href="https://onegippsland.org/">One Gippsland</a>’ in the state of Victoria.</p></li>
+</ul></td>
+</tr>
+<tr class="odd odd">
+<td>Evaluation and monitoring tools</td>
+<td><p>The Australian Government monitors the effectiveness of its programs and policies through tools including:</p>
+<ul>
+<li><p>Many regional grant programs have evaluation plans to review their effectiveness and determine key lessons for ongoing policy design.</p></li>
+<li><p>A centralised evaluation unit is being established in the Australian Government Treasury. This unit will partner with agencies across government to evaluate key programs and support the enablers of high-quality evaluation.</p></li>
+</ul></td>
+</tr>
+<tr class="even even">
+<td>Future orientations of regional policy</td>
+<td><p>The Australian Government’s new Regional Investment Framework released in May 2023 sets the future direction for Australia’s regional policy and focuses on investment in the four following key areas:</p>
+<ul>
+<li><p>People – listening to local voices and partnering with communities</p></li>
+<li><p>Places – supporting adaptive, accessible, sustainable and liveable regions</p></li>
+<li><p>Services – enhancing connectivity, accessibility and equity of services</p></li>
+<li><p>Industries and Local Economies – investment to help activate economic and industry growth.</p></li>
+</ul>
+<p>In addition, the Framework embeds ongoing and regular collaboration and engagement across Australian Government agencies and with state and territory governments. This will help ensure regional development policies are joined up and leverage investment to ensure the best outcomes for regional Australia.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
-<section id="index_2000---summary_stats" class="level1">
-<h1>index_2000 &lt;- summary_stats %&gt;%</h1>
+<section id="regional-inequality-trends" class="level2">
+<h2 class="anchored" data-anchor-id="regional-inequality-trends">Regional inequality trends</h2>
+<p>Australia experienced an increase in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in 2020. The figures were normalized, with the values in the year 2000 set to 1.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5d96130b180696120506" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5d96130b180696120506">{"x":{"data":[{"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":["time: 2000<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2001<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2002<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2003<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2004<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2005<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2006<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2007<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2008<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2009<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2010<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2011<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2012<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2013<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2014<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2015<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2016<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2017<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2018<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2019<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index","time: 2020<br />index_gdppc:       NA<br />factor(labels_index, levels = lev_2): Theil index"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(227,0,19,1)","dash":"dash"},"hoveron":"points","name":"Theil index","legendgroup":"Theil index","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[1,1.0269551079996018,1.0514648793921497,1.0791864361790371,1.1099804240353031,1.1436444473937424,1.1960516274594379,1.214924184611301,1.221181857394074,1.2184744019376887,1.2374265901323867,1.272042868044726,1.2910713693221407,1.3031885596735127,1.3017717907030757,1.3115000497694018,1.3150535850559075,1.3294701217691363,1.3473871064069809,1.3547762035900328,1.3604333255914265],"text":["time: 2000<br />index_gdppc: 1.000000<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2001<br />index_gdppc: 1.026955<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2002<br />index_gdppc: 1.051465<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2003<br />index_gdppc: 1.079186<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2004<br />index_gdppc: 1.109980<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2005<br />index_gdppc: 1.143644<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2006<br />index_gdppc: 1.196052<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2007<br />index_gdppc: 1.214924<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2008<br />index_gdppc: 1.221182<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2009<br />index_gdppc: 1.218474<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2010<br />index_gdppc: 1.237427<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2011<br />index_gdppc: 1.272043<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2012<br />index_gdppc: 1.291071<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2013<br />index_gdppc: 1.303189<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2014<br />index_gdppc: 1.301772<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2015<br />index_gdppc: 1.311500<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2016<br />index_gdppc: 1.315054<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2017<br />index_gdppc: 1.329470<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2018<br />index_gdppc: 1.347387<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2019<br />index_gdppc: 1.354776<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2020<br />index_gdppc: 1.360433<br />factor(labels_index, levels = lev_2): Mean GDP per capita"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(26,154,189,1)","dash":"dash"},"hoveron":"points","name":"Mean GDP per capita","legendgroup":"Mean GDP per capita","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[1,0.72516808596487492,0.83799231242965455,0.80385164263416087,0.94908025228822002,1.1394332009598844,1.6682012784302067,1.6818516001613963,1.9488728790163308,1.7691162479559981,2.3978827326976577,2.6812376563528635,2.7857463526513624,3.0743852067361801,2.3984851026779079,2.0361136358809913,2.0683549236552063,1.9941542610800822,2.3715352842489752,3.0445224999469089,3.6227455456688396],"text":["time: 2000<br />index_theil: 1.0000000<br />factor(labels_index, levels = lev_2): Theil index","time: 2001<br />index_theil: 0.7251681<br />factor(labels_index, levels = lev_2): Theil index","time: 2002<br />index_theil: 0.8379923<br />factor(labels_index, levels = lev_2): Theil index","time: 2003<br />index_theil: 0.8038516<br />factor(labels_index, levels = lev_2): Theil index","time: 2004<br />index_theil: 0.9490803<br />factor(labels_index, levels = lev_2): Theil index","time: 2005<br />index_theil: 1.1394332<br />factor(labels_index, levels = lev_2): Theil index","time: 2006<br />index_theil: 1.6682013<br />factor(labels_index, levels = lev_2): Theil index","time: 2007<br />index_theil: 1.6818516<br />factor(labels_index, levels = lev_2): Theil index","time: 2008<br />index_theil: 1.9488729<br />factor(labels_index, levels = lev_2): Theil index","time: 2009<br />index_theil: 1.7691162<br />factor(labels_index, levels = lev_2): Theil index","time: 2010<br />index_theil: 2.3978827<br />factor(labels_index, levels = lev_2): Theil index","time: 2011<br />index_theil: 2.6812377<br />factor(labels_index, levels = lev_2): Theil index","time: 2012<br />index_theil: 2.7857464<br />factor(labels_index, levels = lev_2): Theil index","time: 2013<br />index_theil: 3.0743852<br />factor(labels_index, levels = lev_2): Theil index","time: 2014<br />index_theil: 2.3984851<br />factor(labels_index, levels = lev_2): Theil index","time: 2015<br />index_theil: 2.0361136<br />factor(labels_index, levels = lev_2): Theil index","time: 2016<br />index_theil: 2.0683549<br />factor(labels_index, levels = lev_2): Theil index","time: 2017<br />index_theil: 1.9941543<br />factor(labels_index, levels = lev_2): Theil index","time: 2018<br />index_theil: 2.3715353<br />factor(labels_index, levels = lev_2): Theil index","time: 2019<br />index_theil: 3.0445225<br />factor(labels_index, levels = lev_2): Theil index","time: 2020<br />index_theil: 3.6227455<br />factor(labels_index, levels = lev_2): Theil index"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(227,0,19,1)","dash":"solid"},"hoveron":"points","name":"Theil index","legendgroup":"Theil index","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":["time: 2000<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2001<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2002<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2003<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2004<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2005<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2006<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2007<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2008<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2009<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2010<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2011<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2012<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2013<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2014<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2015<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2016<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2017<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2018<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2019<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita","time: 2020<br />index_theil:        NA<br />factor(labels_index, levels = lev_2): Mean GDP per capita"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(26,154,189,1)","dash":"solid"},"hoveron":"points","name":"Mean GDP per capita","legendgroup":"Mean GDP per capita","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":25.570776255707766,"l":31.415525114155255},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Figure 1: Trends in GDP per capita inequality indicators,<br />TL2 OECD regions","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2000,2020],"tickmode":"array","ticktext":["2000","2005","2010","2015","2020"],"tickvals":[2000,2005,2010,2015,2020],"categoryorder":"array","categoryarray":["2000","2005","2010","2015","2020"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.58028921297967662,3.7676244186540377],"tickmode":"array","ticktext":["1","2","3"],"tickvals":[1,2,3],"categoryorder":"array","categoryarray":["1","2","3"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Statistic (2000=1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"source":"A","attrs":{"1948109cc27f":{"x":{},"y":{},"colour":{},"type":"scatter"},"1948664df9c2":{"x":{},"y":{},"colour":{}}},"cur_data":"1948109cc27f","visdat":{"1948109cc27f":["function (y) ","x"],"1948664df9c2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="oecdnote">
+<p><strong>Note</strong>: Based on 1 586 TL3 regions in 27 countries with available data (no TL3 data (continuous time series for more than 1 region) for Australia, Canada, Chile, Colombia, Costa Rica, Iceland, Ireland, Israel, Mexico, Luxembourg and Switzerland). Between Theil measures the dissimilarity of the national GDP per capita means with respect to the OECD average. Within Theil measures the dissimilarity between regional and national GDP per capita. <br> <strong>Source</strong>: OECD Regional Database (2022).</p>
+</div>
+<p><br> <br></p>
+<p>In Australia, the gap between the upper and the lower half of regions in terms of labour productivity increased between 2002 and 2019. Over this period labour productivity in the upper half of regions grew roughly by 20%, 13 percentage points more than in the lower half of regions. During 2020, the gap continued to widen. Nevertheless, more years of data are necessary to determine the long-term impact of the COVID-19 pandemic on labour productivity gaps in regions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-07e03f089c3a3f30361b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-07e03f089c3a3f30361b">{"x":{"data":[{"x":[2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[73590.3203125,74724.4453125,76009.1640625,75277.9453125,75996.6484375,75998,75577.0703125,75769.4609375,74616.6640625,76079.5546875,77127.0859375,77785.015625,79877.40625,80949.5390625,81666.7890625,82431.6640625,81375.734375,78657.0546875,79263.90625],"text":["time: 2002<br />value:  73590.32<br />series: Lower half","time: 2003<br />value:  74724.45<br />series: Lower half","time: 2004<br />value:  76009.16<br />series: Lower half","time: 2005<br />value:  75277.95<br />series: Lower half","time: 2006<br />value:  75996.65<br />series: Lower half","time: 2007<br />value:  75998.00<br />series: Lower half","time: 2008<br />value:  75577.07<br />series: Lower half","time: 2009<br />value:  75769.46<br />series: Lower half","time: 2010<br />value:  74616.66<br />series: Lower half","time: 2011<br />value:  76079.55<br />series: Lower half","time: 2012<br />value:  77127.09<br />series: Lower half","time: 2013<br />value:  77785.02<br />series: Lower half","time: 2014<br />value:  79877.41<br />series: Lower half","time: 2015<br />value:  80949.54<br />series: Lower half","time: 2016<br />value:  81666.79<br />series: Lower half","time: 2017<br />value:  82431.66<br />series: Lower half","time: 2018<br />value:  81375.73<br />series: Lower half","time: 2019<br />value:  78657.05<br />series: Lower half","time: 2020<br />value:  79263.91<br />series: Lower half"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(23,125,199,1)","dash":"solid"},"hoveron":"points","name":"Lower half","legendgroup":"Lower half","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[82199.046875,84153.1796875,85617.65625,85329.3828125,86953.578125,88025.7578125,87368.1171875,90000,92278.390625,94739.1171875,95952.34375,98351.796875,98338.2109375,97898.6796875,98334.8828125,98759.765625,99275.0234375,98540.75,103702.703125],"text":["time: 2002<br />value:  82199.05<br />series: Upper half","time: 2003<br />value:  84153.18<br />series: Upper half","time: 2004<br />value:  85617.66<br />series: Upper half","time: 2005<br />value:  85329.38<br />series: Upper half","time: 2006<br />value:  86953.58<br />series: Upper half","time: 2007<br />value:  88025.76<br />series: Upper half","time: 2008<br />value:  87368.12<br />series: Upper half","time: 2009<br />value:  90000.00<br />series: Upper half","time: 2010<br />value:  92278.39<br />series: Upper half","time: 2011<br />value:  94739.12<br />series: Upper half","time: 2012<br />value:  95952.34<br />series: Upper half","time: 2013<br />value:  98351.80<br />series: Upper half","time: 2014<br />value:  98338.21<br />series: Upper half","time: 2015<br />value:  97898.68<br />series: Upper half","time: 2016<br />value:  98334.88<br />series: Upper half","time: 2017<br />value:  98759.77<br />series: Upper half","time: 2018<br />value:  99275.02<br />series: Upper half","time: 2019<br />value:  98540.75<br />series: Upper half","time: 2020<br />value: 103702.70<br />series: Upper half"],"type":"scatter","mode":"lines","line":{"width":4.5354330708661417,"color":"rgba(80,133,81,1)","dash":"solid"},"hoveron":"points","name":"Upper half","legendgroup":"Upper half","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":25.570776255707766,"l":66.484018264840202},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Figure 2: Evolution of labour productivity,<br />TL2 regions","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2001.0999999999999,2020.9000000000001],"tickmode":"array","ticktext":["2002","2004","2006","2008","2010","2012","2014","2016","2018","2020"],"tickvals":[2002,2004,2006,2008,2010,2012,2014,2016,2018,2020],"categoryorder":"array","categoryarray":["2002","2004","2006","2008","2010","2012","2014","2016","2018","2020"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[72084.701171875,105208.322265625],"tickmode":"array","ticktext":["80 000","90 000","100 000"],"tickvals":[80000,90000,100000],"categoryorder":"array","categoryarray":["80 000","90 000","100 000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Productivity (2015 USD PPP)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"source":"A","attrs":{"194840ee2ead":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"194840ee2ead","visdat":{"194840ee2ead":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="oecdnote">
+<p><strong>Note</strong>: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median. Labour productivity in each group is equal to the sum of Gross Value Added, expressed in USD at constant prices and PPP (base year 2015) within the group, divided by the sum of total employment in regions within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Colombia, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability.<br> <strong>Source</strong>: OECD Regional Database (2022).</p>
+</div>
+<p><br> <br></p>
+<p>Regions where the economic activity shifts towards tradable activities, such as industry and tradable services, tend to grow faster in terms of labour productivity. In Australia, between 2002 and 2020, the share of workers in the industrial sector went down in all regions but more so in regions that were already in the lower half of the labour productivity distribution. Hence, the evolution of employment shares in the industrial sector widened the labour productivity gap between regions. At the same time, the share of workers in the tradable services sector went up in all regions, approximately by the same amount.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4fa6856859ae7b613a67" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-4fa6856859ae7b613a67">{"x":{"data":[{"x":["Lower half"],"y":[9.0915842056274414],"type":"bar","name":"Lower half 2019","marker":{"color":"#c8f075","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Upper half"],"y":[10.41031074523926],"type":"bar","name":"Upper half 2019","marker":{"color":"#6bc5f2","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Lower half"],"y":[12.11984157562256],"type":"scatter","mode":"markers","name":"Lower half 2004","marker":{"color":"#508551","size":12,"symbol":"diamond-dot","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Upper half"],"y":[12.837648391723629],"type":"scatter","mode":"markers","name":"Upper half 2004","marker":{"color":"#177dc7","size":12,"symbol":"diamond-dot","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Lower half"],"y":[15.26028442382813],"type":"bar","marker":{"color":"#c8f075","line":{"color":"rgba(102,194,165,1)"}},"showlegend":false,"name":"Lower half","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x2","yaxis":"y","frame":null},{"x":["Upper half"],"y":[19.3913688659668],"type":"bar","marker":{"color":"#6bc5f2","line":{"color":"rgba(141,160,203,1)"}},"showlegend":false,"name":"Upper half","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x2","yaxis":"y","frame":null},{"x":["Lower half"],"y":[15.46754169464111],"type":"scatter","mode":"markers","marker":{"color":"#508551","size":12,"symbol":"diamond-dot","line":{"color":"rgba(102,194,165,1)"}},"showlegend":false,"name":"Lower half","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x2","yaxis":"y","frame":null},{"x":["Upper half"],"y":[18.56627082824707],"type":"scatter","mode":"markers","marker":{"color":"#177dc7","size":12,"symbol":"diamond-dot","line":{"color":"rgba(141,160,203,1)"}},"showlegend":false,"name":"Upper half","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x2","yaxis":"y","frame":null}],"layout":{"xaxis":{"domain":[0,0.45000000000000001],"automargin":true,"title":"","visible":false,"type":"category","categoryorder":"array","categoryarray":["Lower half","Upper half"],"anchor":"y"},"xaxis2":{"domain":[0.55000000000000004,1],"automargin":true,"title":"","visible":false,"type":"category","categoryorder":"array","categoryarray":["Lower half","Upper half"],"anchor":"y"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Employment share (%)","anchor":"x"},"annotations":[{"x":0.25,"y":1,"font":{"size":14},"text":"Industry","xref":"paper","yref":"paper","xanchor":"center","yanchor":"bottom","showarrow":false},{"x":0.75,"y":1,"font":{"size":14},"text":"Tradable services","xref":"paper","yref":"paper","xanchor":"center","yanchor":"bottom","showarrow":false}],"shapes":[],"images":[],"margin":{"b":50,"l":50,"t":120,"r":50,"pad":4},"title":{"text":"Figure 3: Share of workers in most productive (tradable) sectors,<br />TL2 regions","x":0,"font":{"color":"black"}},"hovermode":"closest","showlegend":true,"legend":{"bgcolor":"rgba(0,0,0,0)"}},"attrs":{"19481b54cfb3":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"color":{},"type":"bar","name":{},"marker":{"color":["#c8f075","#6bc5f2"]},"inherit":true},"19481b54cfb3.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"markers","color":{},"name":{},"marker":{"color":["#508551","#177dc7"],"size":12,"symbol":"diamond-dot"},"inherit":true},"19485b624868":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"color":{},"type":"bar","marker":{"color":["#c8f075","#6bc5f2"]},"showlegend":false,"inherit":true},"19485b624868.1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"markers","color":{},"marker":{"color":["#508551","#177dc7"],"size":12,"symbol":"diamond-dot"},"showlegend":false,"inherit":true}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="oecdnote">
+<p><strong>Note</strong>: A region is in the “upper half” if labour productivity was above the country median in the first year with available data and “lower half” if productivity was below the country median. The share of workers in a given sector for a group of regions is defined as the sum of employment in that sector within the group divided by the sum of total employment within the group. Regions are small (TL3) regions, except for Australia, Canada, Chile, Ireland, Mexico, Norway, Switzerland, Türkiye and the United States where they are large (TL2) regions due to data availability. Industry includes the following tradable goods sectors: Mining and quarrying (B), Manufacturing (C), Electricity, gas, steam and air conditioning supply (D) and Water supply; sewerage; waste management and remediation activities (E) NACE macro sectors. Tradable services include Information and communication (J), Financial and insurance activities (K), Real estate activities (L), Professional, scientific and technical activities (M), Administrative and support service activities (N).<br> <strong>Source</strong>: OECD Regional Database (2022).</p>
+</div>
+<p><br> <br></p>
 </section>
-<section id="filtertime-2000" class="level1">
-<h1>filter(time == 2000) %&gt;%</h1>
-</section>
-<section id="pivot_wider" class="level1">
-<h1>pivot_wider(</h1>
-</section>
-<section id="id_cols-iso3" class="level1">
-<h1>id_cols = “iso3”,</h1>
-</section>
-<section id="names_from-time" class="level1">
-<h1>names_from = “time”,</h1>
-</section>
-<section id="values_from--ctime-iso3" class="level1">
-<h1>values_from = -c(time, iso3)</h1>
-</section>
-<section id="section-1" class="level1">
-<h1>)</h1>
-<p>colnames(index_200x) &lt;- gsub(“_200[0-9]“,”_200x”, colnames(index_200x))</p>
-<p>summary_stats_index &lt;- summary_stats %&gt;% left_join(index_200x, by = “iso3”) %&gt;% mutate( index_gdppc = mean_gdp_pc / mean_gdp_pc_200x, index_bottom = bottom_mean / bottom_mean_200x, index_top = top_mean / top_mean_200x, index_theil = theil / theil_200x, index_top_mean = top_mean / top_mean_200x, index_bottom_mean = bottom_mean / bottom_mean_200x, index_top_bottom = top_bottom / top_bottom_200x ) %&gt;% select( iso3, time, index_gdppc, index_bottom, index_top_mean, index_top_bottom, index_bottom_mean, index_top, index_theil )</p>
-<p>summary_wide &lt;- summary_stats_index %&gt;% pivot_longer(cols = -c(time, iso3), names_to = “index”) %&gt;% mutate( labels_index = case_when( index == “index_bottom” ~ “Bottom 20%”, index == “index_top” ~ “Top 20%”, index == “index_bottom_mean” ~ “Bottom 20%/Mean”, index == “index_top_mean” ~ “Top 20%/Mean”, index == “index_theil” ~ “Theil index”, index == “index_gdppc” ~ “Mean GDP per capita”, index == “index_top_bottom” ~ “Top 20%/Bottom 20%” ) ) %&gt;% left_join(iso3_g20, by = “iso3”)</p>
-<p>lev_3 &lt;- c( “Theil index”, “Top 20%/Mean”, “Bottom 20%/Mean”, “Mean GDP per capita” )</p>
-<p>df_fig1 &lt;- summary_wide %&gt;% filter(iso3 == ctry, labels_index %in% lev_3, time &gt;= min_y) %&gt;% pivot_wider( names_from = index, values_from = value ) %&gt;% mutate( index_label = factor(labels_index, levels = lev_3) )</p>
-<p>fig1 &lt;- df_fig1 %&gt;% ggplot(aes(x = time)) + geom_line(aes( y = index_gdppc, colour = index_label ), linetype = “dashed”, linewidth = 1.2) + geom_line(aes( y = index_top_mean, colour = index_label ), linetype = “dashed”, linewidth = 1.2) + geom_line(aes( y = index_bottom_mean, colour = index_label ), linetype = “dashed”, linewidth = 1.2) + geom_line(aes( y = index_theil, colour = index_label ), linewidth = 1.2) + geom_hline(yintercept = 1, color = “lightgrey”, linetype = “dashed”) + scale_colour_manual(values = clrs2[c(1, 3, 4, 2)]) + # evil hack to match TL2 colours scale_x_continuous(expand = c(0, 0), breaks = seq(from = min(df_fig1<span class="math inline">\(time), to = max(df_fig1\)</span>time), by = 5)) + labs( title = “Figure 1: Trends in GDP per capita inequality indicators, OECD regions”, x = ““, y =”Statistic (2000=1)“, linetype =”“, colour =”” ) + # theme_oecd(base_size = 10) + # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) + theme_minimal() # # # theil_chg &lt;- summary_wide %&gt;% filter( index == “index_theil”, iso3 == ctry ) %&gt;% filter(!is.na(value)) %&gt;% filter(time %in% range(time)) %&gt;% arrange(time) %&gt;% mutate(diff = value - lag(value)) %&gt;% filter(time == max(time)) %&gt;% pull(diff)</p>
-<p>theil_chg_txt &lt;- ifelse(theil_chg &gt; 0, “an increase”, “a decline”)</p>
-<p>theil_max &lt;- summary_wide %&gt;% filter( index == “index_theil”, iso3 == ctry ) %&gt;% filter(!is.na(value)) %&gt;% filter(value == max(value)) %&gt;% pull(time) %&gt;% as.integer()</p>
-<p>polarization_pct &lt;- summary_wide %&gt;% filter( index == “index_top_mean”, iso3 == ctry ) %&gt;% filter(!is.na(value)) %&gt;% filter(time %in% range(time)) %&gt;% arrange(time) %&gt;% mutate(diff = lead(value) - value) %&gt;% filter(time == min(time)) %&gt;% pull(diff) %&gt;% round(3)</p>
-<p>polarization_txt &lt;- ifelse(polarization_pct &gt; 0, “higher”, “lower”)</p>
-<p>polarization_txt2 &lt;- ifelse(polarization_txt == “higher”, “increased”, “decreased”)</p>
-<p>polarization_yrs &lt;- summary_wide %&gt;% filter( index == “index_top_mean”, iso3 == ctry ) %&gt;% filter(time %in% range(time)) %&gt;% pull(time) %&gt;% as.integer()</p>
-<p>polarization_2_pct &lt;- summary_wide %&gt;% filter( index == “index_bottom_mean”, iso3 == ctry ) %&gt;% filter(time %in% range(time)) %&gt;% arrange(time) %&gt;% mutate(diff = lead(value) - value) %&gt;% filter(time == min(time)) %&gt;% pull(diff) %&gt;% round(3)</p>
-<p>polarization_2_txt &lt;- ifelse(polarization_2_pct &gt; 0, “higher”, “lower”) polarization_2_txt2 &lt;- ifelse(polarization_2_txt == “higher”, “convergence”, “divergence”)</p>
-</section>
-<section id="needs-the-usa-uk-czech-rep-slovak-rep-netherlands" class="level1">
-<h1>needs the: USA, UK, Czech Rep, Slovak Rep, Netherlands</h1>
-<p>ctry3 &lt;- if (any(ctry %in% c(“USA”, “GBR”, “CZE”, “SVK”, “NLD”))) { paste(“The”, ctry2) } else { ctry2 }</p>
-<p>ctry4 &lt;- if (any(ctry %in% c(“USA”, “GBR”, “CZE”, “SVK”, “NLD”))) { paste(“the”, ctry2) } else { ctry2 }</p>
-<p>paragraph_theil &lt;- if (any(ctry %in% c(“GBR”))) { glue(“{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.</p>
-<p>The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio did not change in the same period.”) } else { glue(“{ ctry3 } experienced { theil_chg_txt } in the Theil index of GDP per capita over 2000-2020. Inequality reached its maximum in { theil_max }. The figures are normalized, with values in the year {as.integer(min_y)} set to 1.</p>
-<p>The Top 20%/Mean ratio was { paste(abs(polarization_pct), polarization_txt) } in { max(polarization_yrs) } compared to { min(polarization_yrs) }, indicating { polarization_txt2 } polarisation. The Bottom 20%/Mean ratio was { paste(abs(polarization_2_pct), polarization_2_txt) } in the same period, indicating bottom { polarization_2_txt2 }.”) } # # # # # # no interactivity # fig1</p>
-</section>
-<section id="interactivity" class="level1">
-<h1>interactivity</h1>
-<p>ggplotly(fig1) %&gt;% config(displayModeBar = F) # # # # # # # # # # # # Load file with top/bottom 20% data (provided by Eric using weights) top_bottom_c_oecd &lt;- read_excel(“data/top_bottom_gdppc_w_agg.xlsx”) %&gt;% clean_names()</p>
-</section>
-<section id="load-gdp_pc-data-for-2000-2020-aggregated-by-metros-sharing-the-same-fua-missings-imputed-by-eric" class="level1">
-<h1>Load GDP_PC data for 2000-2020 aggregated by metros sharing the same FUA (missings imputed by Eric)</h1>
-<p>gdp_pop_00_20 &lt;- read_csv(“data/gdp_pop_00_20_imputed_agg_l.csv”) %&gt;% clean_names() %&gt;% select(-x1) %&gt;% filter(!reg_id %in% missing_reg, !iso3 %in% excl_countries) %&gt;% mutate( metro_large = ifelse(metro_large != “Metropolitan large”, “Non-large”, metro_large), metro_far = ifelse(metro_far != “Far from a FUA&gt;250K”, “Close”, metro_far) ) %&gt;% drop_na(iso3)</p>
-</section>
-<section id="process-data" class="level1">
-<h1>Process data ————————————————————</h1>
-<p>gdppc_metro &lt;- gdp_pop_00_20 %&gt;% group_by(metro_lev1, time, iso3) %&gt;% summarise(mean_gdppc = mean(gdp_pc), .groups = “drop”) %&gt;% ungroup() %&gt;% filter(time %in% c(2000, 2020)) %&gt;% pivot_wider(id_cols = c(time, iso3), names_from = metro_lev1, values_from = mean_gdppc) %&gt;% mutate( gap = Metropolitan / <code>Non-metropolitan</code>, type = “Metropolitan/Non-metropolitan” ) %&gt;% select(time, iso3, gap, type)</p>
-<p>gdppc_large &lt;- gdp_pop_00_20 %&gt;% group_by(metro_large, time, iso3) %&gt;% summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = “drop”) %&gt;% ungroup() %&gt;% filter(time %in% c(2000, 2020)) %&gt;% pivot_wider(id_cols = c(time, iso3), names_from = metro_large, values_from = mean_gdppc) %&gt;% clean_names() %&gt;% mutate( gap = metropolitan_large / non_large, type = “Large metropolitan/Non-large” ) %&gt;% select(time, iso3, gap, type) %&gt;% drop_na(gap)</p>
-<p>gdppc_far &lt;- gdp_pop_00_20 %&gt;% group_by(metro_far, time, iso3) %&gt;% summarise(mean_gdppc = mean(gdp_pc, na.rm = T), .groups = “drop”) %&gt;% ungroup() %&gt;% filter(time %in% c(2000, 2020)) %&gt;% pivot_wider(id_cols = c(time, iso3), names_from = metro_far, values_from = mean_gdppc) %&gt;% clean_names() %&gt;% mutate( gap = close / far_from_a_fua_250k, type = “Near/Far from a FUA &gt;250K” ) %&gt;% select(time, iso3, gap, type) %&gt;% drop_na(gap)</p>
-<p>gaps &lt;- bind_rows(gdppc_metro, gdppc_far, gdppc_large)</p>
-<p>mean_gaps &lt;- gaps %&gt;% filter(time == 2020) %&gt;% group_by(time, type) %&gt;% summarise(gap = mean(gap, na.rm = TRUE)) %&gt;% ungroup() %&gt;% mutate(time = “OECD mean gap, 2020”) %&gt;% select(time, type, gap)</p>
-<p>country &lt;- gaps %&gt;% filter(iso3 == ctry) %&gt;% select(-iso3)</p>
-<p>country &lt;- bind_rows( country %&gt;% mutate(time = as.character(time)), mean_gaps ) %&gt;% mutate(time = factor(time))</p>
-<p>lev_type &lt;- c(“Large metropolitan/Non-large”, “Metropolitan/Non-metropolitan”, “Near/Far from a FUA &gt;250K”)</p>
-<p>fig2 &lt;- country %&gt;% mutate( type = factor(type, levels = lev_type) ) %&gt;% rename( series = type ) %&gt;% ggplot() + geom_col( # aes(x = time, y = gap, fill = type), aes(x = series, y = gap, fill = time), linewidth = 1.5, position = position_dodge2(preserve = “single”) ) + labs( x = ““, y =”Gap”, title = “Figure 2: GDP per capita gap by type of regionto the OECD average” ) + # theme_oecd(base_size = 10) + # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) + theme_minimal() + theme( # put x-ticks with 30 degree angle axis.text.x = element_text(angle = 30, hjust = 1) ) + scale_fill_manual(values = clrs, name = ““) # # # gdp_gap &lt;- country %&gt;% filter( time == 2020, type ==”Large metropolitan/Non-large” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_2_gap &lt;- country %&gt;% filter( time == “OECD mean gap, 2020”, type == “Large metropolitan/Non-large” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_gap_lag &lt;- country %&gt;% filter( time == 2000, type == “Large metropolitan/Non-large” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_gap_txt &lt;- ifelse(gdp_gap - gdp_gap_lag &gt; 0, “increased”, “decreased”)</p>
-<p>gdp_gap_pct &lt;- abs(round(gdp_gap - gdp_gap_lag, 3))</p>
-<p>gdp_3_gap &lt;- country %&gt;% filter( time == 2020, type == “Metropolitan/Non-metropolitan” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_3_gap_lag &lt;- country %&gt;% filter( time == 2000, type == “Metropolitan/Non-metropolitan” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_4_gap &lt;- country %&gt;% filter( time == “OECD mean gap, 2020”, type == “Metropolitan/Non-metropolitan” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_2_gap_txt &lt;- ifelse(gdp_3_gap - gdp_3_gap_lag &gt; 0, “increased”, “decreased”)</p>
-<p>gdp_2_gap_pct &lt;- abs(round(gdp_3_gap - gdp_3_gap_lag, 3))</p>
-<p>gdp_5_gap &lt;- country %&gt;% filter( time == 2020, type == “Near/Far from a FUA &gt;250K” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_5_gap_lag &lt;- country %&gt;% filter( time == 2000, type == “Near/Far from a FUA &gt;250K” ) %&gt;% pull(gap) %&gt;% round(3)</p>
-<p>gdp_3_gap_txt &lt;- ifelse(gdp_5_gap - gdp_5_gap_lag &gt; 0, “increased”, “decreased”)</p>
-<p>gdp_3_gap_pct &lt;- abs(round(gdp_5_gap - gdp_5_gap_lag, 3)) # # # next_paragraph &lt;- if (any(ctry %in% c(“LTU”, “EST”, “FIN”, “LVA”, “NZL”, “NOR”, “SVK”, “SVN”, “CHE”))) { glue(“There is no data for the gap in GDP per capita between large metropolitan and non-large metropolitan regions for 2000 and 2020.”) } else { glue(“In 2020, the gap in GDP per capita between large metropolitan and non-large metropolitan regions was { gdp_gap }. For reference, the same value for OECD was { gdp_2_gap }. This gap { gdp_gap_txt } by { gdp_gap_pct } percentage points between 2000 and 2020.”) }</p>
-<p>last_paragraph &lt;- if (any(ctry %in% c(“KOR”, “NLD”))) { glue(“There is no data for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants for 2000 and 2020.”) } else { glue(“In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was { gdp_5_gap } in 2020 and { gdp_3_gap_txt } by { gdp_3_gap_pct} percentage points since 2000.”) } # # # # # # # # # # no interactivity # fig2</p>
-</section>
-<section id="interactivity-1" class="level1">
-<h1>interactivity</h1>
-<p>ggplotly(fig2) %&gt;% config(displayModeBar = F) # # # # # # # # # # # # read —- dp1 &lt;- read_excel(“data/countryprofile_fig3_alt.xlsx”, sheet = ctry) %&gt;% select(time, pw_lp, pw_hp) %&gt;% clean_names()</p>
-</section>
-<section id="tidy--" class="level1">
-<h1>tidy —-</h1>
-</section>
-<section id="colnamesdp1---str_replacecolnamesdp1-tolowerctry-country" class="level1">
-<h1>colnames(dp1) &lt;- str_replace(colnames(dp1), tolower(ctry), “country”)</h1>
-<p>colnames(dp1) &lt;- c(“time”, “pw_lp_country”, “pw_hp_country”)</p>
-<p>dp11 &lt;- dp1 %&gt;% select(time, matches(“country”)) %&gt;% pivot_longer(-time) %&gt;% rename(value_country = value)</p>
-<p>dp11 &lt;- dp11 %&gt;% mutate( name = case_when( name == “pw_lp_country” ~ “Lower half”, name == “pw_hp_country” ~ “Upper half” ) )</p>
-</section>
-<section id="plot--" class="level1">
-<h1>plot —-</h1>
-<p>yrs &lt;- sort(unique(dp11$time)) yrs &lt;- seq(min(yrs), max(yrs), 2)</p>
-<p>hpgrew &lt;- dp11 %&gt;% filter( name == “Upper half”, time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>lpgrew &lt;- dp11 %&gt;% filter( name == “Lower half”, time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = 100 * (value_country - lag(value_country)) / lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>hpdiff &lt;- hpgrew - lpgrew</p>
-<p>hpmore &lt;- ifelse(hpdiff &gt; 0, “more”, “less”)</p>
-<p>fig3_title &lt;- if (any(ctry %in% c(“USA”, “TUR”, “NOR”, “CHE”))) { “Figure 3: Evolution of labour productivity, regions” } else { “Figure 3: Evolution of labour productivity, regions” }</p>
-<p>fig3_1 &lt;- dp11 %&gt;% rename( value = value_country, series = name ) %&gt;% ggplot() + geom_line(aes(x = time, y = value, color = series), linewidth = 1.2) + # theme_oecd(base_size = 10) + # theme(plot.title = element_text(size = 13, hjust = 0, margin = margin(0, 0, 10, 0))) + theme_minimal() + # scale_colour_manual(values = clrs3[1:2]) + scale_colour_manual(values = c(“#508551”, “#177dc7”)) + labs( x = ““, y =”Labour productivity (2015 USD PPP)“, colour =”“, title = fig3_title ) + scale_x_continuous(labels = as.character(yrs), breaks = yrs) + scale_y_continuous(labels = scales::number_format()) # # # fig3_text &lt;- read_excel(”data/fig3_text_FINAL.xlsx”, sheet = “text”) %&gt;% clean_names()</p>
-<p>fig3_text &lt;- fig3_text %&gt;% filter(iso3 == ctry) %&gt;% pull(text_final) # # # # # # no interactivity # fig3_1</p>
-</section>
-<section id="interactivity-2" class="level1">
-<h1>interactivity</h1>
-<p>ggplotly(fig3_1) %&gt;% config(displayModeBar = F) # # # # # # # # # # # # read —-</p>
-<p>dp2 &lt;- read_excel(“data/countryprofile_fig4_alt.xlsx”, sheet = ctry) %&gt;% clean_names()</p>
-</section>
-<section id="tidy---1" class="level1">
-<h1>tidy —-</h1>
-<p>dp21 &lt;- dp2 %&gt;% select(time, starts_with(“share_”)) %&gt;% pivot_longer(-time) %&gt;% rename(value_country = value)</p>
-<p>dp21 &lt;- dp21 %&gt;% mutate( name = case_when( name == “share_tgoods_lp” ~ paste(ctry, “TG LP”), name == “share_tgoods_hp” ~ paste(ctry, “TG HP”), name == “share_tserv_lp” ~ paste(ctry, “TS LP”), name == “share_tserv_hp” ~ paste(ctry, “TS HP”) ) )</p>
-</section>
-<section id="plot---1" class="level1">
-<h1>plot —-</h1>
-<p>yrs &lt;- sort(unique(dp21$time)) yrs &lt;- seq(min(yrs), max(yrs), 1)</p>
-<p>tghpgrew &lt;- dp21 %&gt;% filter( name == paste(ctry, “TG HP”), time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = value_country - lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>tglpgrew &lt;- dp21 %&gt;% filter( name == paste(ctry, “TG LP”), time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = value_country - lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>tghpdiff &lt;- tghpgrew - tglpgrew tghpmore &lt;- ifelse(tghpdiff &gt; 0, “grew”, “declined”)</p>
-<p>tglpdiff &lt;- tglpgrew - tglpgrew tglpmore &lt;- ifelse(tglpdiff &gt; 0, “grew”, “declined”)</p>
-<p>tshpgrew &lt;- dp21 %&gt;% filter( name == paste(ctry, “TS HP”), time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = value_country - lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>tslpgrew &lt;- dp21 %&gt;% filter( name == paste(ctry, “TS LP”), time %in% c(min(yrs), max(yrs)) ) %&gt;% summarise(grew = value_country - lag(value_country)) %&gt;% drop_na() %&gt;% pull() %&gt;% round(1)</p>
-<p>tshpdiff &lt;- tshpgrew - tslpgrew tshpmore &lt;- ifelse(tshpdiff &gt; 0, “grew”, “declined”)</p>
-<p>tslpdiff &lt;- tslpgrew - tslpgrew tslpmore &lt;- ifelse(tslpdiff &gt; 0, “grew”, “declined”)</p>
-<p>dp21 &lt;- dp21 %&gt;% mutate(category = gsub(paste0(“^OECD |^”, ctry, ” “),”“, name))</p>
-<p>dp21 &lt;- dp21 %&gt;% mutate( country = str_replace_all(name, ” .*“,”“), category1 = str_sub(category, 1, 2), category1 = str_replace_all(category1,”TG”, “Tradable goods”), category1 = str_replace_all(category1, “TS”, “Tradable services”), category2 = paste(str_sub(category, 4, 5), time), category2 = str_replace_all(category2, “LP”, “Lower half”), category2 = str_replace_all(category2, “HP”, “Upper half”) )</p>
-<p>dp21_2 &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate( category2_2 = category2, category2 = str_replace_all(category2, as.character(min(yrs)), “minyr”), category2 = str_replace_all(category2, as.character(max(yrs)), “maxyr”) ) %&gt;% pivot_wider(names_from = category2, values_from = value_country) %&gt;% clean_names()</p>
-</section>
-<section id="for-plot_ly" class="level1">
-<h1>for plot_ly —–</h1>
-<p>dp21_2 &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate(type = ifelse(str_detect(category2, “Lower”), “Lower half”, “Upper half”))</p>
-<p>dp21_min_TG &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate(type = ifelse(str_detect(category2, “Lower”), “Lower half”, “Upper half”)) %&gt;% filter(time == min(dp21_2$time) &amp; category1 == “Tradable goods”)</p>
-<p>dp21_min_TS &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate(type = ifelse(str_detect(category2, “Lower”), “Lower half”, “Upper half”)) %&gt;% filter(time == min(dp21_2$time) &amp; category1 == “Tradable services”)</p>
-<p>dp21_max_TG &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate(type = ifelse(str_detect(category2, “Lower”), “Lower half”, “Upper half”)) %&gt;% filter(time == max(dp21_2$time) &amp; category1 == “Tradable goods”)</p>
-<p>dp21_max_TS &lt;- dp21 %&gt;% select(country, time, category1, category2, value_country) %&gt;% mutate(type = ifelse(str_detect(category2, “Lower”), “Lower half”, “Upper half”)) %&gt;% filter(time == max(dp21_2$time) &amp; category1 == “Tradable services”)</p>
-<p>data_plotly &lt;- tibble( “x” = c(“Lower half”, “Upper half”), “y” = dp21_min_TG<span class="math inline">\(value_country,  "y2" = dp21_min_TS\)</span>value_country, “y3” = dp21_max_TG<span class="math inline">\(value_country,  "y4" = dp21_max_TS\)</span>value_country, “name1” = dp21_min_TG<span class="math inline">\(category2,  "name2" = dp21_max_TG\)</span>category2 )</p>
-<p>x &lt;- c(“Lower half”, “Upper half”)</p>
-<p>y &lt;- dp21_min_TG<span class="math inline">\(value_country y2 &lt;- dp21_min_TS\)</span>value_country</p>
-<p>y3 &lt;- dp21_max_TG<span class="math inline">\(value_country y4 &lt;- dp21_max_TS\)</span>value_country</p>
-<p>name1 &lt;- dp21_min_TG<span class="math inline">\(category2 name2 &lt;- dp21_max_TG\)</span>category2</p>
-<p>p1 &lt;- plot_ly() %&gt;% add_trace( x = ~x, y = ~y3, color = ~x, type = “bar”, name = ~name2, marker = list( color = c(“#c8f075”, “#6bc5f2”) ) )</p>
-<p>p1 &lt;- p1 %&gt;% add_markers( x = ~x, y = ~y, color = ~x, name = ~name1, mode = “markers”, marker = list( color = clrs4[2:1], size = 12, symbol = “diamond-dot” ) )</p>
-<p>p1 &lt;- p1 %&gt;% layout( title = “Tradable goods”, xaxis = list(title = ““, visible = FALSE), yaxis = list(title =”Employment share (%)“) )</p>
-<p>p2 &lt;- plot_ly() %&gt;% add_trace( x = ~x, y = ~y4, color = ~x, type = “bar”, marker = list(color = c(“#c8f075”, “#6bc5f2”)), showlegend = FALSE )</p>
-<p>p2 &lt;- p2 %&gt;% add_markers( x = ~x, y = ~y2, color = ~x, mode = “markers”, marker = list( color = clrs4[2:1], size = 12, symbol = “diamond-dot” ), showlegend = FALSE )</p>
-<p>p2 &lt;- p2 %&gt;% layout( title = “Tradable services”, xaxis = list(title = ““, visible = FALSE), yaxis = list(title =”Employment share (%)“) )</p>
-<p>fig4 &lt;- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)</p>
-<p>fig4 &lt;- fig4 %&gt;% layout( title = list(text = “Figure 4: Share of workers in most productive (tradable) sectors, regions”, x = 0), margin = list( l = 50, r = 50, b = 50, t = 120, pad = 4 ), annotations = list( list( x = 0.25, y = 1, font = list(size = 14), text = “Industry”, xref = “paper”, yref = “paper”, xanchor = “center”, yanchor = “bottom”, showarrow = FALSE ), list( x = 0.75, y = 1, font = list(size = 14), text = “Tradable services”, xref = “paper”, yref = “paper”, xanchor = “center”, yanchor = “bottom”, showarrow = FALSE ) ) ) # # # text_all &lt;- dp2 %&gt;% filter(time == 2020) %&gt;% pull(text_all) # # # # # # put fig4 title in black fig4 &lt;- fig4 %&gt;% layout( title = list(text = “Figure 4: Share of workers in most productive (tradable) sectors, TL2 regions”, x = 0, font = list(color = “black”)) )</p>
-</section>
-<section id="remove-legend-background" class="level1">
-<h1>remove legend background</h1>
-<p>fig4 &lt;- fig4 %&gt;% layout( legend = list(bgcolor = “rgba(0,0,0,0)”) )</p>
-<p>ggplotly(fig4) %&gt;% config(displayModeBar = F) # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</p>
+<section id="recent-policy-developments" class="level2">
+<h2 class="anchored" data-anchor-id="recent-policy-developments">Recent policy developments</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p>The Australian Government’s new Regional Investment Framework places regions and their people at the centre of decision making – valuing local voices and priorities, listening to and building on the latest evidence to inform investment, operating with flexibility and transparency, and coordinating across governments to make investment work better for regions. From forging net zero futures to recovering from natural disasters, the Framework provides a joined-up, flexible and cohesive approach to collaboratively seizing opportunities and responding to challenges across Australia’s diverse regions. Major new initiatives that will underpin vibrant and prosperous economic futures for our regions include programs to fund community infrastructure and precincts, developing critical minerals supply chains, underwriting the production of green hydrogen, and a national Net Zero Authority to promote orderly and positive economic transformation across regional Australia.</p>
+</div>
+</div>
+
+<table border="1" style="width:75%;margin-left:auto;margin-right:auto;">
+<tbody><tr>
+<th style="background:#d4edff; padding:10px;font-size:9.0pt;" valign="center">
+Territorial definitions
+</th>
+</tr>
+<tr>
+<td>
+<p style="padding-left:10px;padding-right:10px;padding-top:10px;font-size:9.0pt;">
+The data in this note reflect different sub-national geographic levels in OECD countries. In particular, <b>regions</b> are classified on two territorial levels reflecting the administrative organisation of countries: large regions (TL2) and small regions (TL3). In Canada, TL2 corresponds to the provinces and territories.
+</p>
+<p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
+Small regions are classified according to their access to metropolitan areas (Fadic et al.&nbsp;2019). The typology classifies small (TL3) regions into metropolitan and non-metropolitan regions according to the following criteria:
+</p>
+<ul style="list-style-type:circle;font-size:9.0pt;padding-right:10px">
+<li>
+<b>Metropolitan regions</b>, if more than half of the population live in a FUA. Metropolitan regions are further classified into: <b>metropolitan large</b>, if more than half of the population live in a (large) FUA of at least 1.5 million inhabitants; and <b>metropolitan midsize</b>, if more than half of the population live in a (midsize) FUA of at 250 000 to 1.5 million inhabitants.
+</li>
+<li>
+<b>Non-metropolitan regions</b>, if less than half of the population live in a midsize/large FUA. These regions are further classified according to their level of access to FUAs of different sizes: <b>near a midsize/large FUA</b> if more than half of the population live within a 60-minute drive from a midsize/large FUA (of more than 250 000 inhabitants) or if the TL3 region contains more than 80% of the area of a midsize/large FUA; <b>near a small FUA</b> if the region does not have access to a midsize/large FUA and at least half of its population have access to a small FUA (i.e.&nbsp;between 50 000 and 250 000 inhabitants) within a 60-minute drive, or contains 80% of the area of a small FUA; and <b>remote</b>, otherwise.
+</li>
+</ul>
+<p></p>
+<p style="padding-left:10px;padding-right:10px;font-size:9.0pt;">
+Disclaimer: <a href="https://oecdcode.org/disclaimers/territories.html" target="_blank"><i style="color:#0d6efd">https://oecdcode.org/disclaimers/territories.html</i></a>
+</p>
+</td>
+</tr>
+
+</tbody></table>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
