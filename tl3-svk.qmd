@@ -50,6 +50,12 @@ clrs5 <- tintin_colours$red_rackhams_treasure
     </tr>
 </table>
 
+## Overview
+
+```{r svk_tbl}
+read_html_table(ctry)
+```
+
 ## Regional inequality trends
 
 ```{r svk_fig1}
@@ -122,14 +128,6 @@ index_200x <- summary_stats %>%
     names_from = "time",
     values_from = -c(time, iso3)
   )
-
-# index_2000 <- summary_stats %>%
-#   filter(time == 2000) %>%
-#   pivot_wider(
-#     id_cols = "iso3",
-#     names_from = "time",
-#     values_from = -c(time, iso3)
-#   )
 
 colnames(index_200x) <- gsub("_200[0-9]", "_200x", colnames(index_200x))
 
@@ -931,6 +929,12 @@ ggplotly(fig4) %>%
 
 <br>
 <br>
+
+## Recent policy developments
+
+```{r svk_txt}
+read_html_text(ctry)
+```
 
 <table border="1" style="width:75%;margin-left:auto;margin-right:auto;">
   <tr>

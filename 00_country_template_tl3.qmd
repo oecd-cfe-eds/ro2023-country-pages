@@ -122,14 +122,6 @@ index_200x <- summary_stats %>%
     values_from = -c(time, iso3)
   )
 
-# index_2000 <- summary_stats %>%
-#   filter(time == 2000) %>%
-#   pivot_wider(
-#     id_cols = "iso3",
-#     names_from = "time",
-#     values_from = -c(time, iso3)
-#   )
-
 colnames(index_200x) <- gsub("_200[0-9]", "_200x", colnames(index_200x))
 
 summary_stats_index <- summary_stats %>%

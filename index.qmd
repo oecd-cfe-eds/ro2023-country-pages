@@ -87,9 +87,6 @@ summary_theil_tl2 <- read_csv("data/theil_gdppc_country_00_20_wCHE-CHL.csv") %>%
     filter(level == "gdppc_tl2") %>%
     select(-c(x1, level))
 
-# summary_theil_tl2 %>%
-#   filter(iso3 == ctry)
-
 summary_stats <- gdp_pop_00_20 %>%
     group_by(iso3, time) %>%
     summarise(mean_gdp_pc = mean(gdp_pc, na.rm = TRUE)) %>%
