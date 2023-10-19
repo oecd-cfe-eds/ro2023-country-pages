@@ -52,7 +52,7 @@ clrs5 <- tintin_colours$red_rackhams_treasure
 
 ## Overview
 
-```{r svk_tbl}
+```{r svk_tbl, eval = FALSE}
 read_html_table(ctry)
 ```
 
@@ -932,7 +932,7 @@ ggplotly(fig4) %>%
 
 ## Recent policy developments
 
-```{r svk_txt}
+```{r svk_txt, eval = FALSE}
 read_html_text(ctry)
 ```
 
