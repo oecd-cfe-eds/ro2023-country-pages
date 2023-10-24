@@ -515,6 +515,26 @@ gdp_3_gap_txt <- ifelse(gdp_5_gap - gdp_5_gap_lag > 0, "increase", "decrease")
 gdp_3_gap_pct <- abs(round(gdp_5_gap - gdp_5_gap_lag, 3))
 ```
 
+```{r next paragraph}
+next_paragraph <- if (any(ctry %in% c("LTU", "EST", "FIN", "LVA", "NZL", "NOR", "SVK", "SVN", "CHE"))) {
+  glue("There is no data for the gap in GDP per capita between large metropolitan and non-large metropolitan regions for 2000 and 2020.")
+} else {
+  glue("In 2020, the gap in GDP per capita between large metropolitan and non-large metropolitan regions was { gdp_gap }. For reference, the same value for OECD was { gdp_2_gap }. This gap { gdp_gap_txt }  by { gdp_gap_pct } percentage points between 2000 and 2020.")
+}
+
+last_paragraph <- if (any(ctry %in% c("KOR", "NLD"))) {
+  glue("There is no data for the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants for 2000 and 2020.")
+} else {
+  glue("In turn, the gap in GDP per capita between regions near and far a Functional Urban Area (FUA) of more than 250 thousand inhabitants was { gdp_5_gap } in 2020 and { gdp_3_gap_txt } by { gdp_3_gap_pct}  percentage points since 2000.")
+}
+```
+
+`r next_paragraph`
+
+Meanwhile, in 2020, the gap in GDP per capita between metropolitan and non-metropolitan regions was `r gdp_3_gap`. For reference, the same value for OECD was `r gdp_4_gap`. This gap `r paste(gdp_2_gap_txt, "by", gdp_2_gap_pct)` percentage points since 2000.
+
+`r last_paragraph`
+
 ```{r usa_fig2_3}
 # no interactivity
 # fig2
@@ -904,7 +924,11 @@ text_all <- dp2 %>%
 # put fig4 title in black
 fig4 <- fig4 %>%
     layout(
-        title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
+        title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors,\nTL2 regions", 
+                     x = 0,
+                     xanchor = "left",
+                     xref = "paper",
+                     font = list(color = "black", family = "Arial"))
     )
 
 # remove legend background

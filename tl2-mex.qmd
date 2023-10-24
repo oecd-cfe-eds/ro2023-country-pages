@@ -689,7 +689,10 @@ text_all <- dp2 %>%
 # put fig3 title in black
 fig3 <- fig3 %>%
   layout(
-    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = "Figure 3: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0,
+                 xanchor = "left",
+                 xref = "paper",
+                 font = list(color = "black", family = "Arial"))
   )
 
 # remove legend background

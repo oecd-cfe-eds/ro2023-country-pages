@@ -907,9 +907,22 @@ text_all <- dp2 %>%
 
 ```{r che_fig4_2}
 # put fig4 title in black
+
+title_fig4 <- if (any(ctry %in% c("USA", "TUR", "NOR", "CHE", "IRL"))) {
+  "Figure 4: Share of workers in most productive (tradable) sectors, \nTL2 regions"
+} else {
+  "Figure 4: Share of workers in most productive (tradable) sectors, \nTL3 regions"
+}
+
+# https://stackoverflow.com/questions/34610165/what-is-the-default-font-for-ggplot2
+# https://plotly.com/r/reference/layout/
 fig4 <- fig4 %>%
   layout(
-    title = list(text = "Figure 4: Share of workers in most productive (tradable) sectors, TL2 regions", x = 0, font = list(color = "black"))
+    title = list(text = title_fig4, 
+                 x = 0,
+                 xanchor = "left",
+                 xref = "paper",
+                 font = list(color = "black", family = "Arial"))
   )
 
 # remove legend background

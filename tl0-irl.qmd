@@ -362,7 +362,11 @@ fig2 <- subplot(p1, p2, nrows = 1, margin = 0.05, shareX = TRUE, shareY = TRUE)
 
 fig2 <- fig2 %>%
   layout(
-    title = list(text = "Figure 2: Share of workers in most productive (tradable) sectors,\nTL2 regions", x = 0),
+    title = list(text = "Figure 2: Share of workers in most productive (tradable) sectors,\nTL2 regions", 
+                 x = 0,
+                 xanchor = "left",
+                 xref = "paper",
+                 font = list(color = "black", family = "Arial")),
     margin = list(
       l = 50, r = 50,
       b = 50, t = 120,
